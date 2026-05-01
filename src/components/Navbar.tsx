@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Proyectos", href: "/" },
   { label: "Sobre mí", href: "/about" },
   { label: "Contacto", href: "/contact" },
 ] as const;
@@ -15,31 +14,6 @@ const externalLinks = [
   { label: "X (twitter)", href: "https://x.com/jonzasa" },
   { label: "Instagram",   href: "https://instagram.com/jonzasa" },
 ] as const;
-
-const LOCATION = "Coatzacoalcos, MX";
-
-function formatTime(date: Date) {
-  const h24 = date.getHours();
-  const m = String(date.getMinutes()).padStart(2, "0");
-  const period = h24 >= 12 ? "PM" : "AM";
-  const h12 = h24 === 0 ? 12 : h24 > 12 ? h24 - 12 : h24;
-  return `${h12}:${m} ${period}`;
-}
-
-function Clock() {
-  const [time, setTime] = useState<string>("");
-  useEffect(() => {
-    const tick = () => setTime(formatTime(new Date()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <span suppressHydrationWarning className="tabular-nums">
-      {time || "—:—"}
-    </span>
-  );
-}
 
 function Logo({ className = "" }: { className?: string }) {
   return (
@@ -63,10 +37,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/" || pathname.startsWith("/proyecto/");
-    return pathname === href || pathname.startsWith(href + "/");
-  };
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
 
   useEffect(() => {
     setOpen(false);
@@ -145,11 +117,6 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-
-            <div className="flex flex-col gap-1.5 text-base text-black text-right">
-              <span>{LOCATION}</span>
-              <Clock />
-            </div>
           </div>
         </div>
       </div>
@@ -190,11 +157,6 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-
-            <div className="flex flex-col gap-1.5 text-sm text-black pt-4 border-t border-black/10">
-              <span>{LOCATION}</span>
-              <Clock />
-            </div>
           </div>
         </div>
       )}
