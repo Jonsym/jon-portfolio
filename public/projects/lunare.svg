@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="g" cx="0.6" cy="0.4" r="0.9">
+      <stop offset="0%" stop-color="#3b3b3b"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="2000" fill="url(#g)"/>
+  <circle cx="960" cy="800" r="540" fill="rgba(255,255,255,0.04)"/>
+  <circle cx="960" cy="800" r="380" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="960" cy="800" r="220" fill="rgba(255,255,255,0.08)"/>
+  <text x="80" y="180" font-family="system-ui,sans-serif" font-size="42" fill="rgba(255,255,255,0.6)" letter-spacing="0.18em">03 / LUNARE</text>
+  <text x="80" y="1880" font-family="system-ui,sans-serif" font-size="240" font-weight="800" letter-spacing="-0.04em" fill="rgba(255,255,255,0.92)">Lunare</text>
+  <text x="80" y="1960" font-family="system-ui,sans-serif" font-size="44" fill="rgba(255,255,255,0.5)" letter-spacing="0.14em">REAL ESTATE AGENCY · 2025</text>
+</svg>

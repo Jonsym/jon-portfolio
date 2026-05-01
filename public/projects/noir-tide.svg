@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#2a2a2a"/>
+    </linearGradient>
+    <pattern id="lines" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 0 80 L 80 0" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="2000" fill="url(#g)"/>
+  <rect width="1600" height="2000" fill="url(#lines)"/>
+  <text x="80" y="180" font-family="system-ui,sans-serif" font-size="42" fill="rgba(255,255,255,0.6)" letter-spacing="0.18em">01 / NOIR &amp; TIDE</text>
+  <text x="80" y="1880" font-family="system-ui,sans-serif" font-size="240" font-weight="800" letter-spacing="-0.04em" fill="rgba(255,255,255,0.92)">Noir</text>
+  <text x="80" y="1960" font-family="system-ui,sans-serif" font-size="44" fill="rgba(255,255,255,0.5)" letter-spacing="0.14em">SLOW—FASHION · 2025</text>
+</svg>
