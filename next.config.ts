@@ -5,11 +5,19 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy:
       "default-src 'self'; script-src 'none'; sandbox;",
-    localPatterns: [{ pathname: "/projects/**" }],
+    localPatterns: [
+      { pathname: "/projects/**" },
+      { pathname: "/icons/**" },
+    ],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "framerusercontent.com",
         pathname: "/**",
       },
     ],

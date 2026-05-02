@@ -1,5 +1,13 @@
 export interface GalleryItem {
   type: "image" | "video";
+  /**
+   * Image / video URL. Accepts any string:
+   *  - Plain external URL: "https://my-site.com/img.jpg"
+   *  - Unsplash helper:    UNSPLASH("photo-xxxx")
+   *  - Local public path:  "/projects/foo.svg"
+   * The renderer optimizes via next/image when the host is in `images.remotePatterns`
+   * (currently `images.unsplash.com`), and falls back to `unoptimized` for everything else.
+   */
   src: string;
   alt: string;
   aspect?: string;
@@ -17,99 +25,288 @@ export interface Project {
   image: string;
   description: string;
   blurb: [string, string, string];
+  /** External live-site URL, e.g. "https://noirtide.com". Renders the "Visit Site" CTA when present. */
+  url?: string;
   gallery?: GalleryItem[];
 }
 
-const UNSPLASH = (id: string, w = 1800) =>
+export const UNSPLASH = (id: string, w = 1800) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+const OPTIMIZABLE_HOSTS = new Set([
+  "images.unsplash.com",
+  "framerusercontent.com",
+]);
+
+/**
+ * Returns true when the `src` can flow through next/image's optimizer
+ * (i.e. host is in `next.config.ts` → `images.remotePatterns`, or it's a local path).
+ * Used by the gallery and hero renderers to decide whether to set `unoptimized`.
+ */
+export function canOptimizeSrc(src: string): boolean {
+  if (!src) return false;
+  if (src.startsWith("/")) return true;
+  try {
+    const url = new URL(src);
+    return OPTIMIZABLE_HOSTS.has(url.hostname);
+  } catch {
+    return false;
+  }
+}
 
 export const projects: Project[] = [
   {
     id: "01",
-    slug: "noir-tide",
-    title: "Noir & Tide",
-    subtitle: "Slow-Fashion Storefront / 2025",
+    slug: "The-Woods",
+    title: "The Woods",
+    subtitle: "Web Design / 2025",
     category: "Diseño Web",
     year: 2025,
     color: "#B91C1C",
-    image: UNSPLASH("photo-1542291026-7eec264c27ff"),
+    url: "https://the-woods-landing.vercel.app/", // ← pega aquí la URL del sitio en vivo de The Woods
+    image: "/projects/thewoods/woods1.png",
     description:
-      "Tienda digital editorial para una marca de slow-fashion arraigada en guardarropas monocromáticos. El brief consistía en construir una experiencia silenciosa y guiada por la tipografía que dejara a las prendas captar la atención. Cada página se ritma como una doble página impresa — formato largo, márgenes generosos y solo las interacciones esenciales. El sistema de catálogo se diseñó alrededor de retículas asimétricas, transiciones contenidas y un checkout sin distracciones, con cuidado especial al peso de las imágenes y al ritmo de carga progresiva.",
+      "En The Woods, la simplicidad, el confort y la conexión con lo natural definen cada detalle. Inspirados en la maestría artesanal, creamos piezas atemporales que elevan el día a día. El diseño es un estilo de vida donde el propósito y la sensibilidad se unen para dar forma a espacios calmos y significativos. Nuestra misión es transformar lo cotidiano en extraordinario.",
     blurb: [
       "JonZS Studio — Edition Nº 01",
-      "Slow-fashion editorial commerce",
+      "Editorial web design",
       "© 2025 / Diseño Web — CDMX",
     ],
     gallery: [
-      { type: "image", src: UNSPLASH("photo-1542291026-7eec264c27ff"), alt: "Noir & Tide — hero", aspect: "16/10" },
-      { type: "image", src: UNSPLASH("photo-1539109136881-3be0616acf4b"), alt: "Noir & Tide — colección", aspect: "4/5" },
-      { type: "image", src: UNSPLASH("photo-1469334031218-e382a71b716b"), alt: "Noir & Tide — campaña", aspect: "16/10" },
+      {
+        type: "image",
+        src: "/projects/thewoods/woods1.png",
+        alt: "The Woods — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/thewoods/woods2.png",
+        alt: "The Woods — frame 02",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/thewoods/woods3.png",
+        alt: "The Woods — frame 03",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/thewoods/woods4.png",
+        alt: "The Woods — frame 04",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/thewoods/woods5.png",
+        alt: "The Woods — frame 05",
+        aspect: "16/10",
+      },
     ],
   },
   {
     id: "02",
-    slug: "puren-co",
-    title: "Puren & Co.",
-    subtitle: "SaaS Workflow Platform / 2025",
+    slug: "academia",
+    title: "Academia",
+    subtitle: "Web Design / 2025",
+    category: "Diseño Web",
+    year: 2025,
+    color: "#B91C1C",
+    url: "https://grace-academia-platform.vercel.app/", // ← pega aquí la URL del sitio en vivo de Academia
+    image: "/projects/academia/heroaca.png",
+    description:
+      "La Academia Latinoamericana de Envejecimiento Saludable (ALES) nace de la convicción de que la medicina del envejecimiento saludable y la medicina estética requieren una formación académica rigurosa, basada en evidencia científica y ética profesional inquebrantable. Fundada por la Dra. Grace, nuestra institución se ha convertido en un referente latinoamericano en educación médica especializada.",
+    blurb: [
+      "JonZS Studio — Edition Nº 02",
+      "Editorial web design",
+      "© 2025 / Diseño Web — CDMX",
+    ],
+    gallery: [
+      {
+        type: "image",
+        src: "/projects/academia/heroaca.png",
+        alt: "Academia — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/academia/aca2.png",
+        alt: "Academia — frame 02",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/academia/aca4.png",
+        alt: "Academia — frame 04",
+        aspect: "16/10",
+      },
+    ],
+  },
+  {
+    id: "04",
+    slug: "HowtoSpanish",
+    title: "HowtoSpanish",
+    subtitle: "Web Design / 2025",
     category: "Diseño de Producto",
     year: 2025,
     color: "#1F2937",
-    image: UNSPLASH("photo-1531297484001-80022131f5a1"),
+    url: "https://howtospanish.framer.website/", // ← pega aquí la URL del sitio en vivo de Puren & Co.
+    image:
+      "https://framerusercontent.com/images/lKsN0nTdoz0ghuaWID6uHwNEPg.png?scale-down-to=1024&width=1920&height=1280",
     description:
-      "SaaS de automatización de flujos diseñado para conectar herramientas entre equipos. El reto era visualizar la complejidad de un modo que se sintiera simple, así que construimos un sistema de dashboards en torno a una densidad predecible, movimiento suave y una sola acción principal por pantalla. El proyecto incluyó la definición del modelo de tokens, la curva tipográfica para datos densos, y patrones de canvas para flujos visuales editables sin perder claridad cuando el grafo crece.",
+      "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
     blurb: [
       "JonZS Studio — Edition Nº 02",
       "Workflow automation platform",
       "© 2025 / Producto SaaS — Beta",
     ],
     gallery: [
-      { type: "image", src: UNSPLASH("photo-1531297484001-80022131f5a1"), alt: "Puren & Co. — dashboard", aspect: "16/10" },
-      { type: "image", src: UNSPLASH("photo-1551288049-bebda4e38f71"), alt: "Puren & Co. — flujo", aspect: "16/9" },
-      { type: "image", src: UNSPLASH("photo-1542744173-8e7e53415bb0"), alt: "Puren & Co. — analítica", aspect: "16/10" },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/lKsN0nTdoz0ghuaWID6uHwNEPg.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/J2wtgERbxJpo5ZdeFLbQZnYMtkY.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/stkPufGwqeWM0OPLpU4FCbdg6us.png?scale-down-to=1024&width=1093&height=731",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/r5RfYjg2YXCxr9NnHbmU8KPP6YQ.png?scale-down-to=1024&width=1248&height=832",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
     ],
   },
   {
-    id: "03",
-    slug: "lunare",
-    title: "Lunare",
-    subtitle: "Real Estate Portfolio / 2025",
-    category: "Diseño Web",
+    id: "05",
+    slug: "MaterCare",
+    title: "MaterCare",
+    subtitle: "Web Design / 2025",
+    category: "Diseño de Producto",
     year: 2025,
-    color: "#166534",
-    image: UNSPLASH("photo-1486325212027-8081e485255e"),
+    color: "#1F2937",
+    image:
+      "https://framerusercontent.com/images/wwr6czJzrQQwqUUd7i4bL3LjI4c.png?width=1920&height=1280",
     description:
-      "Lunare es una agencia digital especializada en bienes raíces y desarrollo inmobiliario. El sitio se lee primero como portafolio y después como canal de ventas — tipografía display grande, movimiento contenido y un índice largo y scrolleable que premia el navegar sin empujar al usuario hacia un CTA. Se diseñó un sistema de fichas de propiedad reutilizable, con video hero opcional, plano interactivo en SVG y un visor de galería tipo lightbox sin sombras ni cromos para mantener la calma editorial.",
+      "Desarrollé un panel de gestión de pacientes para el Hospital Comunitario de Coatzacoalcos, ubicado en el estado de Veracruz. El objetivo fue crear una herramienta interna que facilitara la organización y seguimiento de la información médica del área de maternidad. El sistema integra visualizaciones interactivas mediante Chart.js y un chatbot construido con Dialogflow para agilizar consultas rápidas dentro del panel.",
     blurb: [
-      "JonZS Studio — Edition Nº 03",
-      "Real estate editorial portfolio",
-      "© 2025 / Diseño Web — Madrid",
+      "JonZS Studio — Edition Nº 02",
+      "Workflow automation platform",
+      "© 2025 / Producto SaaS — Beta",
     ],
     gallery: [
-      { type: "image", src: UNSPLASH("photo-1486325212027-8081e485255e"), alt: "Lunare — landing", aspect: "16/10" },
-      { type: "image", src: UNSPLASH("photo-1545324418-cc1a3fa10c00"), alt: "Lunare — propiedades", aspect: "4/5" },
-      { type: "image", src: UNSPLASH("photo-1496307653780-42ee777d4833"), alt: "Lunare — interiores", aspect: "16/10" },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/wwr6czJzrQQwqUUd7i4bL3LjI4c.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "MaterCare — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/bKRCn2hvICotmzxkAFKiDccQZgA.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "MaterCare — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/bKRCn2hvICotmzxkAFKiDccQZgA.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "MaterCare — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/KMAUlxr016zVC4Ud4zsMMLmgTo.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "MaterCare — hero",
+        aspect: "16/10",
+      },
     ],
   },
   {
-    id: "04",
-    slug: "system-beta",
-    title: "System Beta",
-    subtitle: "Modular Design System / 2024",
-    category: "Sistema Web",
-    year: 2024,
-    color: "#92400E",
-    image: UNSPLASH("photo-1611224923853-80b023f02d71"),
+    id: "06",
+    slug: "HelloMatcha",
+    title: "HelloMatcha",
+    subtitle: "Web Design / 2025",
+    category: "Diseño de Producto",
+    year: 2025,
+    color: "#1F2937",
+    url: "https://hellomatcha.framer.website/", // ← pega aquí la URL del sitio en vivo de Puren & Co.
+    image:
+      "https://framerusercontent.com/images/sZLHrEIP2EtW2LcwPO77F3Ixro.png?width=1920&height=1280",
     description:
-      "Sistema de diseño modular entregado como sitio web vivo y librería de Figma. El sistema mantiene un único tono entre superficies — marketing, app y documentación — con una escala tipográfica afinada para datos densos y un modelo de tokens que sobrevive a rebrands white-label. El entregable incluyó documentación de uso, snippets de código por componente, y una ruta de adopción incremental para equipos que migran desde stacks heredados sin congelar el roadmap del producto.",
+      "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
     blurb: [
-      "JonZS Studio — Edition Nº 04",
-      "Modular design system",
-      "© 2024 / Sistema Web — Multi-brand",
+      "JonZS Studio — Edition Nº 02",
+      "Workflow automation platform",
+      "© 2025 / Producto SaaS — Beta",
     ],
     gallery: [
-      { type: "image", src: UNSPLASH("photo-1611224923853-80b023f02d71"), alt: "System Beta — token map", aspect: "16/10" },
-      { type: "image", src: UNSPLASH("photo-1517048676732-d65bc937f952"), alt: "System Beta — librería", aspect: "16/10" },
-      { type: "image", src: UNSPLASH("photo-1487014679447-9f8336841d58"), alt: "System Beta — documentación", aspect: "4/5" },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/sZLHrEIP2EtW2LcwPO77F3Ixro.png?width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/gtVnLbEMWr1dn9GFa9Muj31HWI.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/u28ytq4BIR7mmfE7lSgi7kP1v0.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/UTZMujmsGkZLkZJk3CJ0HAF1qNk.png?scale-down-to=1024&width=1233&height=738",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+    ],
+  },
+  {
+    id: "07",
+    slug: "Petzu",
+    title: "Petzu",
+    subtitle: "Directorio Web / 2025",
+    category: "Producto Web",
+    year: 2025,
+    color: "#1F2937",
+    image:
+      "https://framerusercontent.com/images/14vOvgIwTkkUeS9OUd41OTVoYdk.png?width=1920&height=1280",
+    description:
+      "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
+    blurb: [
+      "JonZS Studio — Edition Nº 02",
+      "Workflow automation platform",
+      "© 2025 / Producto SaaS — Beta",
+    ],
+    gallery: [
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/14vOvgIwTkkUeS9OUd41OTVoYdk.png?width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "https://framerusercontent.com/images/GO1pAlH3syX4gAiWKzfd71uK1T8.png?scale-down-to=1024&width=1920&height=1280",
+        alt: "HowtoSpanish — hero",
+        aspect: "16/10",
+      },
     ],
   },
 ];

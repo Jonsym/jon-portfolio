@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 const sitemap = [
@@ -9,19 +10,21 @@ const sitemap = [
 ] as const;
 
 const social = [
-  { label: "LinkedIn",  href: "https://linkedin.com/in/jonzamudio" },
-  { label: "GitHub",    href: "https://github.com/jonzamudio" },
-  { label: "Instagram", href: "https://instagram.com/jonzasa" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/jonzamudio" },
+  { label: "GitHub", href: "https://github.com/Jonsym" },
+  { label: "X", href: "https://x.com/JonsymZ" },
+  { label: "Instagram", href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
 
 const EMAIL = "jon@jonzamudio.com";
-const WHATSAPP = `https://wa.me/529211735484?text=${encodeURIComponent("Hola JonZS")}`;
+const WHATSAPP = `https://wa.me/529211735484?text=${encodeURIComponent(
+  "Hola JonZS"
+)}`;
 
 const linkCls =
   "text-black/80 hover:text-[#0000FF] transition-colors duration-150";
 
-const headerCls =
-  "text-base font-bold uppercase tracking-widest text-black";
+const headerCls = "text-base font-bold uppercase tracking-widest text-black";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -34,12 +37,16 @@ export default function Footer() {
             <Link
               href="/"
               aria-label="JonZS — Inicio"
-              className="inline-flex items-baseline font-bold tracking-[-0.04em] leading-none text-black select-none hover:opacity-70 transition-opacity duration-150 text-4xl lg:text-5xl"
+              className="inline-flex items-center leading-none select-none hover:opacity-70 transition-opacity duration-150"
             >
-              <span>JonZS</span>
-              <span className="text-[0.32em] font-medium ml-[0.05em] -translate-y-[0.18em]">
-                ®
-              </span>
+              <Image
+                src="/icons/newicon.png"
+                alt=""
+                width={1329}
+                height={1183}
+                sizes="(min-width: 1024px) 80px, 64px"
+                className="h-16 lg:h-20 w-auto"
+              />
             </Link>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-black/60">
               Full-stack Developer &amp; Designer.

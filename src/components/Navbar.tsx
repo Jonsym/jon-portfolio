@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,8 +12,8 @@ const navLinks = [
 ] as const;
 
 const externalLinks = [
-  { label: "X (twitter)", href: "https://x.com/jonzasa" },
-  { label: "Instagram",   href: "https://instagram.com/jonzasa" },
+  { label: "X (twitter)", href: "https://x.com/JonsymZ" },
+  { label: "Instagram",   href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
 
 function Logo({ className = "" }: { className?: string }) {
@@ -20,12 +21,17 @@ function Logo({ className = "" }: { className?: string }) {
     <Link
       href="/"
       aria-label="JonZS — Inicio"
-      className={`inline-flex items-baseline font-bold tracking-[-0.05em] leading-none text-black select-none hover:opacity-70 transition-opacity duration-150 ${className}`}
+      className={`inline-flex items-center select-none hover:opacity-70 transition-opacity duration-150 ${className}`}
     >
-      <span>JonZS</span>
-      <span className="text-[0.32em] font-medium ml-[0.05em] -translate-y-[0.18em]">
-        ®
-      </span>
+      <Image
+        src="/icons/newicon.png"
+        alt=""
+        width={1329}
+        height={1183}
+        priority
+        sizes="(min-width: 1280px) 80px, (min-width: 1024px) 64px, 44px"
+        className="h-full w-auto"
+      />
     </Link>
   );
 }
@@ -66,7 +72,7 @@ export default function Navbar() {
     <header className="w-full bg-white border-b border-black/10">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="flex h-16 lg:hidden items-center justify-between gap-6">
-          <Logo className="text-3xl" />
+          <Logo className="h-11" />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -84,7 +90,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden lg:flex items-start gap-12 py-8">
-          <Logo className="text-7xl xl:text-8xl shrink-0" />
+          <Logo className="h-16 xl:h-20 shrink-0" />
 
           <div className="flex items-start gap-14 xl:gap-24 ml-auto pt-2 xl:pt-4">
             <nav aria-label="Principal">

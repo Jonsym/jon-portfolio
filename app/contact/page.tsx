@@ -57,7 +57,6 @@ export default function ContactPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <p className={labelCls}>00 / Contacto</p>
         <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-5xl md:text-7xl lg:text-8xl">
           Construyamos algo juntos.
         </h1>
