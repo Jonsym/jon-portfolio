@@ -117,12 +117,12 @@ export default async function ProjectPage({
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-12">
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 min-w-0">
             <p className="text-xs uppercase tracking-widest text-zinc-500">
               {project.id} / Proyecto
             </p>
 
-            <h1 className="mt-6 lg:mt-8 font-bold uppercase tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="mt-6 lg:mt-8 font-bold uppercase tracking-tighter leading-[0.9] text-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl break-words">
               {project.title}
             </h1>
 

@@ -244,7 +244,7 @@ export const projects: Project[] = [
     image:
       "https://framerusercontent.com/images/sZLHrEIP2EtW2LcwPO77F3Ixro.png?width=1920&height=1280",
     description:
-      "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
+      "HelloMatcha es una cafetería ubicada en el estado de Puebla, conocida por su estilo natural, relajado y visualmente fresco. Para este proyecto desarrollé una landing page que capturara fielmente la esencia de la marca, destacando su identidad visual y promoviendo una experiencia agradable desde el primer momento. El sitio integra un menú digital que permite a los visitantes conocer de manera clara y ordenada las bebidas y alimentos disponibles.",
     blurb: [
       "JonZS Studio — Edition Nº 02",
       "Workflow automation platform",
@@ -288,7 +288,7 @@ export const projects: Project[] = [
     image:
       "https://framerusercontent.com/images/14vOvgIwTkkUeS9OUd41OTVoYdk.png?width=1920&height=1280",
     description:
-      "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
+      "Petzu es una app web diseñada para conectar a dueños de mascotas con los mejores negocios y servicios especializados en su ciudad. Desde veterinarias y estéticas hasta tiendas, guarderías y paseadores, Petzu centraliza todo en un solo lugar para facilitar la búsqueda y elección. A diferencia de otros directorios genéricos, Petzu está enfocado exclusivamente en el mundo pet-friendly, permitiendo a los usuarios descubrir opciones confiables, comparar servicios y tomar decisiones informadas para el bienestar de sus mascotas. Para los negocios, Petzu representa una oportunidad de aumentar su visibilidad y llegar a clientes realmente interesados, a través de un perfil optimizado donde pueden mostrar sus servicios, ubicación y propuesta de valor.",
     blurb: [
       "JonZS Studio — Edition Nº 02",
       "Workflow automation platform",
