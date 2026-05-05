@@ -50,10 +50,7 @@ export default function ContactPage() {
   return (
     <article className="w-full pb-24 lg:pb-40">
       <Breadcrumb
-        items={[
-          { label: "Inicio", href: "/" },
-          { label: "Contacto" },
-        ]}
+        items={[{ label: "Inicio", href: "/" }, { label: "Contacto" }]}
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
@@ -80,7 +77,9 @@ export default function ContactPage() {
             noValidate
           >
             <div className="flex flex-col gap-2">
-              <label htmlFor="name" className={labelCls}>Nombre</label>
+              <label htmlFor="name" className={labelCls}>
+                Nombre
+              </label>
               <input
                 id="name"
                 name="name"
@@ -95,7 +94,9 @@ export default function ContactPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="subject" className={labelCls}>Asunto</label>
+              <label htmlFor="subject" className={labelCls}>
+                Asunto
+              </label>
               <input
                 id="subject"
                 name="subject"
@@ -109,7 +110,9 @@ export default function ContactPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="message" className={labelCls}>Mensaje</label>
+              <label htmlFor="message" className={labelCls}>
+                Mensaje
+              </label>
               <textarea
                 id="message"
                 name="message"
@@ -133,13 +136,17 @@ export default function ContactPage() {
 
               <a
                 href={buildWhatsAppUrl(
-                  "Hola JonZS — Me gustaría comenzar una conversación sobre un proyecto."
+                  "Hola JonZS — Me gustaría comenzar una conversación sobre un proyecto.",
                 )}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150 underline-offset-4 hover:underline"
               >
-                <MessageCircle size={16} strokeWidth={1.75} aria-hidden="true" />
+                <MessageCircle
+                  size={16}
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
                 <span>Enviar por WhatsApp directamente</span>
               </a>
             </div>
@@ -178,7 +185,9 @@ export default function ContactPage() {
             <ul className="mt-6 divide-y divide-black/10 border-y border-black/10 text-base lg:text-lg text-black">
               <li className="flex items-baseline justify-between gap-6 py-4">
                 <span>Lun — Vie</span>
-                <span className="tabular-nums text-zinc-500">09:00 — 18:00</span>
+                <span className="tabular-nums text-zinc-500">
+                  09:00 — 18:00
+                </span>
               </li>
               <li className="flex items-baseline justify-between gap-6 py-4">
                 <span>Zona horaria</span>

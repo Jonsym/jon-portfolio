@@ -18,13 +18,15 @@ const social = [
 
 const EMAIL = "jon@jonzamudio.com";
 const WHATSAPP = `https://wa.me/529211735484?text=${encodeURIComponent(
-  "Hola JonZS"
+  "Hola JonZS",
 )}`;
 
 const linkCls =
   "text-black/80 hover:text-[#0000FF] transition-colors duration-150";
 
 const headerCls = "text-base font-bold uppercase tracking-widest text-black";
+
+const dividerCls = "lg:border-l lg:border-black/10";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -55,7 +57,7 @@ export default function Footer() {
 
           <nav
             aria-label="Sitemap"
-            className="lg:col-span-3 lg:pl-8 lg:border-l lg:border-black/10"
+            className={`lg:col-span-3 lg:pl-8 ${dividerCls}`}
           >
             <h2 className={headerCls}>Sitemap</h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
@@ -69,7 +71,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="lg:col-span-2 lg:pl-8 lg:border-l lg:border-black/10">
+          <div className={`lg:col-span-2 lg:pl-8 ${dividerCls}`}>
             <h2 className={headerCls}>Social</h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               {social.map((item) => (
@@ -87,7 +89,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3 lg:pl-8 lg:border-l lg:border-black/10">
+          <div className={`lg:col-span-3 lg:pl-8 ${dividerCls}`}>
             <h2 className={headerCls}>Contacto</h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               <li>

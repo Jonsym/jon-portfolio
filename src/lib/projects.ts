@@ -59,9 +59,9 @@ export const projects: Project[] = [
     id: "01",
     slug: "The-Woods",
     title: "The Woods",
-    subtitle: "Web Design / 2025",
-    category: "Diseño Web",
-    year: 2025,
+    subtitle: "Web Design / 2026",
+    category: "Sitio Web",
+    year: 2026,
     color: "#B91C1C",
     url: "https://the-woods-landing.vercel.app/", // ← pega aquí la URL del sitio en vivo de The Woods
     image: "/projects/thewoods/woods1.png",
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     blurb: [
       "JonZS Studio — Edition Nº 01",
       "Editorial web design",
-      "© 2025 / Diseño Web — CDMX",
+      "© 2026 / Diseño Web — CDMX",
     ],
     gallery: [
       {
@@ -108,10 +108,10 @@ export const projects: Project[] = [
   {
     id: "02",
     slug: "academia",
-    title: "Academia",
-    subtitle: "Web Design / 2025",
-    category: "Diseño Web",
-    year: 2025,
+    title: "ALES",
+    subtitle: "Academia Latinoamericana de Envejecimiento Saludable / 2026",
+    category: "Aplicación Web",
+    year: 2026,
     color: "#B91C1C",
     url: "https://grace-academia-platform.vercel.app/", // ← pega aquí la URL del sitio en vivo de Academia
     image: "/projects/academia/heroaca.png",
@@ -120,7 +120,7 @@ export const projects: Project[] = [
     blurb: [
       "JonZS Studio — Edition Nº 02",
       "Editorial web design",
-      "© 2025 / Diseño Web — CDMX",
+      "© 2026 / Diseño Web — CDMX",
     ],
     gallery: [
       {

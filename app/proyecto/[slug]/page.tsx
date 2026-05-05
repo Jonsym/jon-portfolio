@@ -44,8 +44,7 @@ function MediaItem({
 }) {
   const aspect = media.aspect ?? "16/10";
   const showCaption = typeof index === "number" && typeof total === "number";
-  const imageSizes =
-    sizes ?? "(min-width: 1024px) 1024px, 100vw";
+  const imageSizes = sizes ?? "(min-width: 1024px) 1024px, 100vw";
 
   return (
     <figure className="group">
@@ -178,10 +177,7 @@ export default async function ProjectPage({
       </header>
 
       {gallery.length > 0 && (
-        <section
-          aria-label="Galería del proyecto"
-          className="mt-20 lg:mt-32"
-        >
+        <section aria-label="Galería del proyecto" className="mt-20 lg:mt-32">
           <div className="flex items-baseline justify-between border-b border-black/10 pb-4">
             <h2 className="text-xs uppercase tracking-widest text-zinc-500">
               Galería
