@@ -131,6 +131,12 @@ export const projects: Project[] = [
       },
       {
         type: "image",
+        src: "/projects/academia/aca1.png",
+        alt: "Academia — frame 01",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
         src: "/projects/academia/aca2.png",
         alt: "Academia — frame 02",
         aspect: "16/10",
