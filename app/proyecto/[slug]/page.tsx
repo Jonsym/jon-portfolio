@@ -42,37 +42,44 @@ function MediaItem({
   total?: number;
   sizes?: string;
 }) {
-  const aspect = media.aspect ?? "16/10";
+  const aspect = media.aspect ?? "16/9";
   const showCaption = typeof index === "number" && typeof total === "number";
-  const imageSizes = sizes ?? "(min-width: 1024px) 1024px, 100vw";
+  const imageSizes = sizes ?? "(min-width: 1024px) 50vw, 100vw";
 
   return (
     <figure className="group">
-      <div
-        className="relative w-full overflow-hidden bg-black/[0.04] border-t border-black/10"
-        style={{ aspectRatio: aspect }}
-      >
-        {media.type === "video" ? (
-          <video
-            src={media.src}
-            poster={media.poster}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-          />
-        ) : (
-          <Image
-            src={media.src}
-            alt={media.alt}
-            fill
-            priority={priority}
-            sizes={imageSizes}
-            unoptimized={!canOptimizeSrc(media.src)}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-          />
-        )}
+      <div className="overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-6px_rgba(0,0,0,0.08),0_32px_64px_-16px_rgba(0,0,0,0.18)]">
+        <div className="flex items-center gap-1.5 border-b border-black/10 bg-zinc-50 px-4 py-3">
+          <span className="h-3 w-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
+          <span className="h-3 w-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
+          <span className="h-3 w-3 rounded-full bg-[#28c840]" aria-hidden="true" />
+        </div>
+        <div
+          className="relative w-full bg-black/[0.04]"
+          style={{ aspectRatio: aspect }}
+        >
+          {media.type === "video" ? (
+            <video
+              src={media.src}
+              poster={media.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+            />
+          ) : (
+            <Image
+              src={media.src}
+              alt={media.alt}
+              fill
+              priority={priority}
+              sizes={imageSizes}
+              unoptimized={!canOptimizeSrc(media.src)}
+              className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+            />
+          )}
+        </div>
       </div>
       {showCaption && (
         <figcaption className="mt-3 lg:mt-4 flex items-baseline justify-between gap-6 text-xs uppercase tracking-widest text-zinc-500">
@@ -177,7 +184,10 @@ export default async function ProjectPage({
       </header>
 
       {gallery.length > 0 && (
-        <section aria-label="Galería del proyecto" className="mt-20 lg:mt-32">
+        <section
+          aria-label="Galería del proyecto"
+          className="mt-20 lg:mt-32 max-w-6xl mx-auto"
+        >
           <div className="flex items-baseline justify-between border-b border-black/10 pb-4">
             <h2 className="text-xs uppercase tracking-widest text-zinc-500">
               Galería
@@ -188,7 +198,7 @@ export default async function ProjectPage({
             </p>
           </div>
 
-          <div className="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          <div className="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {gallery.map((item, idx) => (
               <MediaItem
                 key={`${project.slug}-${idx}`}

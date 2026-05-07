@@ -27,13 +27,13 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </header>
 
-      <div className="relative w-full aspect-[16/10] overflow-hidden bg-black/[0.04] border-t border-black">
+      <div className="relative w-full aspect-video overflow-hidden bg-black/[0.04] border-t border-black">
         <Image
           src={project.image}
           alt={project.title}
           fill
           sizes="(min-width: 1024px) 60vw, 100vw"
-          className="pointer-events-none object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+          className="pointer-events-none object-cover object-top transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
         />
       </div>
     </Link>

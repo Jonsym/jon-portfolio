@@ -150,7 +150,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "04",
+    id: "03",
     slug: "HowtoSpanish",
     title: "HowtoSpanish",
     subtitle: "Web Design / 2025",
@@ -158,8 +158,7 @@ export const projects: Project[] = [
     year: 2025,
     color: "#1F2937",
     url: "https://howtospanish.framer.website/", // ← pega aquí la URL del sitio en vivo de Puren & Co.
-    image:
-      "https://framerusercontent.com/images/lKsN0nTdoz0ghuaWID6uHwNEPg.png?scale-down-to=1024&width=1920&height=1280",
+    image: "/projects/howtospanish/htp1.png",
     description:
       "HowtoSpanish es un sitio promocional y de servicio pensado para una marca dedicada a la enseñanza del español/inglés — con cursos, ebooks y contenido digital. El objetivo de este proyecto fue construir una presencia web clara, atractiva y profesional para la marca, que permitiera a sus visitantes descubrir de forma inmediata la propuesta de valor: cursos, ebook, y servicios de aprendizaje de idioma.",
     blurb: [
@@ -170,32 +169,34 @@ export const projects: Project[] = [
     gallery: [
       {
         type: "image",
-        src: "https://framerusercontent.com/images/lKsN0nTdoz0ghuaWID6uHwNEPg.png?scale-down-to=1024&width=1920&height=1280",
+        src: "/projects/howtospanish/htp1.png",
         alt: "HowtoSpanish — hero",
-        aspect: "16/10",
+        aspect: "16/9",
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/J2wtgERbxJpo5ZdeFLbQZnYMtkY.png?scale-down-to=1024&width=1920&height=1280",
+        src: "/projects/howtospanish/htp3.png",
         alt: "HowtoSpanish — hero",
-        aspect: "16/10",
+        aspect: "16/9",
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/stkPufGwqeWM0OPLpU4FCbdg6us.png?scale-down-to=1024&width=1093&height=731",
+        src: "/projects/howtospanish/htp4.png",
         alt: "HowtoSpanish — hero",
-        aspect: "16/10",
+        aspect: "16/9",
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/r5RfYjg2YXCxr9NnHbmU8KPP6YQ.png?scale-down-to=1024&width=1248&height=832",
+        src: "/projects/howtospanish/htp2.png",
         alt: "HowtoSpanish — hero",
-        aspect: "16/10",
+        aspect: "16/9",
       },
+
+  
     ],
   },
   {
-    id: "05",
+    id: "04",
     slug: "MaterCare",
     title: "MaterCare",
     subtitle: "Web Design / 2025",
@@ -239,7 +240,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "06",
+    id: "05",
     slug: "HelloMatcha",
     title: "HelloMatcha",
     subtitle: "Web Design / 2025",
@@ -260,31 +261,31 @@ export const projects: Project[] = [
       {
         type: "image",
         src: "https://framerusercontent.com/images/sZLHrEIP2EtW2LcwPO77F3Ixro.png?width=1920&height=1280",
-        alt: "HowtoSpanish — hero",
+        alt: "Hellomatcha — hero",
         aspect: "16/10",
       },
       {
         type: "image",
         src: "https://framerusercontent.com/images/gtVnLbEMWr1dn9GFa9Muj31HWI.png?scale-down-to=1024&width=1920&height=1280",
-        alt: "HowtoSpanish — hero",
+        alt: "Hellomatcha — hero",
         aspect: "16/10",
       },
       {
         type: "image",
         src: "https://framerusercontent.com/images/u28ytq4BIR7mmfE7lSgi7kP1v0.png?scale-down-to=1024&width=1920&height=1280",
-        alt: "HowtoSpanish — hero",
+        alt: "Hellomatcha — hero",
         aspect: "16/10",
       },
       {
         type: "image",
         src: "https://framerusercontent.com/images/UTZMujmsGkZLkZJk3CJ0HAF1qNk.png?scale-down-to=1024&width=1233&height=738",
-        alt: "HowtoSpanish — hero",
+        alt: "Hellomatcha — hero",
         aspect: "16/10",
       },
     ],
   },
   {
-    id: "07",
+    id: "06",
     slug: "Petzu",
     title: "Petzu",
     subtitle: "Directorio Web / 2025",
@@ -304,13 +305,13 @@ export const projects: Project[] = [
       {
         type: "image",
         src: "https://framerusercontent.com/images/14vOvgIwTkkUeS9OUd41OTVoYdk.png?width=1920&height=1280",
-        alt: "HowtoSpanish — hero",
+        alt: "Petzu — hero",
         aspect: "16/10",
       },
       {
         type: "image",
         src: "https://framerusercontent.com/images/GO1pAlH3syX4gAiWKzfd71uK1T8.png?scale-down-to=1024&width=1920&height=1280",
-        alt: "HowtoSpanish — hero",
+        alt: "Petzu — hero",
         aspect: "16/10",
       },
     ],
