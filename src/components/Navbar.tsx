@@ -12,6 +12,7 @@ const navLinks = [
 ] as const;
 
 const externalLinks = [
+  { label: "GitHub",      href: "https://github.com/Jonsym" },
   { label: "X (twitter)", href: "https://x.com/JonsymZ" },
   { label: "Instagram",   href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
