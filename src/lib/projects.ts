@@ -57,6 +57,106 @@ export function canOptimizeSrc(src: string): boolean {
 export const projects: Project[] = [
   {
     id: "01",
+    slug: "lumina-dental",
+    title: "Lumina Dental",
+    subtitle: "Clínica Dental / 2026",
+    category: "Sitio Web",
+    year: 2026,
+    color: "#0F0F0F",
+    url: "https://lumina-dental-five.vercel.app/",
+    image: "/projects/lumina/lu3.png",
+    description:
+      "Lumina Dental es una clínica dental enfocada en la estética y la salud bucal contemporánea. Su filosofía —«pequeños gestos, grandes detalles»— guía cada decisión clínica: tratamientos discretos y precisos, materiales y proveedores europeos certificados, y un seguimiento personalizado durante todo el año. El sitio traduce esa promesa a un lenguaje editorial sobrio, transmitiendo confianza y profesionalismo a quienes buscan una experiencia dental cuidada en cada detalle.",
+    blurb: [
+      "JonZS Studio — Edition Nº 01",
+      "Editorial web design",
+      "© 2026 / Diseño Web — CDMX",
+    ],
+    gallery: [
+      {
+        type: "image",
+        src: "/projects/lumina/lu3.png",
+        alt: "Lumina Dental — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/lumina/lu2.png",
+        alt: "Lumina Dental — frame 02",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/lumina/lu1.png",
+        alt: "Lumina Dental — frame 03",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/lumina/lu4.png",
+        alt: "Lumina Dental — frame 04",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/lumina/lu5.png",
+        alt: "Lumina Dental — frame 05",
+        aspect: "16/10",
+      },
+    ],
+  },
+  {
+    id: "02",
+    slug: "luxora",
+    title: "Luxora",
+    subtitle: "Representación Inmobiliaria / 2026",
+    category: "Sitio Web",
+    year: 2026,
+    color: "#0F0F0F",
+    url: "https://luxora-estates.vercel.app/",
+    image: "/projects/luxora/lux1.png",
+    description:
+      "Luxora es un estudio de representación inmobiliaria nacido del encuentro entre arquitectos, conservadores e inversores privados. No publicamos. No alquilamos. No tasamos para terceros. Cada propiedad que aceptamos pasa por un comité interno de arquitectura que evalúa su autoría, su estado de conservación y su lugar en el tiempo. Trabajamos con un máximo de cincuenta residencias activas en cualquier momento.",
+    blurb: [
+      "JonZS Studio — Edition Nº 01",
+      "Editorial web design",
+      "© 2026 / Diseño Web — CDMX",
+    ],
+    gallery: [
+      {
+        type: "image",
+        src: "/projects/luxora/lux1.png",
+        alt: "Luxora — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/luxora/lux2.png",
+        alt: "Luxora — frame 02",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/luxora/lux3.png",
+        alt: "Luxora — frame 03",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/luxora/lux4.png",
+        alt: "Luxora — frame 04",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/luxora/lux5.png",
+        alt: "Luxora — frame 05",
+        aspect: "16/10",
+      },
+    ],
+  },
+  {
+    id: "03",
     slug: "The-Woods",
     title: "The Woods",
     subtitle: "Web Design / 2026",
@@ -106,7 +206,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "02",
+    id: "04",
     slug: "academia",
     title: "ALES",
     subtitle: "Academia Latinoamericana de Envejecimiento Saludable / 2026",
@@ -150,7 +250,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "03",
+    id: "05",
     slug: "HowtoSpanish",
     title: "HowtoSpanish",
     subtitle: "Web Design / 2025",
@@ -196,7 +296,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "04",
+    id: "06",
     slug: "MaterCare",
     title: "MaterCare",
     subtitle: "Web Design / 2025",
@@ -240,7 +340,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "05",
+    id: "07",
     slug: "HelloMatcha",
     title: "HelloMatcha",
     subtitle: "Web Design / 2025",
@@ -285,7 +385,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "06",
+    id: "08",
     slug: "Petzu",
     title: "Petzu",
     subtitle: "Directorio Web / 2025",
