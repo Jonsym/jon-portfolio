@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { projects, type Project } from "@/src/lib/projects";
+import VideoCover from "@/src/components/VideoCover";
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -28,13 +29,17 @@ function ProjectCard({ project }: { project: Project }) {
       </header>
 
       <div className="relative w-full aspect-video overflow-hidden bg-black/[0.04] border-t border-black">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(min-width: 1024px) 60vw, 100vw"
-          className="pointer-events-none object-cover object-top transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
-        />
+        {project.video ? (
+          <VideoCover src={project.video.src} title={project.title} />
+        ) : project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            className="pointer-events-none object-cover object-top transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+          />
+        ) : null}
       </div>
     </Link>
   );
