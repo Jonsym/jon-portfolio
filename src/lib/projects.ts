@@ -16,6 +16,8 @@ export interface GalleryItem {
 
 export interface ProjectVideo {
   src: string;
+  /** Still image shown while the video loads. Use the actual first frame of the video so there's no scale flash. */
+  poster?: string;
 }
 
 export interface Project {
@@ -73,6 +75,7 @@ export const projects: Project[] = [
     url: "https://lumina-dental-five.vercel.app/",
     video: {
       src: "/projects/lumina/lumina-cover.mp4",
+      poster: "/projects/lumina/lumina-poster.jpg",
     },
     description:
       "Lumina Dental es una clínica dental enfocada en la estética y la salud bucal contemporánea. Su filosofía —«pequeños gestos, grandes detalles»— guía cada decisión clínica: tratamientos discretos y precisos, materiales y proveedores europeos certificados, y un seguimiento personalizado durante todo el año. El sitio traduce esa promesa a un lenguaje editorial sobrio, transmitiendo confianza y profesionalismo a quienes buscan una experiencia dental cuidada en cada detalle.",
@@ -125,6 +128,7 @@ export const projects: Project[] = [
     url: "https://luxora-estates.vercel.app/",
     video: {
       src: "/projects/luxora/luxora-cover.mp4",
+      poster: "/projects/luxora/luxora-poster.jpg",
     },
     description:
       "Luxora es un estudio de representación inmobiliaria nacido del encuentro entre arquitectos, conservadores e inversores privados. No publicamos. No alquilamos. No tasamos para terceros. Cada propiedad que aceptamos pasa por un comité interno de arquitectura que evalúa su autoría, su estado de conservación y su lugar en el tiempo. Trabajamos con un máximo de cincuenta residencias activas en cualquier momento.",
@@ -177,6 +181,7 @@ export const projects: Project[] = [
     url: "https://the-woods-landing.vercel.app/", // ← pega aquí la URL del sitio en vivo de The Woods
     video: {
       src: "/projects/thewoods/thewoods-cover.mp4",
+      poster: "/projects/thewoods/thewoods-poster.jpg",
     },
     description:
       "En The Woods, la simplicidad, el confort y la conexión con lo natural definen cada detalle. Inspirados en la maestría artesanal, creamos piezas atemporales que elevan el día a día. El diseño es un estilo de vida donde el propósito y la sensibilidad se unen para dar forma a espacios calmos y significativos. Nuestra misión es transformar lo cotidiano en extraordinario.",
@@ -229,6 +234,7 @@ export const projects: Project[] = [
     url: "https://grace-academia-platform.vercel.app/", // ← pega aquí la URL del sitio en vivo de Academia
     video: {
       src: "/projects/academia/ales-cover.mp4",
+      poster: "/projects/academia/ales-poster.jpg",
     },
     description:
       "La Academia Latinoamericana de Envejecimiento Saludable (ALES) nace de la convicción de que la medicina del envejecimiento saludable y la medicina estética requieren una formación académica rigurosa, basada en evidencia científica y ética profesional inquebrantable. Fundada por la Dra. Grace, nuestra institución se ha convertido en un referente latinoamericano en educación médica especializada.",

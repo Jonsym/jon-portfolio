@@ -30,7 +30,11 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="relative w-full aspect-video overflow-hidden bg-black/[0.04] border-t border-black">
         {project.video ? (
-          <VideoCover src={project.video.src} title={project.title} />
+          <VideoCover
+            src={project.video.src}
+            poster={project.video.poster}
+            title={project.title}
+          />
         ) : project.image ? (
           <Image
             src={project.image}

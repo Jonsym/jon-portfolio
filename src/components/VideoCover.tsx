@@ -1,22 +1,45 @@
 "use client";
 
 import { Play, Pause } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface VideoCoverProps {
   src: string;
+  poster?: string;
   title: string;
 }
 
-export default function VideoCover({ src, title }: VideoCoverProps) {
+export default function VideoCover({ src, poster, title }: VideoCoverProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Defer attaching the `src` until the card is near the viewport, so mobile
+  // browsers don't fetch megabytes for off-screen cards (or eagerly fetch them
+  // when iOS ignores preload="metadata").
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (shouldLoad) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShouldLoad(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, [shouldLoad]);
 
   const toggle = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const v = ref.current;
     if (!v) return;
+    if (!shouldLoad) setShouldLoad(true);
     if (v.paused) v.play();
     else v.pause();
   };
@@ -25,7 +48,8 @@ export default function VideoCover({ src, title }: VideoCoverProps) {
     <>
       <video
         ref={ref}
-        src={src}
+        src={shouldLoad ? src : undefined}
+        poster={poster}
         muted
         loop
         playsInline
