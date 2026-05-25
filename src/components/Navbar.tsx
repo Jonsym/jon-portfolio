@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
+import CvMenu, { CvMobileList } from "./CvMenu";
 
 const navLinks = [
   { href: "/about", es: "Sobre mí", en: "About" },
@@ -117,6 +118,9 @@ export default function Navbar() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <CvMenu />
+                </li>
               </ul>
             </nav>
 
@@ -176,6 +180,8 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
+
+            <CvMobileList onNavigate={() => setOpen(false)} />
           </div>
         </div>
       )}
