@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { projects, type Project } from "@/src/lib/projects";
 import VideoCover from "@/src/components/VideoCover";
+import { T } from "@/src/components/I18nProvider";
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const categoryEn = project.i18n?.en?.category ?? project.category;
   return (
     <Link
       href={`/proyecto/${project.slug}`}
@@ -24,7 +26,9 @@ function ProjectCard({ project }: { project: Project }) {
         </h3>
         <div className="flex items-center gap-1.5 shrink-0">
           <Badge>{project.year}</Badge>
-          <Badge>{project.category}</Badge>
+          <Badge>
+            <T es={project.category} en={categoryEn} />
+          </Badge>
         </div>
       </header>
 
@@ -55,16 +59,19 @@ export default function Home() {
       <header className="grid grid-cols-12 gap-x-6">
         <div className="col-span-12 lg:col-start-5 lg:col-span-8 mt-8 lg:mt-12">
           <h1 className="text-3xl lg:text-4xl tracking-tight leading-none text-black">
-            Todos los Proyectos
+            <T es="Todos los Proyectos" en="All Projects" />
           </h1>
           <p className="mt-2 text-lg lg:text-xl text-zinc-500 tracking-tight">
-            Trabajo destacado entre ©2018-25
+            <T
+              es="Trabajo destacado entre ©2018-25"
+              en="Featured work between ©2018-25"
+            />
           </p>
         </div>
       </header>
 
       <section
-        aria-label="Listado de proyectos"
+        aria-label="Projects"
         className="mt-16 lg:mt-24 grid grid-cols-12 gap-x-6 gap-y-16 lg:gap-y-24"
       >
         {projects.map((project) => (

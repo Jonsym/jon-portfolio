@@ -20,11 +20,19 @@ export interface ProjectVideo {
   poster?: string;
 }
 
+export interface ProjectLocale {
+  subtitle?: string;
+  category?: string;
+  description?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
   title: string;
+  /** Default (Spanish) subtitle. */
   subtitle: string;
+  /** Default (Spanish) category. */
   category: string;
   year: number;
   color: string;
@@ -32,11 +40,16 @@ export interface Project {
   image?: string;
   /** Optional video cover for the home-grid card. When present, the still `image` is not rendered to avoid a scale flash between poster and first frame. The detail gallery is unaffected. */
   video?: ProjectVideo;
+  /** Default (Spanish) description. */
   description: string;
   blurb: [string, string, string];
   /** External live-site URL, e.g. "https://noirtide.com". Renders the "Visit Site" CTA when present. */
   url?: string;
   gallery?: GalleryItem[];
+  /** Localized overrides. Anything missing falls back to the default Spanish field. */
+  i18n?: {
+    en?: ProjectLocale;
+  };
 }
 
 export const UNSPLASH = (id: string, w = 1800) =>
@@ -66,6 +79,58 @@ export function canOptimizeSrc(src: string): boolean {
 export const projects: Project[] = [
   {
     id: "01",
+    slug: "novax-constructora",
+    title: "Novax Constructora",
+    subtitle: "Constructora / 2026",
+    category: "Sitio Web",
+    year: 2026,
+    color: "#0F0F0F",
+    url: "https://novax-constructora.vercel.app/",
+    image: "/projects/novax/novax1.png",
+    description:
+      "Novax es una constructora con base en Puebla, México, especializada en obra residencial, comercial e industrial, además de remodelaciones integrales. Junto al servicio de construcción, Novax ofrece la venta y renta de equipo, materiales y herramientas para obra, consolidándose como un aliado integral para arquitectos, contratistas y propietarios que buscan calidad, cumplimiento y un solo proveedor para todo el proceso.",
+    blurb: [
+      "JonZS Studio — Edition Nº 01",
+      "Editorial web design",
+      "© 2026 / Diseño Web — CDMX",
+    ],
+    gallery: [
+      {
+        type: "image",
+        src: "/projects/novax/novax1.png",
+        alt: "Novax — hero",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/novax/novax2.png",
+        alt: "Novax — frame 02",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/novax/novax3.png",
+        alt: "Novax — frame 03",
+        aspect: "16/10",
+      },
+      {
+        type: "image",
+        src: "/projects/novax/novax4.png",
+        alt: "Novax — frame 04",
+        aspect: "16/10",
+      },
+    ],
+    i18n: {
+      en: {
+        subtitle: "Construction / 2026",
+        category: "Website",
+        description:
+          "Novax is a construction company based in Puebla, Mexico, specialized in residential, commercial, and industrial work, as well as full remodels. Alongside construction services, Novax offers the sale and rental of equipment, materials, and tools for the trade — establishing itself as a comprehensive partner for architects, contractors, and owners who want quality, accountability, and a single supplier for the entire process.",
+      },
+    },
+  },
+  {
+    id: "02",
     slug: "lumina-dental",
     title: "Lumina Dental",
     subtitle: "Clínica Dental / 2026",
@@ -116,9 +181,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Dental Clinic / 2026",
+        category: "Website",
+        description:
+          "Lumina Dental is a dental clinic focused on contemporary aesthetics and oral health. Its philosophy — «small gestures, great details» — guides every clinical decision: discreet and precise treatments, certified European materials and suppliers, and personalized follow-up throughout the year. The site translates that promise into a sober, editorial language, conveying trust and professionalism to those seeking a dental experience cared for in every detail.",
+      },
+    },
   },
   {
-    id: "02",
+    id: "03",
     slug: "luxora",
     title: "Luxora",
     subtitle: "Representación Inmobiliaria / 2026",
@@ -169,9 +242,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Real Estate Representation / 2026",
+        category: "Website",
+        description:
+          "Luxora is a real estate representation studio born from the meeting of architects, conservators, and private investors. We do not publish. We do not rent. We do not appraise for third parties. Each property we accept passes through an internal architecture committee that evaluates its authorship, its state of conservation, and its place in time. We work with a maximum of fifty active residences at any given moment.",
+      },
+    },
   },
   {
-    id: "03",
+    id: "04",
     slug: "The-Woods",
     title: "The Woods",
     subtitle: "Web Design / 2026",
@@ -222,9 +303,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Web Design / 2026",
+        category: "Website",
+        description:
+          "At The Woods, simplicity, comfort, and connection with the natural define every detail. Inspired by artisanal mastery, we create timeless pieces that elevate the everyday. Design is a way of living where purpose and sensitivity come together to shape calm, meaningful spaces. Our mission is to turn the ordinary into the extraordinary.",
+      },
+    },
   },
   {
-    id: "04",
+    id: "05",
     slug: "academia",
     title: "ALES",
     subtitle: "Academia Latinoamericana de Envejecimiento Saludable / 2026",
@@ -269,9 +358,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Latin American Academy of Healthy Aging / 2026",
+        category: "Web Application",
+        description:
+          "The Latin American Academy of Healthy Aging (ALES) was born from the conviction that the medicine of healthy aging and aesthetic medicine require rigorous academic training, grounded in scientific evidence and unwavering professional ethics. Founded by Dr. Grace, our institution has become a Latin American reference in specialized medical education.",
+      },
+    },
   },
   {
-    id: "05",
+    id: "06",
     slug: "HowtoSpanish",
     title: "HowtoSpanish",
     subtitle: "Web Design / 2025",
@@ -312,12 +409,18 @@ export const projects: Project[] = [
         alt: "HowtoSpanish — hero",
         aspect: "16/9",
       },
-
-  
     ],
+    i18n: {
+      en: {
+        subtitle: "Web Design / 2025",
+        category: "Product Design",
+        description:
+          "HowtoSpanish is a promotional and service site built for a brand dedicated to teaching Spanish and English — with courses, ebooks, and digital content. The goal of this project was to build a clear, attractive, and professional web presence for the brand, letting visitors immediately discover the value proposition: courses, ebooks, and language-learning services.",
+      },
+    },
   },
   {
-    id: "06",
+    id: "07",
     slug: "MaterCare",
     title: "MaterCare",
     subtitle: "Web Design / 2025",
@@ -359,9 +462,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Web Design / 2025",
+        category: "Product Design",
+        description:
+          "I built a patient management dashboard for the Community Hospital of Coatzacoalcos, located in the state of Veracruz. The goal was to create an internal tool that streamlined the organization and tracking of medical information in the maternity ward. The system integrates interactive visualizations via Chart.js and a chatbot built with Dialogflow to speed up quick queries within the dashboard.",
+      },
+    },
   },
   {
-    id: "07",
+    id: "08",
     slug: "HelloMatcha",
     title: "HelloMatcha",
     subtitle: "Web Design / 2025",
@@ -404,9 +515,17 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Web Design / 2025",
+        category: "Product Design",
+        description:
+          "HelloMatcha is a café in the state of Puebla, known for its natural, relaxed, and visually fresh style. For this project I built a landing page that faithfully captured the brand's essence, highlighting its visual identity and creating a pleasant experience from the very first moment. The site integrates a digital menu that lets visitors browse the available drinks and food in a clear, orderly way.",
+      },
+    },
   },
   {
-    id: "08",
+    id: "09",
     slug: "Petzu",
     title: "Petzu",
     subtitle: "Directorio Web / 2025",
@@ -436,6 +555,14 @@ export const projects: Project[] = [
         aspect: "16/10",
       },
     ],
+    i18n: {
+      en: {
+        subtitle: "Web Directory / 2025",
+        category: "Web Product",
+        description:
+          "Petzu is a web app designed to connect pet owners with the best businesses and specialized services in their city. From vets and grooming to shops, daycare, and dog walkers, Petzu centralizes everything in one place so searching and choosing is easier. Unlike other generic directories, Petzu focuses exclusively on the pet-friendly world, letting users discover trustworthy options, compare services, and make informed decisions for their pets' wellbeing. For businesses, Petzu is an opportunity to gain visibility and reach genuinely interested customers through an optimized profile that showcases their services, location, and value proposition.",
+      },
+    },
   },
 ];
 

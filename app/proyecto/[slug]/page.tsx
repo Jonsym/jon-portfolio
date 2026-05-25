@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import Breadcrumb from "@/src/components/Breadcrumb";
+import { T } from "@/src/components/I18nProvider";
 import {
   projects,
   getProjectBySlug,
@@ -110,14 +111,17 @@ export default async function ProjectPage({
   }
 
   const gallery = project.gallery ?? [];
+  const subtitleEn = project.i18n?.en?.subtitle ?? project.subtitle;
+  const categoryEn = project.i18n?.en?.category ?? project.category;
+  const descriptionEn = project.i18n?.en?.description ?? project.description;
 
   return (
     <article className="w-full pb-24 lg:pb-40">
       <Breadcrumb
         items={[
-          { label: "Inicio", href: "/" },
-          { label: "Proyectos", href: "/" },
-          { label: project.title },
+          { es: "Inicio", en: "Home", href: "/" },
+          { es: "Proyectos", en: "Projects", href: "/" },
+          { es: project.title },
         ]}
       />
 
@@ -125,7 +129,7 @@ export default async function ProjectPage({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-12">
           <div className="lg:col-span-8 min-w-0">
             <p className="text-xs uppercase tracking-widest text-zinc-500">
-              {project.id} / Proyecto
+              {project.id} / <T es="Proyecto" en="Project" />
             </p>
 
             <h1 className="mt-6 lg:mt-8 font-bold uppercase tracking-tighter leading-[0.9] text-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl break-words">
@@ -133,27 +137,29 @@ export default async function ProjectPage({
             </h1>
 
             <p className="mt-6 text-base lg:text-lg uppercase tracking-widest text-zinc-500">
-              {project.subtitle}
+              <T es={project.subtitle} en={subtitleEn} />
             </p>
           </div>
 
           <dl className="lg:col-span-4 lg:col-start-9 grid grid-cols-3 gap-x-6 lg:gap-x-4 gap-y-10 text-sm self-start lg:pt-1">
             <div>
               <dt className="text-xs uppercase tracking-widest text-zinc-500">
-                Año
+                <T es="Año" en="Year" />
               </dt>
               <dd className="mt-3 text-black tabular-nums">{project.year}</dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-widest text-zinc-500">
-                Categoría
+                <T es="Categoría" en="Category" />
               </dt>
-              <dd className="mt-3 text-black">{project.category}</dd>
+              <dd className="mt-3 text-black">
+                <T es={project.category} en={categoryEn} />
+              </dd>
             </div>
             {project.url && (
               <div>
                 <dt className="text-xs uppercase tracking-widest text-zinc-500">
-                  Sitio
+                  <T es="Sitio" en="Site" />
                 </dt>
                 <dd className="mt-3">
                   <a
@@ -162,7 +168,9 @@ export default async function ProjectPage({
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 border-b border-black pb-1 text-sm tracking-tight text-black hover:opacity-60 transition-opacity duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
                   >
-                    <span>Ver Sitio</span>
+                    <span>
+                      <T es="Ver Sitio" en="Visit Site" />
+                    </span>
                     <ArrowUpRight
                       size={16}
                       strokeWidth={1.75}
@@ -178,23 +186,26 @@ export default async function ProjectPage({
 
         <div className="mt-14 lg:mt-24 border-t border-black pt-10 lg:pt-14">
           <p className="max-w-3xl text-base lg:text-lg leading-[1.75] text-zinc-700">
-            {project.description}
+            <T es={project.description} en={descriptionEn} />
           </p>
         </div>
       </header>
 
       {gallery.length > 0 && (
         <section
-          aria-label="Galería del proyecto"
+          aria-label="Gallery"
           className="mt-20 lg:mt-32 max-w-6xl mx-auto"
         >
           <div className="flex items-baseline justify-between border-b border-black/10 pb-4">
             <h2 className="text-xs uppercase tracking-widest text-zinc-500">
-              Galería
+              <T es="Galería" en="Gallery" />
             </h2>
             <p className="text-xs uppercase tracking-widest text-zinc-500 tabular-nums">
               {String(gallery.length).padStart(2, "0")}{" "}
-              {gallery.length === 1 ? "Pieza" : "Piezas"}
+              <T
+                es={gallery.length === 1 ? "Pieza" : "Piezas"}
+                en={gallery.length === 1 ? "Piece" : "Pieces"}
+              />
             </p>
           </div>
 
@@ -217,13 +228,17 @@ export default async function ProjectPage({
           className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
         >
           <span aria-hidden="true">←</span>
-          <span>Todos los proyectos</span>
+          <span>
+            <T es="Todos los proyectos" en="All projects" />
+          </span>
         </Link>
         <Link
           href="/contact"
           className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
         >
-          <span>Iniciar un proyecto</span>
+          <span>
+            <T es="Iniciar un proyecto" en="Start a project" />
+          </span>
           <span aria-hidden="true">→</span>
         </Link>
       </footer>

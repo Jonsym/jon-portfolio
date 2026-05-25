@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { T, useTPair } from "./I18nProvider";
 
 const sitemap = [
-  { label: "Proyectos", href: "/" },
-  { label: "Sobre mí", href: "/about" },
-  { label: "Contacto", href: "/contact" },
+  { href: "/", es: "Proyectos", en: "Projects" },
+  { href: "/about", es: "Sobre mí", en: "About" },
+  { href: "/contact", es: "Contacto", en: "Contact" },
 ] as const;
 
 const social = [
@@ -30,6 +31,8 @@ const dividerCls = "lg:border-l lg:border-black/10";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const ariaHome = useTPair("JonZS — Inicio", "JonZS — Home");
+  const ariaSitemap = useTPair("Sitemap", "Sitemap");
 
   return (
     <footer className="w-full border-t border-black bg-white">
@@ -38,7 +41,7 @@ export default function Footer() {
           <div className="lg:col-span-4 lg:pr-8">
             <Link
               href="/"
-              aria-label="JonZS — Inicio"
+              aria-label={ariaHome}
               className="inline-flex items-center leading-none select-none hover:opacity-70 transition-opacity duration-150"
             >
               <Image
@@ -56,15 +59,17 @@ export default function Footer() {
           </div>
 
           <nav
-            aria-label="Sitemap"
+            aria-label={ariaSitemap}
             className={`lg:col-span-3 lg:pl-8 ${dividerCls}`}
           >
-            <h2 className={headerCls}>Sitemap</h2>
+            <h2 className={headerCls}>
+              <T es="Sitemap" en="Sitemap" />
+            </h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               {sitemap.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={linkCls}>
-                    {item.label}
+                    <T es={item.es} en={item.en} />
                   </Link>
                 </li>
               ))}
@@ -72,7 +77,9 @@ export default function Footer() {
           </nav>
 
           <div className={`lg:col-span-2 lg:pl-8 ${dividerCls}`}>
-            <h2 className={headerCls}>Social</h2>
+            <h2 className={headerCls}>
+              <T es="Social" en="Social" />
+            </h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               {social.map((item) => (
                 <li key={item.href}>
@@ -90,7 +97,9 @@ export default function Footer() {
           </div>
 
           <div className={`lg:col-span-3 lg:pl-8 ${dividerCls}`}>
-            <h2 className={headerCls}>Contacto</h2>
+            <h2 className={headerCls}>
+              <T es="Contacto" en="Contact" />
+            </h2>
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               <li>
                 <a href={`mailto:${EMAIL}`} className={linkCls}>
@@ -104,7 +113,9 @@ export default function Footer() {
                   rel="noreferrer noopener"
                   className={`${linkCls} inline-flex items-center gap-2`}
                 >
-                  <span>Chat on WhatsApp</span>
+                  <span>
+                    <T es="Chatear por WhatsApp" en="Chat on WhatsApp" />
+                  </span>
                   <span aria-hidden="true">→</span>
                 </a>
               </li>
@@ -113,8 +124,15 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 lg:mt-20 pt-6 border-t border-black/10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 text-[11px] uppercase tracking-widest text-black/60">
-          <span>© {year} JonZS® — Todos los derechos reservados.</span>
-          <span>Hecho en México</span>
+          <span>
+            <T
+              es={`© ${year} JonZS® — Todos los derechos reservados.`}
+              en={`© ${year} JonZS® — All rights reserved.`}
+            />
+          </span>
+          <span>
+            <T es="Hecho en México" en="Made in Mexico" />
+          </span>
         </div>
       </div>
     </footer>

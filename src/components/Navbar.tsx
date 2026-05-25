@@ -5,23 +5,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { T, useTPair } from "./I18nProvider";
+import LangToggle from "./LangToggle";
 
 const navLinks = [
-  { label: "Sobre mí", href: "/about" },
-  { label: "Contacto", href: "/contact" },
+  { href: "/about", es: "Sobre mí", en: "About" },
+  { href: "/contact", es: "Contacto", en: "Contact" },
 ] as const;
 
 const externalLinks = [
-  { label: "GitHub",      href: "https://github.com/Jonsym" },
+  { label: "GitHub", href: "https://github.com/Jonsym" },
   { label: "X (twitter)", href: "https://x.com/JonsymZ" },
-  { label: "Instagram",   href: "https://www.instagram.com/jony.zasa/" },
+  { label: "Instagram", href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
 
 function Logo({ className = "" }: { className?: string }) {
+  const ariaHome = useTPair("JonZS — Inicio", "JonZS — Home");
   return (
     <Link
       href="/"
-      aria-label="JonZS — Inicio"
+      aria-label={ariaHome}
       className={`inline-flex items-center select-none hover:opacity-70 transition-opacity duration-150 ${className}`}
     >
       <Image
@@ -46,6 +49,10 @@ export default function Navbar() {
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
+
+  const ariaPrincipal = useTPair("Principal", "Primary");
+  const ariaOpen = useTPair("Abrir menú", "Open menu");
+  const ariaClose = useTPair("Cerrar menú", "Close menu");
 
   useEffect(() => {
     setOpen(false);
@@ -74,27 +81,30 @@ export default function Navbar() {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="flex h-16 lg:hidden items-center justify-between gap-6">
           <Logo className="h-11" />
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="inline-flex items-center justify-center w-10 h-10 -mr-2 text-black hover:opacity-60 transition-opacity duration-150"
-          >
-            {open ? (
-              <X size={20} strokeWidth={1.75} aria-hidden="true" />
-            ) : (
-              <Menu size={20} strokeWidth={1.75} aria-hidden="true" />
-            )}
-          </button>
+          <div className="flex items-center gap-4">
+            <LangToggle />
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              aria-label={open ? ariaClose : ariaOpen}
+              className="inline-flex items-center justify-center w-10 h-10 -mr-2 text-black hover:opacity-60 transition-opacity duration-150"
+            >
+              {open ? (
+                <X size={20} strokeWidth={1.75} aria-hidden="true" />
+              ) : (
+                <Menu size={20} strokeWidth={1.75} aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
 
         <div className="hidden lg:flex items-start gap-12 py-8">
           <Logo className="h-16 xl:h-20 shrink-0" />
 
           <div className="flex items-start gap-14 xl:gap-24 ml-auto pt-2 xl:pt-4">
-            <nav aria-label="Principal">
+            <nav aria-label={ariaPrincipal}>
               <ul className="flex flex-col gap-1.5 text-base">
                 {navLinks.map((link) => (
                   <li key={link.href}>
@@ -103,7 +113,7 @@ export default function Navbar() {
                       aria-current={isActive(link.href) ? "page" : undefined}
                       className={linkCls}
                     >
-                      {link.label}
+                      <T es={link.es} en={link.en} />
                     </Link>
                   </li>
                 ))}
@@ -124,6 +134,8 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
+
+            <LangToggle className="self-start" />
           </div>
         </div>
       </div>
@@ -144,7 +156,7 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block py-3 text-lg text-black hover:text-[#0000FF] transition-colors duration-150"
                   >
-                    {link.label}
+                    <T es={link.es} en={link.en} />
                   </Link>
                 </li>
               ))}

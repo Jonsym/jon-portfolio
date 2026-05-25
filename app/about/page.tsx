@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Breadcrumb from "@/src/components/Breadcrumb";
+import { T } from "@/src/components/I18nProvider";
 
 export const metadata: Metadata = {
   title: "Acerca — JonZS®",
@@ -9,16 +10,20 @@ export const metadata: Metadata = {
 };
 
 const services = [
-  { id: "01", label: "Desarrollo Web", note: "Next.js, App Router, RSC" },
+  {
+    id: "01",
+    es: { label: "Desarrollo Web", note: "Next.js, App Router, RSC" },
+    en: { label: "Web Development", note: "Next.js, App Router, RSC" },
+  },
   {
     id: "02",
-    label: "Diseño UI / UX",
-    note: "Sistemas editoriales y tipográficos",
+    es: { label: "Diseño UI / UX", note: "Sistemas editoriales y tipográficos" },
+    en: { label: "UI / UX Design", note: "Editorial and typographic systems" },
   },
   {
     id: "03",
-    label: "Sistemas",
-    note: "Tokens de diseño, librerías de componentes",
+    es: { label: "Sistemas", note: "Tokens de diseño, librerías de componentes" },
+    en: { label: "Systems", note: "Design tokens, component libraries" },
   },
 ] as const;
 
@@ -29,69 +34,56 @@ const stack = [
   { id: "04", label: "Node.js" },
 ] as const;
 
-function Registered() {
-  return (
-    <span className="inline-block text-[0.32em] font-medium ml-[0.05em] -translate-y-[0.18em] align-baseline">
-      ®
-    </span>
-  );
-}
-
 export default function AboutPage() {
   return (
     <article className="w-full pb-24 lg:pb-40">
       <Breadcrumb
-        items={[{ label: "Inicio", href: "/" }, { label: "Acerca" }]}
+        items={[
+          { es: "Inicio", en: "Home", href: "/" },
+          { es: "Acerca", en: "About" },
+        ]}
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
         <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-          Mas de Mi
+          <T es="Mas de Mi" en="More About Me" />
         </h1>
       </header>
 
       <div className="mt-20 lg:mt-32 grid grid-cols-12 gap-y-20 lg:gap-x-12">
         <section
-          aria-label="Perfil"
+          aria-label="Profile"
           className="col-span-12 lg:col-span-7 lg:pr-12"
         >
           <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-            Perfil
+            <T es="Perfil" en="Profile" />
           </h2>
           <div className="mt-6 space-y-6 max-w-2xl text-base lg:text-lg leading-relaxed text-zinc-700">
             <p>
-              Soy desarrollador frontend enfocado en construir experiencias
-              digitales modernas, rápidas y bien estructuradas. Me especializo
-              en trabajar con tecnologías actuales como React y Next.js, creando
-              interfaces escalables que no solo se ven bien, sino que también
-              están pensadas para mantenerse y crecer a largo plazo.
+              <T
+                es="Soy desarrollador frontend enfocado en construir experiencias digitales modernas, rápidas y bien estructuradas. Me especializo en trabajar con tecnologías actuales como React y Next.js, creando interfaces escalables que no solo se ven bien, sino que también están pensadas para mantenerse y crecer a largo plazo."
+                en="I'm a frontend developer focused on building modern, fast, and well-structured digital experiences. I specialize in current technologies like React and Next.js, crafting scalable interfaces that not only look good but are also built to be maintained and grow over the long term."
+              />
             </p>
             <p>
-              He trabajado en proyectos donde el diseño y la funcionalidad
-              tienen el mismo peso, desde dashboards administrativos hasta
-              sitios orientados a mostrar contenido visual como arte o
-              productos. Me interesa especialmente cómo la tecnología puede
-              mejorar la forma en que se presenta la información, haciendo que
-              sea más clara, atractiva y útil para el usuario final.
+              <T
+                es="He trabajado en proyectos donde el diseño y la funcionalidad tienen el mismo peso, desde dashboards administrativos hasta sitios orientados a mostrar contenido visual como arte o productos. Me interesa especialmente cómo la tecnología puede mejorar la forma en que se presenta la información, haciendo que sea más clara, atractiva y útil para el usuario final."
+                en="I've worked on projects where design and functionality carry equal weight — from admin dashboards to sites built around visual content like art or products. I'm especially interested in how technology can improve the way information is presented, making it clearer, more engaging, and more useful for the end user."
+              />
             </p>
             <p>
-              Además de desarrollar, suelo involucrarme en la estructura del
-              producto: cómo se organizan los datos, cómo fluye la navegación y
-              cómo se pueden optimizar procesos tanto del lado del usuario como
-              del negocio. Me gusta proponer mejoras, no solo ejecutar tareas.
-              Trabajo bien en entornos donde hay enfoque en calidad, detalle y
-              evolución constante del producto. Me interesa formar parte de
-              equipos que estén construyendo cosas reales, con impacto, y donde
-              pueda seguir creciendo tanto a nivel técnico como en toma de
-              decisiones.
+              <T
+                es="Además de desarrollar, suelo involucrarme en la estructura del producto: cómo se organizan los datos, cómo fluye la navegación y cómo se pueden optimizar procesos tanto del lado del usuario como del negocio. Me gusta proponer mejoras, no solo ejecutar tareas. Trabajo bien en entornos donde hay enfoque en calidad, detalle y evolución constante del producto. Me interesa formar parte de equipos que estén construyendo cosas reales, con impacto, y donde pueda seguir creciendo tanto a nivel técnico como en toma de decisiones."
+                en="Beyond development, I tend to get involved in product structure: how data is organized, how navigation flows, and how processes can be optimized for both users and the business. I like proposing improvements, not just executing tasks. I work well in environments focused on quality, detail, and constant product evolution. I'm interested in joining teams building real, high-impact things — where I can keep growing both technically and in decision-making."
+              />
             </p>
           </div>
         </section>
 
         <aside className="col-span-12 lg:col-span-5 flex flex-col gap-16 lg:border-l lg:border-black/10 lg:pl-12">
-          <section aria-label="Servicios">
+          <section aria-label="Services">
             <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-              Servicios
+              <T es="Servicios" en="Services" />
             </h2>
             <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
               {services.map((service) => (
@@ -104,20 +96,20 @@ export default function AboutPage() {
                       {service.id}
                     </span>
                     <span className="text-base lg:text-lg text-black">
-                      {service.label}
+                      <T es={service.es.label} en={service.en.label} />
                     </span>
                   </span>
                   <span className="text-xs text-zinc-500 text-right">
-                    {service.note}
+                    <T es={service.es.note} en={service.en.note} />
                   </span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section aria-label="Stack tecnológico">
+          <section aria-label="Tech stack">
             <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-              Stack Tecnológico
+              <T es="Stack Tecnológico" en="Tech Stack" />
             </h2>
             <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
               {stack.map((tech) => (
@@ -140,7 +132,9 @@ export default function AboutPage() {
           href="/contact"
           className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
         >
-          <span>Iniciar un proyecto</span>
+          <span>
+            <T es="Iniciar un proyecto" en="Start a project" />
+          </span>
           <span aria-hidden="true">→</span>
         </Link>
       </footer>

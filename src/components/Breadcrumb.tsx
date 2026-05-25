@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { T } from "./I18nProvider";
 
 export interface Crumb {
-  label: string;
+  /** Spanish label. Required. */
+  es: string;
+  /** English label. Optional — falls back to `es` when missing. */
+  en?: string;
   href?: string;
 }
 
@@ -11,24 +15,22 @@ export default function Breadcrumb({ items }: { items: Crumb[] }) {
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.18em]">
         {items.map((item, idx) => {
           const isLast = idx === items.length - 1;
+          const label = <T es={item.es} en={item.en ?? item.es} />;
           return (
-            <li
-              key={`${item.label}-${idx}`}
-              className="flex items-center gap-2"
-            >
+            <li key={`${item.es}-${idx}`} className="flex items-center gap-2">
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
                   className="text-zinc-500 hover:text-black transition-colors duration-150"
                 >
-                  {item.label}
+                  {label}
                 </Link>
               ) : (
                 <span
                   aria-current={isLast ? "page" : undefined}
                   className="text-black"
                 >
-                  {item.label}
+                  {label}
                 </span>
               )}
               {!isLast && (
