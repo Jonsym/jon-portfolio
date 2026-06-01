@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import Breadcrumb from "@/src/components/Breadcrumb";
@@ -50,10 +51,10 @@ export default function AboutPage() {
         </h1>
       </header>
 
-      <div className="mt-20 lg:mt-32 grid grid-cols-12 gap-y-20 lg:gap-x-12">
+      <div className="mt-20 lg:mt-32 grid grid-cols-12 gap-y-12 lg:gap-x-12 items-start">
         <section
           aria-label="Profile"
-          className="col-span-12 lg:col-span-7 lg:pr-12"
+          className="col-span-12 lg:col-span-7 lg:pr-12 order-2 lg:order-1"
         >
           <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
             <T es="Perfil" en="Profile" />
@@ -80,51 +81,73 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <aside className="col-span-12 lg:col-span-5 flex flex-col gap-16 lg:border-l lg:border-black/10 lg:pl-12">
-          <section aria-label="Services">
-            <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-              <T es="Servicios" en="Services" />
-            </h2>
-            <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
-              {services.map((service) => (
-                <li
-                  key={service.id}
-                  className="flex items-baseline justify-between gap-6 py-4"
-                >
-                  <span className="flex items-baseline gap-4">
-                    <span className="text-xs tabular-nums text-zinc-400">
-                      {service.id}
-                    </span>
-                    <span className="text-base lg:text-lg text-black">
-                      <T es={service.es.label} en={service.en.label} />
-                    </span>
-                  </span>
-                  <span className="text-xs text-zinc-500 text-right">
-                    <T es={service.es.note} en={service.en.note} />
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
+        <aside
+          aria-hidden="true"
+          className="col-span-12 lg:col-span-5 lg:border-l lg:border-black/10 lg:pl-12 order-1 lg:order-2"
+        >
+          <div className="relative aspect-square w-full max-w-sm overflow-hidden border border-black/10 bg-black/[0.04]">
+            <Image
+              src="/about/jon.jpeg"
+              alt="Jon Zamudio"
+              fill
+              sizes="(min-width: 1024px) 30vw, 100vw"
+              priority
+              className="object-cover"
+            />
+          </div>
+        </aside>
+      </div>
 
-          <section aria-label="Tech stack">
-            <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-              <T es="Stack Tecnológico" en="Tech Stack" />
-            </h2>
-            <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
-              {stack.map((tech) => (
-                <li key={tech.id} className="flex items-baseline gap-4 py-4">
+      <div className="mt-20 lg:mt-32 grid grid-cols-12 gap-y-16 lg:gap-x-12">
+        <section
+          aria-label="Services"
+          className="col-span-12 lg:col-span-6"
+        >
+          <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+            <T es="Servicios" en="Services" />
+          </h2>
+          <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+            {services.map((service) => (
+              <li
+                key={service.id}
+                className="flex items-baseline justify-between gap-6 py-4"
+              >
+                <span className="flex items-baseline gap-4">
                   <span className="text-xs tabular-nums text-zinc-400">
-                    {tech.id}
+                    {service.id}
                   </span>
                   <span className="text-base lg:text-lg text-black">
-                    {tech.label}
+                    <T es={service.es.label} en={service.en.label} />
                   </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </aside>
+                </span>
+                <span className="text-xs text-zinc-500 text-right">
+                  <T es={service.es.note} en={service.en.note} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section
+          aria-label="Tech stack"
+          className="col-span-12 lg:col-span-6 lg:border-l lg:border-black/10 lg:pl-12"
+        >
+          <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+            <T es="Stack Tecnológico" en="Tech Stack" />
+          </h2>
+          <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+            {stack.map((tech) => (
+              <li key={tech.id} className="flex items-baseline gap-4 py-4">
+                <span className="text-xs tabular-nums text-zinc-400">
+                  {tech.id}
+                </span>
+                <span className="text-base lg:text-lg text-black">
+                  {tech.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
       <footer className="mt-24 lg:mt-32 pt-8 border-t border-black/10 flex flex-wrap items-center justify-end gap-4">

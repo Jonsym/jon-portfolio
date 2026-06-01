@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: "/projects/**" },
       { pathname: "/icons/**" },
+      { pathname: "/about/**" },
     ],
     remotePatterns: [
       {
