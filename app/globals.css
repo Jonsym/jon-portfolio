@@ -26,6 +26,62 @@ body {
   color: var(--foreground);
   min-height: 100vh;
   min-height: 100dvh;
+  /* Guard against the full-bleed hero's 100vw width spilling into a
+     horizontal scrollbar. `clip` (unlike `hidden`) doesn't create a
+     scroll container, so it won't break `position: sticky`. */
+  overflow-x: clip;
+}
+
+/* Vertical auto-scroll carousel (hero, desktop only). Two identical copies
+   of the project list translate up by exactly half the track height for a
+   seamless loop. GPU-friendly transform animation; paused on hover. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes vscroll {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  .carousel-track {
+    animation: vscroll 60s linear infinite;
+  }
+
+  .carousel:hover .carousel-track {
+    animation-play-state: paused;
+  }
+
+  /* Horizontal logo/client marquee (hero proof row). Two identical copies of
+     the row translate left by exactly half the track width for a seamless,
+     continuous loop. Subtle and GPU-friendly; paused on hover. */
+  @keyframes hscroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: hscroll 34s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Hidden scrollbar for the left hero column overflow fallback. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 html {

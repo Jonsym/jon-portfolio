@@ -98,7 +98,10 @@ export default function AboutPage() {
         </aside>
       </div>
 
-      <div className="mt-20 lg:mt-32 grid grid-cols-12 gap-y-16 lg:gap-x-12">
+      <div
+        id="approach"
+        className="scroll-mt-24 mt-20 lg:mt-32 grid grid-cols-12 gap-y-16 lg:gap-x-12"
+      >
         <section
           aria-label="Services"
           className="col-span-12 lg:col-span-6"

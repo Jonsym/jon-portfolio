@@ -128,13 +128,21 @@ export default function CvMenu() {
 }
 
 /** Flat list rendered inside the mobile menu (no dropdown — hover doesn't work on touch). */
-export function CvMobileList({ onNavigate }: { onNavigate?: () => void }) {
+export function CvMobileList({
+  onNavigate,
+  dark = false,
+}: {
+  onNavigate?: () => void;
+  dark?: boolean;
+}) {
   return (
-    <div className="flex flex-col gap-3 text-base pt-4 border-t border-black/10">
-      <h3 className="text-xs uppercase tracking-widest text-zinc-500">
+    <div className="flex flex-col gap-2 text-base">
+      <h3
+        className={`text-xs uppercase tracking-widest ${dark ? "text-white/40" : "text-zinc-500"}`}
+      >
         <T es="Currículum" en="CV" />
       </h3>
-      <ul className="flex flex-col">
+      <ul className="flex flex-wrap gap-x-5">
         {items.map((item) => (
           <li key={item.href}>
             <a
@@ -142,7 +150,11 @@ export function CvMobileList({ onNavigate }: { onNavigate?: () => void }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={onNavigate}
-              className="block py-3 text-lg text-black hover:text-[#0000FF] transition-colors duration-150"
+              className={`block py-1 text-sm transition-colors duration-150 ${
+                dark
+                  ? "text-white/70 hover:text-white"
+                  : "text-black hover:text-[#0000FF]"
+              }`}
             >
               <T es={item.es} en={item.en} />
             </a>

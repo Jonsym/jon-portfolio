@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The projects index lives at /proyectos and links to /proyectos/[slug];
+  // the canonical detail pages remain at /proyecto/[slug]. Bridge the two so
+  // those links resolve without duplicating the detail route.
+  async redirects() {
+    return [
+      {
+        source: "/proyectos/:slug",
+        destination: "/proyecto/:slug",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy:

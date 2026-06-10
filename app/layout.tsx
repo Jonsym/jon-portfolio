@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/src/components/Navbar";
+import GlobalNavbar from "@/src/components/GlobalNavbar";
 import Footer from "@/src/components/Footer";
 import { I18nProvider } from "@/src/components/I18nProvider";
 
@@ -32,7 +32,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col bg-white text-black antialiased">
         <I18nProvider>
-          <Navbar />
+          <GlobalNavbar />
           <main className="flex-1 w-full pt-8 lg:pt-12">
             <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
               {children}

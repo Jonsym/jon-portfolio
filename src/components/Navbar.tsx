@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Fragment, useEffect, useState } from "react";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
 import CvMenu, { CvMobileList } from "./CvMenu";
 
 const navLinks = [
-  { href: "/about", es: "Sobre mí", en: "About" },
-  { href: "/contact", es: "Contacto", en: "Contact" },
+  { href: "/about", es: "Sobre mí", en: "About", match: "/about" },
+  { href: "/proyectos", es: "Proyectos", en: "Projects", match: "/proyectos" },
+  { href: "/contact", es: "Contacto", en: "Contact", match: "/contact" },
 ] as const;
 
 const externalLinks = [
@@ -20,7 +20,13 @@ const externalLinks = [
   { label: "Instagram", href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
 
-function Logo({ className = "" }: { className?: string }) {
+function Logo({
+  className = "",
+  invert = false,
+}: {
+  className?: string;
+  invert?: boolean;
+}) {
   const ariaHome = useTPair("JonZS — Inicio", "JonZS — Home");
   return (
     <Link
@@ -34,26 +40,26 @@ function Logo({ className = "" }: { className?: string }) {
         width={1329}
         height={1183}
         priority
-        sizes="(min-width: 1280px) 80px, (min-width: 1024px) 64px, 44px"
-        className="h-full w-auto"
+        sizes="(min-width: 1024px) 48px, 44px"
+        className={`h-full w-auto ${invert ? "invert" : ""}`}
       />
     </Link>
   );
 }
 
-const linkCls =
-  "text-black hover:text-[#0000FF] transition-colors duration-150";
+const linkCls = "text-black hover:text-[#0000FF] transition-colors duration-150";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+  const isActive = (match: string) =>
+    match === "/"
+      ? pathname === "/"
+      : pathname === match || pathname.startsWith(match + "/");
 
   const ariaPrincipal = useTPair("Principal", "Primary");
   const ariaOpen = useTPair("Abrir menú", "Open menu");
-  const ariaClose = useTPair("Cerrar menú", "Close menu");
 
   useEffect(() => {
     setOpen(false);
@@ -79,101 +85,106 @@ export default function Navbar() {
 
   return (
     <header className="w-full bg-white border-b border-black/10">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+      <div className="w-full px-6 lg:px-12">
+        {/* Mobile bar */}
         <div className="flex h-16 lg:hidden items-center justify-between gap-6">
           <Logo className="h-11" />
-          <div className="flex items-center gap-4">
-            <LangToggle />
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              aria-label={open ? ariaClose : ariaOpen}
-              className="inline-flex items-center justify-center w-10 h-10 -mr-2 text-black hover:opacity-60 transition-opacity duration-150"
-            >
-              {open ? (
-                <X size={20} strokeWidth={1.75} aria-hidden="true" />
-              ) : (
-                <Menu size={20} strokeWidth={1.75} aria-hidden="true" />
-              )}
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={ariaOpen}
+            className="inline-flex items-center rounded-full bg-black/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-black transition-colors duration-150 hover:bg-black/[0.1]"
+          >
+            <T es="Menú" en="Menu" />
+          </button>
         </div>
 
-        <div className="hidden lg:flex items-start gap-12 py-8">
-          <Logo className="h-16 xl:h-20 shrink-0" />
+        {/* Desktop bar — logo left, links + lang right */}
+        <div className="hidden lg:flex h-20 items-center justify-between gap-8">
+          <Logo className="h-12 shrink-0" />
 
-          <div className="flex items-start gap-14 xl:gap-24 ml-auto pt-2 xl:pt-4">
+          <div className="flex items-center gap-8 xl:gap-10">
             <nav aria-label={ariaPrincipal}>
-              <ul className="flex flex-col gap-1.5 text-base">
+              <ul className="flex items-center gap-8 xl:gap-10 text-base">
                 {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      aria-current={isActive(link.href) ? "page" : undefined}
-                      className={linkCls}
-                    >
-                      <T es={link.es} en={link.en} />
-                    </Link>
-                  </li>
+                  <Fragment key={link.href}>
+                    <li>
+                      <Link
+                        href={link.href}
+                        aria-current={isActive(link.match) ? "page" : undefined}
+                        className={`${linkCls} ${isActive(link.match) ? "text-[#0000FF]" : ""}`}
+                      >
+                        <T es={link.es} en={link.en} />
+                      </Link>
+                    </li>
+                    {/* Restore the Curriculum dropdown right after Projects */}
+                    {link.match === "/proyectos" && (
+                      <li>
+                        <CvMenu />
+                      </li>
+                    )}
+                  </Fragment>
                 ))}
-                <li>
-                  <CvMenu />
-                </li>
               </ul>
             </nav>
 
-            <ul className="flex flex-col gap-1.5 text-base">
-              {externalLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={linkCls}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <LangToggle className="self-start" />
+            <LangToggle className="shrink-0" />
           </div>
         </div>
       </div>
 
-      {open && (
-        <div
-          id="mobile-nav"
-          className="lg:hidden border-t border-black/10 bg-white"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="mx-auto max-w-7xl px-6 py-8 flex flex-col gap-8">
+      {/* Mobile full-screen overlay — slides in from the right */}
+      <div
+        id="mobile-nav"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!open}
+        className={`lg:hidden fixed inset-0 z-50 flex flex-col bg-[#141414] text-white transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          open ? "translate-x-0" : "translate-x-full pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center justify-between px-6 h-16 shrink-0">
+          <Logo className="h-11 opacity-40" invert />
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-150 hover:bg-white/20"
+          >
+            <T es="Cerrar" en="Close" />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-6 pb-10 flex flex-col justify-end">
+          <nav aria-label={ariaPrincipal}>
             <ul className="flex flex-col">
-              {navLinks.map((link) => (
+              {navLinks.map((link, i) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-lg text-black hover:text-[#0000FF] transition-colors duration-150"
+                    style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
+                    className={`block py-1 text-5xl sm:text-6xl font-extrabold uppercase tracking-tight leading-[1.05] text-white transition-all duration-500 hover:text-[#7c7cff] ${
+                      open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
+                    }`}
                   >
                     <T es={link.es} en={link.en} />
                   </Link>
                 </li>
               ))}
             </ul>
+          </nav>
 
-            <ul className="flex flex-col gap-3 text-base pt-4 border-t border-black/10">
+          <div className="mt-10 flex flex-col gap-6 border-t border-white/10 pt-8">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
               {externalLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="text-black hover:text-[#0000FF] transition-colors duration-150"
+                    className="transition-colors duration-150 hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -181,10 +192,13 @@ export default function Navbar() {
               ))}
             </ul>
 
-            <CvMobileList onNavigate={() => setOpen(false)} />
+            <div className="flex items-center justify-between gap-6">
+              <CvMobileList onNavigate={() => setOpen(false)} dark />
+              <LangToggle className="text-white/70 self-end shrink-0" dark />
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
