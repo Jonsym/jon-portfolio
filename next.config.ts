@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
         destination: "/proyecto/:slug",
         permanent: false,
       },
+      // The canonical contact page is /contact; /contacto links resolve to it.
+      {
+        source: "/contacto",
+        destination: "/contact",
+        permanent: false,
+      },
     ];
   },
   images: {

@@ -32,10 +32,10 @@ body {
   overflow-x: clip;
 }
 
-/* Vertical auto-scroll carousel (hero, desktop only). Two identical copies
-   of the project list translate up by exactly half the track height for a
-   seamless loop. GPU-friendly transform animation; paused on hover. */
 @media (prefers-reduced-motion: no-preference) {
+  /* Vertical auto-scroll carousel (hero, desktop only). Two identical copies
+     of the project list translate up by exactly half the track height for a
+     seamless loop. GPU-friendly transform animation; paused on hover. */
   @keyframes vscroll {
     from {
       transform: translateY(0);
@@ -46,7 +46,7 @@ body {
   }
 
   .carousel-track {
-    animation: vscroll 60s linear infinite;
+    animation: vscroll 45s linear infinite;
   }
 
   .carousel:hover .carousel-track {
