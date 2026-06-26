@@ -7,12 +7,29 @@ import { Fragment, useEffect, useState } from "react";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
 import CvMenu, { CvMobileList } from "./CvMenu";
+import ProyectosMenu from "./ProyectosMenu";
 
-const navLinks = [
+type NavChild = {
+  href: string;
+  es: string;
+  en: string;
+  match: string;
+};
+
+type NavLink = NavChild & { children?: readonly NavChild[] };
+
+const navLinks: readonly NavLink[] = [
   { href: "/about", es: "Sobre mí", en: "About", match: "/about" },
-  { href: "/proyectos", es: "Proyectos", en: "Projects", match: "/proyectos" },
+  {
+    href: "/proyectos",
+    es: "Proyectos",
+    en: "Projects",
+    match: "/proyectos",
+    // Labs lives as a sub-section of Proyectos (see ProyectosMenu).
+    children: [{ href: "/labs", es: "Labs", en: "Labs", match: "/labs" }],
+  },
   { href: "/contact", es: "Contacto", en: "Contact", match: "/contact" },
-] as const;
+];
 
 const externalLinks = [
   { label: "GitHub", href: "https://github.com/Jonsym" },
@@ -111,15 +128,19 @@ export default function Navbar() {
                 {navLinks.map((link) => (
                   <Fragment key={link.href}>
                     <li>
-                      <Link
-                        href={link.href}
-                        aria-current={isActive(link.match) ? "page" : undefined}
-                        className={`${linkCls} ${isActive(link.match) ? "text-[#0000FF]" : ""}`}
-                      >
-                        <T es={link.es} en={link.en} />
-                      </Link>
+                      {link.children?.length ? (
+                        <ProyectosMenu />
+                      ) : (
+                        <Link
+                          href={link.href}
+                          aria-current={isActive(link.match) ? "page" : undefined}
+                          className={`${linkCls} ${isActive(link.match) ? "text-[#0000FF]" : ""}`}
+                        >
+                          <T es={link.es} en={link.en} />
+                        </Link>
+                      )}
                     </li>
-                    {/* Restore the Curriculum dropdown right after Projects */}
+                    {/* Curriculum dropdown sits right after Proyectos */}
                     {link.match === "/proyectos" && (
                       <li>
                         <CvMenu />
@@ -171,6 +192,31 @@ export default function Navbar() {
                   >
                     <T es={link.es} en={link.en} />
                   </Link>
+
+                  {link.children?.length ? (
+                    <ul className="mt-1 mb-2 flex flex-col gap-0.5 pl-1">
+                      {link.children.map((child, ci) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={() => setOpen(false)}
+                            style={{
+                              transitionDelay: open
+                                ? `${120 + (i + ci + 1) * 60}ms`
+                                : "0ms",
+                            }}
+                            className={`block py-1.5 text-2xl sm:text-3xl font-semibold uppercase tracking-tight leading-tight text-white/70 transition-all duration-500 hover:text-[#7c7cff] ${
+                              open
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 translate-x-4"
+                            }`}
+                          >
+                            <T es={child.es} en={child.en} />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
               ))}
             </ul>
