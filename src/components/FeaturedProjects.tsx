@@ -60,8 +60,13 @@ function ProjectCard({
               <T es={project.category} en={categoryEn} /> · {project.year}
             </p>
           </div>
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-black">
-            <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-black shadow-sm transition-transform duration-300 group-hover:scale-110">
+            <ArrowUpRight
+              size={17}
+              strokeWidth={2}
+              aria-hidden="true"
+              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </span>
         </div>
       </div>

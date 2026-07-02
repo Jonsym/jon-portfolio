@@ -53,7 +53,7 @@ export default function LabCard({
         {/* Current stage + latest milestone */}
         <div className="mt-auto pt-7">
           <div className="border-t border-black/10 pt-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-400">
               <T es="Etapa actual" en="Current stage" /> —{" "}
               <span style={{ color: product.color }}>
                 <T es={current.es} en={current.en} />

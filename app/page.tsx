@@ -1,16 +1,16 @@
 import Link from "next/link";
+import { BadgeCheck } from "lucide-react";
 import {
-  BadgeCheck,
-  Building2,
-  Coffee,
-  Gem,
+  Baby,
+  Buildings,
   GraduationCap,
-  Heart,
-  Languages,
+  HardHat,
+  Leaf,
   PawPrint,
-  Stethoscope,
-  Trees,
-} from "lucide-react";
+  Tooth,
+  Translate,
+  Tree,
+} from "@phosphor-icons/react/ssr";
 import FeaturedProjects from "@/src/components/FeaturedProjects";
 import HowIWork from "@/src/components/HowIWork";
 import Testimonials from "@/src/components/Testimonials";
@@ -21,14 +21,14 @@ import { T } from "@/src/components/I18nProvider";
 /* ----------------------------- Social proof ----------------------------- */
 
 const clients = [
-  { name: "Novax", Icon: Building2 },
-  { name: "Lumina", Icon: Stethoscope },
-  { name: "Luxora", Icon: Gem },
-  { name: "The Woods", Icon: Trees },
+  { name: "Novax", Icon: HardHat },
+  { name: "Lumina", Icon: Tooth },
+  { name: "Luxora", Icon: Buildings },
+  { name: "The Woods", Icon: Tree },
   { name: "ALES", Icon: GraduationCap },
-  { name: "HowtoSpanish", Icon: Languages },
-  { name: "MaterCare", Icon: Heart },
-  { name: "HelloMatcha", Icon: Coffee },
+  { name: "HowtoSpanish", Icon: Translate },
+  { name: "MaterCare", Icon: Baby },
+  { name: "HelloMatcha", Icon: Leaf },
   { name: "Petzu", Icon: PawPrint },
 ] as const;
 
@@ -43,7 +43,7 @@ function ClientRow({ hidden = false }: { hidden?: boolean }) {
           key={name}
           className="flex shrink-0 items-center gap-2 px-5 text-zinc-400"
         >
-          <Icon size={17} strokeWidth={1.75} aria-hidden="true" />
+          <Icon size={18} weight="light" aria-hidden="true" />
           <span className="whitespace-nowrap text-sm font-medium tracking-tight">
             {name}
           </span>
@@ -117,17 +117,14 @@ export default function Home() {
 
             <div className="flex flex-col justify-center flex-1 px-6 lg:pl-12 lg:pr-10 py-12 lg:py-10 lg:overflow-y-auto no-scrollbar">
               <h1 className="text-[2.6rem] leading-[0.95] sm:text-6xl xl:text-7xl font-extrabold uppercase tracking-tight text-black">
-              <T es="¿Quieres un sitio" en="Need a cool" />{" "}
-              <T es="genial?" en="website?" />{" "}
-              <span className="font-serif font-medium italic normal-case">
-                <T es="Yo lo hago." en="I will." />
-              </span>
+              <T es="Diseño y desarrollo" en="Digital design &" />{" "}
+              <T es="digital." en="development." />
             </h1>
 
             <p className="mt-6 max-w-md text-lg lg:text-xl leading-relaxed text-zinc-500 tracking-tight">
               <T
-                es="Del diseño al desarrollo, construyo sitios web simples, rápidos y efectivos."
-                en="From design to development, I build websites that are simple, fast, and effective."
+                es="Desarrollador y diseñador. Uno una base técnica sólida con un ojo editorial para crear productos digitales que cargan rápido, se sienten claros y están hechos para crecer."
+                en="Developer and designer. I pair solid engineering with an editorial eye to build digital products that load fast, feel clear, and are built to grow."
               />
             </p>
 
@@ -142,7 +139,7 @@ export default function Home() {
                 href="#proyectos"
                 className="inline-flex items-center justify-center rounded-full border border-black/15 px-7 py-3.5 text-base font-medium text-black transition-colors duration-150 hover:border-black hover:bg-black/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
               >
-                <T es="Ver trabajos" en="See Our Work" />
+                <T es="Ver mi trabajo" en="See my work" />
               </a>
             </div>
 

@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import GlobalNavbar from "@/src/components/GlobalNavbar";
 import Footer from "@/src/components/Footer";
 import { I18nProvider } from "@/src/components/I18nProvider";
 
+// Single typeface for the entire site — Geist Sans. Keeps the design system to
+// one voice; weight, case, and color carry the hierarchy instead of extra fonts.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "JonZS® — Trabajos Seleccionados",
-  description: "Portafolio editorial de trabajos seleccionados, 2018—2026.",
+  title: "Jon Zamudio — Desarrollador & Diseñador Web",
+  description:
+    "Diseño y construyo experiencias digitales de alto rendimiento con React y Next.js — rápidas, claras y hechas para crecer. Portafolio de trabajos seleccionados, 2018—2026.",
 };
 
 export default function RootLayout({
@@ -28,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+      className={`${geistSans.variable} antialiased bg-white`}
     >
       <body className="min-h-screen flex flex-col bg-white text-black antialiased">
         <I18nProvider>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
 import CvMenu, { CvMobileList } from "./CvMenu";
@@ -29,6 +30,13 @@ const navLinks: readonly NavLink[] = [
     children: [{ href: "/labs", es: "Labs", en: "Labs", match: "/labs" }],
   },
   { href: "/contact", es: "Contacto", en: "Contact", match: "/contact" },
+];
+
+// The mobile drawer shows an explicit Home entry first; on desktop the logo
+// already serves as the home link, so Home is omitted there.
+const mobileLinks: readonly NavLink[] = [
+  { href: "/", es: "Inicio", en: "Home", match: "/" },
+  ...navLinks,
 ];
 
 const externalLinks = [
@@ -69,6 +77,8 @@ const linkCls = "text-black hover:text-[#0000FF] transition-colors duration-150"
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  // Mobile "Proyectos" sub-drawer (deploys Proyectos + Labs on tap).
+  const [subOpen, setSubOpen] = useState(false);
 
   const isActive = (match: string) =>
     match === "/"
@@ -98,6 +108,11 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = original;
     };
+  }, [open]);
+
+  // Collapse the Proyectos sub-drawer whenever the mobile menu closes.
+  useEffect(() => {
+    if (!open) setSubOpen(false);
   }, [open]);
 
   return (
@@ -166,8 +181,7 @@ export default function Navbar() {
           open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
       >
-        <div className="flex items-center justify-between px-6 h-16 shrink-0">
-          <Logo className="h-11 opacity-40" invert />
+        <div className="flex items-center justify-end px-6 h-16 shrink-0">
           <button
             type="button"
             onClick={() => setOpen(false)}
@@ -180,45 +194,81 @@ export default function Navbar() {
         <div className="flex-1 overflow-y-auto px-6 pb-10 flex flex-col justify-end">
           <nav aria-label={ariaPrincipal}>
             <ul className="flex flex-col">
-              {navLinks.map((link, i) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
-                    className={`block py-1 text-5xl sm:text-6xl font-extrabold uppercase tracking-tight leading-[1.05] text-white transition-all duration-500 hover:text-[#7c7cff] ${
-                      open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
-                    }`}
-                  >
-                    <T es={link.es} en={link.en} />
-                  </Link>
+              {mobileLinks.map((link, i) => {
+                const itemCls = `block py-1 text-5xl sm:text-6xl font-extrabold uppercase tracking-tight leading-[1.05] text-white transition-all duration-500 hover:text-[#7c7cff] ${
+                  open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
+                }`;
+                const delay = {
+                  transitionDelay: open ? `${120 + i * 60}ms` : "0ms",
+                };
 
-                  {link.children?.length ? (
-                    <ul className="mt-1 mb-2 flex flex-col gap-0.5 pl-1">
-                      {link.children.map((child, ci) => (
-                        <li key={child.href}>
-                          <Link
-                            href={child.href}
-                            onClick={() => setOpen(false)}
-                            style={{
-                              transitionDelay: open
-                                ? `${120 + (i + ci + 1) * 60}ms`
-                                : "0ms",
-                            }}
-                            className={`block py-1.5 text-2xl sm:text-3xl font-semibold uppercase tracking-tight leading-tight text-white/70 transition-all duration-500 hover:text-[#7c7cff] ${
-                              open
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 translate-x-4"
-                            }`}
-                          >
-                            <T es={child.es} en={child.en} />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </li>
-              ))}
+                // "Proyectos" is a toggle: tapping it deploys the sub-drawer
+                // (the Proyectos index + Labs), mirroring the desktop dropdown.
+                if (link.children?.length) {
+                  const subItems = [
+                    { href: link.href, es: link.es, en: link.en },
+                    ...link.children,
+                  ];
+                  return (
+                    <li key={link.href}>
+                      <button
+                        type="button"
+                        onClick={() => setSubOpen((v) => !v)}
+                        aria-expanded={subOpen}
+                        aria-controls="mobile-proyectos-sub"
+                        style={delay}
+                        className={`flex w-full items-center justify-between gap-3 text-left ${itemCls}`}
+                      >
+                        <T es={link.es} en={link.en} />
+                        <ChevronDown
+                          size={30}
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                          className={`shrink-0 transition-transform duration-300 ${
+                            subOpen ? "rotate-180 text-[#7c7cff]" : "text-white/50"
+                          }`}
+                        />
+                      </button>
+
+                      <div
+                        id="mobile-proyectos-sub"
+                        className={`grid transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                          subOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <ul className="min-h-0 overflow-hidden flex flex-col gap-0.5 pl-1 pt-1 pb-2">
+                          {subItems.map((child) => (
+                            <li key={child.href}>
+                              <Link
+                                href={child.href}
+                                onClick={() => setOpen(false)}
+                                className="block py-1.5 text-2xl sm:text-3xl font-semibold uppercase tracking-tight leading-tight text-white/70 transition-colors duration-200 hover:text-[#7c7cff]"
+                              >
+                                <T es={child.es} en={child.en} />
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                }
+
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      style={delay}
+                      className={itemCls}
+                    >
+                      <T es={link.es} en={link.en} />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 

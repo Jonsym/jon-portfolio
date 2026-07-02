@@ -9,7 +9,7 @@ export default function HowIWork() {
     <section aria-label="How I Work" className="mt-24 lg:mt-40">
       {/* Editorial split: label left, statement + CTA right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-8 lg:gap-x-12">
-        <p className="lg:col-span-4 max-w-[18rem] font-mono text-xs uppercase leading-[1.7] tracking-[0.12em] text-zinc-500">
+        <p className="lg:col-span-4 max-w-[18rem] text-xs uppercase leading-[1.7] tracking-[0.12em] text-zinc-500">
           <T
             es="Desarrollador independiente & tecnólogo creativo"
             en="Independent developer & creative technologist"

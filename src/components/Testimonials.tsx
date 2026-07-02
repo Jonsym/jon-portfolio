@@ -187,7 +187,7 @@ export default function Testimonials() {
           </span>
         </h2>
 
-        <div className="flex items-center gap-5">
+        <div className="flex w-full lg:w-auto items-center justify-between lg:justify-end gap-5">
           <Link
             href="/proyectos"
             className="group inline-flex items-center gap-2 text-sm font-medium text-black transition-colors duration-150 hover:text-[#0000FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-4 focus-visible:ring-offset-white"

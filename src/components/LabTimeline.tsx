@@ -313,7 +313,7 @@ export default function LabTimeline({
               <div className="rounded-2xl border border-black/10 bg-white p-4 sm:p-5 transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.25)]">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                   <span
-                    className="font-mono text-[10px] uppercase tracking-[0.18em]"
+                    className="text-[10px] uppercase tracking-[0.18em]"
                     style={{ color }}
                   >
                     <T es={sLabel.es} en={sLabel.en} />
@@ -321,7 +321,7 @@ export default function LabTimeline({
                   <span aria-hidden="true" className="text-black/15">
                     /
                   </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500 tabular-nums">
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 tabular-nums">
                     {formatMonth(m.date, locale)}
                   </span>
                   <span className="ml-auto">

@@ -21,7 +21,7 @@ export default function LabsPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+        <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-zinc-500">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0000FF] opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0000FF]" />

@@ -5,9 +5,9 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import { T } from "@/src/components/I18nProvider";
 
 export const metadata: Metadata = {
-  title: "Acerca — JonZS®",
+  title: "Sobre mí — Jon Zamudio, Desarrollador & Diseñador",
   description:
-    "Diseñador y desarrollador independiente enfocado en productos digitales editoriales, sistemas de diseño e interfaces de alta calidad.",
+    "Desarrollador y diseñador enfocado en productos digitales rápidos y bien construidos con React y Next.js — del concepto al código, con un ojo editorial por el detalle.",
 };
 
 const services = [
@@ -47,7 +47,7 @@ export default function AboutPage() {
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
         <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-          <T es="Mas de Mi" en="More About Me" />
+          <T es="Más de mí" en="More About Me" />
         </h1>
       </header>
 

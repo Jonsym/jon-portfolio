@@ -66,7 +66,7 @@ export default async function LabPage({
 
           <dl className="lg:col-span-4 lg:col-start-9 grid grid-cols-2 gap-x-6 gap-y-8 text-sm self-start lg:pt-2">
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
                 <T es="Etapa" en="Stage" />
               </dt>
               <dd className="mt-2.5" style={{ color: product.color }}>
@@ -74,7 +74,7 @@ export default async function LabPage({
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
                 <T es="Hitos" en="Milestones" />
               </dt>
               <dd className="mt-2.5 text-black tabular-nums">
@@ -82,14 +82,14 @@ export default async function LabPage({
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
                 <T es="Plataformas" en="Platforms" />
               </dt>
               <dd className="mt-2.5 text-black">{product.platforms.join(" · ")}</dd>
             </div>
             {product.stack && product.stack.length > 0 && (
               <div>
-                <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
                   <T es="Stack" en="Stack" />
                 </dt>
                 <dd className="mt-2.5 text-black leading-relaxed">

@@ -7,9 +7,9 @@ import { T } from "@/src/components/I18nProvider";
 import { projects, canOptimizeSrc, type Project } from "@/src/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Proyectos — JonZS®",
+  title: "Proyectos — Jon Zamudio",
   description:
-    "Todos los proyectos del portafolio: diseño y desarrollo web editorial, 2018—2026.",
+    "Proyectos seleccionados de diseño y desarrollo web con React y Next.js — sitios rápidos, claros y hechos para crecer, 2018—2026.",
 };
 
 function ProjectCard({ project }: { project: Project }) {

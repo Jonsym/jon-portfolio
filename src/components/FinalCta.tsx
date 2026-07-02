@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
 import { T } from "@/src/components/I18nProvider";
 
 /** Final call-to-action: full-width black statement that invites the visitor
@@ -11,7 +10,7 @@ export default function FinalCta() {
       className="w-full bg-[#0c0c0c] text-white"
     >
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 py-24 sm:py-32 lg:py-44 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/40">
+        <p className="text-xs uppercase tracking-[0.18em] text-white/40">
           <T
             es="(Disponible para nuevos proyectos — 2026)"
             en="(Available for new projects — 2026)"
@@ -31,9 +30,6 @@ export default function FinalCta() {
             className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.1em] text-black transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#0c0c0c]"
           >
             <T es="Empecemos" en="Let's talk" />
-            <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-black text-white transition-transform duration-200 group-hover:translate-x-0.5">
-              <Mail size={12} strokeWidth={2} aria-hidden="true" />
-            </span>
           </Link>
         </div>
       </div>
