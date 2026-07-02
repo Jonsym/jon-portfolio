@@ -208,7 +208,7 @@ export const labs: LabProduct[] = [
       {
         date: "2026-05",
         stage: "building",
-        status: "in-progress",
+        status: "completed",
         title: {
           es: "Construyendo la primera versión",
           en: "Building the first version",
@@ -242,6 +242,46 @@ export const labs: LabProduct[] = [
             src: "/labs/chupiroom/new4.jpg",
             alt: "ChupiRoom — latest version, screen 4",
             aspect: "1282/2636",
+          },
+        ],
+      },
+      {
+        date: "2026-07",
+        stage: "building",
+        status: "in-progress",
+        title: {
+          es: "Salas online y una interfaz más intuitiva",
+          en: "Online rooms and a more intuitive interface",
+        },
+        description: {
+          es: "Dos semanas después de haber publicado el primer avance de ChupiRoom, finalmente he podido hostear una sala online en la cual otros dispositivos se han podido unir a jugar. A su vez he mejorado el UI a como estaba antes, con el propósito de hacerlo mas intuitivo y que el usuario al llegar sepa crear su partida online u offline.",
+          en: "Two weeks after publishing the first ChupiRoom update, I was finally able to host an online room that other devices could join to play. I also improved the UI compared to before, with the goal of making it more intuitive so that, as soon as they arrive, users know how to create their game — online or offline.",
+        },
+        // Online multiplayer working + reworked, more intuitive UI.
+        media: [
+          {
+            type: "image",
+            src: "/labs/chupiroom/chupi12.jpg",
+            alt: "ChupiRoom — online room, screen 1",
+            aspect: "1282/2563",
+          },
+          {
+            type: "image",
+            src: "/labs/chupiroom/chupi13.jpg",
+            alt: "ChupiRoom — online room, screen 2",
+            aspect: "1282/2471",
+          },
+          {
+            type: "image",
+            src: "/labs/chupiroom/chupi14.jpg",
+            alt: "ChupiRoom — online room, screen 3",
+            aspect: "1282/2470",
+          },
+          {
+            type: "image",
+            src: "/labs/chupiroom/chupi15.jpg",
+            alt: "ChupiRoom — online room, screen 4",
+            aspect: "1283/2461",
           },
         ],
       },
