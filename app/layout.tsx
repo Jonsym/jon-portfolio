@@ -13,9 +13,9 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Jon Zamudio — Desarrollador & Diseñador Web",
+  title: "Jon Zamudio — Diseño y Desarrollo Web con React & Next.js",
   description:
-    "Diseño y construyo experiencias digitales de alto rendimiento con React y Next.js — rápidas, claras y hechas para crecer. Portafolio de trabajos seleccionados, 2018—2026.",
+    "Diseño y desarrollo sitios web rápidos y de alto rendimiento con React & Next.js — claros, escalables y hechos para crecer. Jon Zamudio, portafolio 2018—2026.",
 };
 
 export default function RootLayout({

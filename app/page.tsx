@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BadgeCheck } from "lucide-react";
 import {
   Baby,
   Buildings,
@@ -82,14 +81,13 @@ function Testimonial() {
     <figure className="rounded-2xl bg-[#161616] p-5 sm:p-6 text-white shadow-[0_24px_48px_-24px_rgba(0,0,0,0.45)]">
       <div className="flex items-center gap-3">
         <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#4f46e5] text-sm font-semibold tracking-tight">
-          GH
+          AL
         </span>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
           <span className="inline-flex items-center gap-1 font-semibold tracking-tight">
-            Dra. Grace H.
-            <BadgeCheck size={15} className="text-[#3b82f6]" aria-hidden="true" />
+            ALES
           </span>
-          <span className="text-white/45">@dragrace · 8h</span>
+          <span className="text-white/45">@ales · 8h</span>
         </div>
       </div>
       <blockquote className="mt-4 text-[0.95rem] leading-relaxed text-white/85">
@@ -117,14 +115,16 @@ export default function Home() {
 
             <div className="flex flex-col justify-center flex-1 px-6 lg:pl-12 lg:pr-10 py-12 lg:py-10 lg:overflow-y-auto no-scrollbar">
               <h1 className="text-[2.6rem] leading-[0.95] sm:text-6xl xl:text-7xl font-extrabold uppercase tracking-tight text-black">
-              <T es="Diseño y desarrollo" en="Digital design &" />{" "}
-              <T es="digital." en="development." />
+              <T
+                es="Sitios web con React & Next.js que no parecen plantilla."
+                en="Websites built with React & Next.js that don't look like templates."
+              />
             </h1>
 
             <p className="mt-6 max-w-md text-lg lg:text-xl leading-relaxed text-zinc-500 tracking-tight">
               <T
-                es="Desarrollador y diseñador. Uno una base técnica sólida con un ojo editorial para crear productos digitales que cargan rápido, se sienten claros y están hechos para crecer."
-                en="Developer and designer. I pair solid engineering with an editorial eye to build digital products that load fast, feel clear, and are built to grow."
+                es="Desarrollador y diseñador con criterio editorial. Diseño y programo sitios que se notan pensados, no ensamblados — de startups a marcas consolidadas."
+                en="Developer and designer with an editorial eye. I design and build sites that feel considered, not assembled — from startups to established brands."
               />
             </p>
 
@@ -133,14 +133,14 @@ export default function Home() {
                 href="/contact"
                 className="inline-flex items-center justify-center rounded-full bg-black px-7 py-3.5 text-base font-medium text-white transition-colors duration-150 hover:bg-[#0000FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
               >
-                <T es="Inicia tu proyecto" en="Start Your Project" />
+                <T es="Inicia tu proyecto" en="Start your project" />
               </Link>
-              <a
-                href="#proyectos"
+              <Link
+                href="/proyectos"
                 className="inline-flex items-center justify-center rounded-full border border-black/15 px-7 py-3.5 text-base font-medium text-black transition-colors duration-150 hover:border-black hover:bg-black/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
               >
                 <T es="Ver mi trabajo" en="See my work" />
-              </a>
+              </Link>
             </div>
 
             <div className="mt-12">

@@ -24,12 +24,19 @@ export default function FinalCta() {
           />
         </h2>
 
+        <p className="mx-auto mt-6 max-w-xl text-base lg:text-lg leading-relaxed text-white/60">
+          <T
+            es="Cuéntame qué estás construyendo. Te respondo en un día hábil con los próximos pasos claros — sin compromiso."
+            en="Tell me what you're building. I'll reply within one business day with clear next steps — no obligation."
+          />
+        </p>
+
         <div className="mt-10 lg:mt-14 flex justify-center">
           <Link
-            href="/contacto"
+            href="/contact"
             className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.1em] text-black transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#0c0c0c]"
           >
-            <T es="Empecemos" en="Let's talk" />
+            <T es="Inicia tu proyecto" en="Start your project" />
           </Link>
         </div>
       </div>

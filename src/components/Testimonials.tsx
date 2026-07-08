@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import MobileCarousel, {
   type CarouselHandle,
 } from "@/src/components/MobileCarousel";
@@ -82,7 +82,6 @@ function Rating({ value, dark }: { value: number; dark?: boolean }) {
         dark ? "text-white/70" : "text-zinc-500"
       }`}
     >
-      <Star size={13} aria-hidden="true" className="fill-amber-400 text-amber-400" />
       {value.toFixed(1)}
     </span>
   );
@@ -178,21 +177,29 @@ export default function Testimonials() {
     <section aria-label="Recent clients" className="mt-24 lg:mt-40">
       {/* Heading + CTA + (mobile) controls */}
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
-        <h2 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight lowercase">
-          <span className="text-zinc-300">
-            <T es="/clientes " en="/recent " />
-          </span>
-          <span className="text-black">
-            <T es="recientes" en="clients" />
-          </span>
-        </h2>
+        <div className="max-w-xl">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight lowercase">
+            <span className="text-zinc-300">
+              <T es="/clientes " en="/recent " />
+            </span>
+            <span className="text-black">
+              <T es="recientes" en="clients" />
+            </span>
+          </h2>
+          <p className="mt-5 max-w-md text-base lg:text-lg leading-relaxed text-zinc-500">
+            <T
+              es="Proyectos reales, entregados más rápido y más limpios de lo esperado — sitios que se ven impecables y de verdad rinden. Esto dicen mis clientes recientes."
+              en="Real projects, delivered faster and cleaner than expected — sites that look sharp and actually perform. Here's what recent clients had to say."
+            />
+          </p>
+        </div>
 
         <div className="flex w-full lg:w-auto items-center justify-between lg:justify-end gap-5">
           <Link
             href="/proyectos"
             className="group inline-flex items-center gap-2 text-sm font-medium text-black transition-colors duration-150 hover:text-[#0000FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
           >
-            <T es="Ver proyectos" en="View Projects" />
+            <T es="Ver proyectos recientes" en="View recent projects" />
             <ArrowUpRight
               size={16}
               strokeWidth={1.75}
