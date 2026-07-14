@@ -1,12 +1,9 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import MobileCarousel, {
-  type CarouselHandle,
-} from "@/src/components/MobileCarousel";
-import { T, useTPair } from "@/src/components/I18nProvider";
+import { ArrowUpRight } from "lucide-react";
+import MobileCarousel from "@/src/components/MobileCarousel";
+import { T } from "@/src/components/I18nProvider";
 
 /* ----------------------------------------------------------------------------
  * Placeholder testimonials — edit these freely. The home page shows 4;
@@ -139,27 +136,6 @@ function Card({ t }: { t: Testimonial }) {
   );
 }
 
-function Ctrl({
-  onClick,
-  label,
-  children,
-}: {
-  onClick: () => void;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:bg-foreground hover:text-background focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-2"
-    >
-      {children}
-    </button>
-  );
-}
-
 // Desktop masonry placement: featured tall-left, two white top-right, one wide
 // white bottom-right — fills a 3×2 grid with no gaps for exactly 4 cards.
 function placement(i: number): string {
@@ -169,10 +145,6 @@ function placement(i: number): string {
 }
 
 export default function Testimonials() {
-  const carouselRef = useRef<CarouselHandle>(null);
-  const prevLabel = useTPair("Anterior", "Previous");
-  const nextLabel = useTPair("Siguiente", "Next");
-
   return (
     <section aria-label="Recent clients" className="mt-24 lg:mt-40">
       {/* Heading + CTA + (mobile) controls */}
@@ -194,7 +166,7 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="flex w-full lg:w-auto items-center justify-between lg:justify-end gap-5">
+        <div className="flex w-full lg:w-auto items-center justify-end gap-5">
           <Link
             href="/proyectos"
             className="group inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors duration-150 hover:text-foreground-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
@@ -207,23 +179,12 @@ export default function Testimonials() {
               className="transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             />
           </Link>
-
-          {/* Controls — mobile / tablet only */}
-          <div className="flex gap-2 lg:hidden">
-            <Ctrl onClick={() => carouselRef.current?.prev()} label={prevLabel}>
-              <ChevronLeft size={17} strokeWidth={1.75} aria-hidden="true" />
-            </Ctrl>
-            <Ctrl onClick={() => carouselRef.current?.next()} label={nextLabel}>
-              <ChevronRight size={17} strokeWidth={1.75} aria-hidden="true" />
-            </Ctrl>
-          </div>
         </div>
       </div>
 
       {/* Mobile / tablet: infinite touch carousel */}
       <div className="mt-10 lg:hidden">
         <MobileCarousel
-          ref={carouselRef}
           ariaLabel="Recent clients"
           className="-mx-2"
           slides={visible.map((t) => (

@@ -1,18 +1,7 @@
 "use client";
 
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-
-export interface CarouselHandle {
-  next(): void;
-  prev(): void;
-}
+import { useCarousel } from "@/src/hooks/useCarousel";
+import { useTPair } from "./I18nProvider";
 
 interface MobileCarouselProps {
   slides: React.ReactNode[];
@@ -21,144 +10,76 @@ interface MobileCarouselProps {
 }
 
 /**
- * Lightweight, dependency-free infinite carousel for mobile/tablet.
- * One slide per view. Loops seamlessly in both directions via two clones
- * (last prepended, first appended) and an instant, transition-less snap when
- * a clone scrolls into view. Pointer/touch drag with horizontal-intent
- * detection so vertical page scrolling still works. Pure CSS transforms.
+ * Dependency-free infinite carousel for mobile/tablet. One slide per view.
+ * All behavior (autoplay, drag, pause sources, reduced-motion, cleanup) lives
+ * in `useCarousel`; this component only renders the track, clones, and the
+ * focusable dot indicators. Navigation is drag OR dots OR ←/→ keys.
  */
-const MobileCarousel = forwardRef<CarouselHandle, MobileCarouselProps>(
-  function MobileCarousel({ slides, ariaLabel, className = "" }, ref) {
-    const n = slides.length;
-    const total = n + 2; // two clones
-    const [index, setIndex] = useState(1); // 1 = first real slide
-    const [anim, setAnim] = useState(true);
-    const [dragPx, setDragPx] = useState(0);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const drag = useRef({
-      active: false,
-      startX: 0,
-      startY: 0,
-      dx: 0,
-      width: 1,
-      decided: false,
-      horizontal: false,
-      moved: false,
-    });
+export default function MobileCarousel({
+  slides,
+  ariaLabel,
+  className = "",
+}: MobileCarouselProps) {
+  const n = slides.length;
+  const c = useCarousel({ count: n });
+  const slideLabel = useTPair("Ir a la diapositiva", "Go to slide");
 
-    const go = useCallback((dir: number) => {
-      setAnim(true);
-      setIndex((i) => i + dir);
-    }, []);
-
-    useImperativeHandle(ref, () => ({ next: () => go(1), prev: () => go(-1) }), [
-      go,
-    ]);
-
-    // Re-enable the transition on the frame after a clone snap.
-    useEffect(() => {
-      if (anim) return;
-      const id = requestAnimationFrame(() =>
-        requestAnimationFrame(() => setAnim(true)),
-      );
-      return () => cancelAnimationFrame(id);
-    }, [anim]);
-
-    const handleEnd = () => {
-      if (index === 0) {
-        setAnim(false);
-        setIndex(n);
-      } else if (index === n + 1) {
-        setAnim(false);
-        setIndex(1);
-      }
-    };
-
-    const onPointerDown = (e: React.PointerEvent) => {
-      drag.current = {
-        active: true,
-        startX: e.clientX,
-        startY: e.clientY,
-        dx: 0,
-        width: containerRef.current?.offsetWidth ?? 1,
-        decided: false,
-        horizontal: false,
-        moved: false,
-      };
-    };
-
-    const onPointerMove = (e: React.PointerEvent) => {
-      const d = drag.current;
-      if (!d.active) return;
-      const dx = e.clientX - d.startX;
-      const dy = e.clientY - d.startY;
-      if (!d.decided) {
-        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        d.decided = true;
-        d.horizontal = Math.abs(dx) > Math.abs(dy);
-        if (d.horizontal) {
-          (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-          setAnim(false);
-        }
-      }
-      if (!d.horizontal) return;
-      d.dx = dx;
-      if (Math.abs(dx) > 4) d.moved = true;
-      setDragPx(dx);
-    };
-
-    const onPointerUp = () => {
-      const d = drag.current;
-      if (!d.active) return;
-      d.active = false;
-      if (!d.horizontal) return;
-      setDragPx(0);
-      setAnim(true);
-      const threshold = d.width * 0.18;
-      if (d.dx <= -threshold) setIndex((i) => i + 1);
-      else if (d.dx >= threshold) setIndex((i) => i - 1);
-    };
-
-    // Suppress the click that follows a drag so cards don't navigate on swipe.
-    const onClickCapture = (e: React.MouseEvent) => {
-      if (drag.current.moved) {
-        e.preventDefault();
-        e.stopPropagation();
-        drag.current.moved = false;
-      }
-    };
-
-    const rendered = [slides[n - 1], ...slides, slides[0]];
-
+  // Single slide (or none): render it statically — no clones, autoplay, dots,
+  // drag, or keys. Nothing to loop or announce.
+  if (n <= 1) {
     return (
       <div
-        ref={containerRef}
         className={`overflow-hidden ${className}`}
         role="group"
         aria-roledescription="carousel"
         aria-label={ariaLabel}
       >
+        <div className="px-2">{slides[0] ?? null}</div>
+      </div>
+    );
+  }
+
+  const rendered = [slides[n - 1], ...slides, slides[0]];
+  const animate = c.anim && !c.reducedMotion;
+
+  return (
+    // Root wraps track + dots so hover/focus-within/keyboard/IntersectionObserver
+    // all cover the dots too, not just the slides.
+    <div
+      ref={c.containerRef}
+      className={className}
+      role="group"
+      aria-roledescription="carousel"
+      aria-label={ariaLabel}
+      tabIndex={0}
+      onKeyDown={c.onKeyDown}
+      onPointerEnter={c.onPointerEnter}
+      onPointerLeave={c.onPointerLeave}
+      onFocus={c.onFocus}
+      onBlur={c.onBlur}
+    >
+      <div className="overflow-hidden">
         <div
           className="flex items-stretch will-change-transform"
           style={{
-            width: `${total * 100}%`,
-            transform: `translate3d(calc(${(-index * 100) / total}% + ${dragPx}px), 0, 0)`,
-            transition: anim
+            width: `${c.total * 100}%`,
+            transform: `translate3d(calc(${(-c.index * 100) / c.total}% + ${c.dragPx}px), 0, 0)`,
+            transition: animate
               ? "transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1)"
               : "none",
             touchAction: "pan-y",
           }}
-          onTransitionEnd={handleEnd}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerUp}
-          onClickCapture={onClickCapture}
+          onTransitionEnd={c.handleEnd}
+          onPointerDown={c.onPointerDown}
+          onPointerMove={c.onPointerMove}
+          onPointerUp={c.onPointerUp}
+          onPointerCancel={c.onPointerUp}
+          onClickCapture={c.onClickCapture}
         >
           {rendered.map((slide, i) => (
             <div
               key={i}
-              style={{ width: `${100 / total}%` }}
+              style={{ width: `${100 / c.total}%` }}
               className="shrink-0 px-2"
               aria-hidden={i === 0 || i === n + 1 || undefined}
             >
@@ -167,8 +88,31 @@ const MobileCarousel = forwardRef<CarouselHandle, MobileCarouselProps>(
           ))}
         </div>
       </div>
-    );
-  },
-);
 
-export default MobileCarousel;
+      {/* Dot indicators — real focusable buttons (≥24px hit target). */}
+      <div className="mt-5 flex items-center justify-center gap-1">
+        {slides.map((_, i) => {
+          const active = i === c.activeIndex;
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => c.goTo(i)}
+              aria-label={`${slideLabel} ${i + 1}`}
+              aria-current={active ? "true" : undefined}
+              className="group flex h-6 w-6 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              <span
+                className={`block h-2 rounded-full transition-all duration-200 motion-reduce:transition-none ${
+                  active
+                    ? "w-5 bg-foreground"
+                    : "w-2 bg-line-strong group-hover:bg-muted"
+                }`}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

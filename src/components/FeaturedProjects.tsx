@@ -1,14 +1,11 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/src/lib/projects";
 import HeroMedia from "@/src/components/HeroMedia";
-import MobileCarousel, {
-  type CarouselHandle,
-} from "@/src/components/MobileCarousel";
+import MobileCarousel from "@/src/components/MobileCarousel";
 import { T, useTPair } from "@/src/components/I18nProvider";
 
 /** Featured projects shown on the home page. The full set lives on /proyectos. */
@@ -74,55 +71,22 @@ function ProjectCard({
   );
 }
 
-function Ctrl({
-  onClick,
-  label,
-  children,
-}: {
-  onClick: () => void;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:bg-foreground hover:text-background focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-2"
-    >
-      {children}
-    </button>
-  );
-}
-
 export default function FeaturedProjects() {
   // Two copies so the desktop vertical marquee loops seamlessly.
   const loop = [...FEATURED, ...FEATURED];
 
-  const carouselRef = useRef<CarouselHandle>(null);
-  const prevLabel = useTPair("Anterior", "Previous");
-  const nextLabel = useTPair("Siguiente", "Next");
   const label = useTPair("Trabajo destacado", "Featured work");
 
   return (
     <div className="lg:h-full">
       {/* Mobile / tablet: infinite touch carousel */}
       <div className="lg:hidden px-6 pb-12">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4">
           <span className="text-xs uppercase tracking-widest text-muted">
             {label}
           </span>
-          <div className="flex gap-2">
-            <Ctrl onClick={() => carouselRef.current?.prev()} label={prevLabel}>
-              <ChevronLeft size={16} strokeWidth={1.75} aria-hidden="true" />
-            </Ctrl>
-            <Ctrl onClick={() => carouselRef.current?.next()} label={nextLabel}>
-              <ChevronRight size={16} strokeWidth={1.75} aria-hidden="true" />
-            </Ctrl>
-          </div>
         </div>
         <MobileCarousel
-          ref={carouselRef}
           ariaLabel={label}
           className="-mx-2"
           slides={FEATURED.map((project, i) => (

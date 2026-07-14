@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Square, Zap } from "lucide-react";
+import { Square, SquareEqual, Zap, } from "lucide-react";
 import { T } from "@/src/components/I18nProvider";
 
 /** Editorial "How I Work" block: a label/statement split above a large black
@@ -62,18 +62,6 @@ export default function HowIWork() {
                 />
               </p>
             </div>
-
-            <Link
-              href="/about#approach"
-              className="group inline-flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
-            >
-              <span className="text-xs font-bold uppercase tracking-[0.14em] text-foreground">
-                <T es="Ver mi enfoque" en="See my approach" />
-              </span>
-              <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-200 group-hover:scale-110">
-                <Square size={11} strokeWidth={2.5} aria-hidden="true" />
-              </span>
-            </Link>
           </div>
         </div>
       </div>
