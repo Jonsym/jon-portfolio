@@ -26,7 +26,7 @@ function ProjectCard({
     <Link
       href={`/proyectos/${project.slug}`}
       aria-label={`${project.title} — ${project.year} ${project.category}`}
-      className="group relative block overflow-hidden rounded-2xl lg:rounded-3xl border border-black/10 bg-black/[0.03] shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_28px_56px_-24px_rgba(0,0,0,0.32)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+      className="group relative block overflow-hidden rounded-2xl lg:rounded-3xl border border-line bg-surface transition-colors duration-300 hover:border-line-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         {project.video ? (
@@ -49,18 +49,18 @@ function ProjectCard({
         {/* Hover scrim + label */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/0 to-background/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:p-5 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
           <div className="min-w-0">
-            <p className="truncate text-lg font-medium tracking-tight text-white">
+            <p className="truncate text-lg font-medium tracking-tight text-foreground-strong">
               {project.title}
             </p>
-            <p className="mt-0.5 text-xs tracking-tight text-white/70">
+            <p className="mt-0.5 text-xs tracking-tight text-foreground/70">
               <T es={project.category} en={categoryEn} /> · {project.year}
             </p>
           </div>
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-black shadow-sm transition-transform duration-300 group-hover:scale-110">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-300 group-hover:scale-110">
             <ArrowUpRight
               size={17}
               strokeWidth={2}
@@ -88,7 +88,7 @@ function Ctrl({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors duration-150 hover:bg-black hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
+      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:bg-foreground hover:text-background focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-2"
     >
       {children}
     </button>
@@ -109,7 +109,7 @@ export default function FeaturedProjects() {
       {/* Mobile / tablet: infinite touch carousel */}
       <div className="lg:hidden px-6 pb-12">
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-xs uppercase tracking-widest text-zinc-400">
+          <span className="text-xs uppercase tracking-widest text-muted">
             {label}
           </span>
           <div className="flex gap-2">
@@ -145,11 +145,11 @@ export default function FeaturedProjects() {
         {/* Soft fade at top & bottom edges */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent"
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ export interface Project {
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex h-7 items-center justify-center border border-black bg-black px-2 text-xs font-medium text-white tabular-nums tracking-tight">
+    <span className="inline-flex h-7 items-center justify-center border border-line-strong bg-surface px-2 text-xs font-medium text-foreground tabular-nums tracking-tight">
       {children}
     </span>
   );
@@ -28,11 +28,11 @@ export default function ProjectCard({ project }: { project: Project }) {
     <Link
       href={`/proyecto/${slug}`}
       aria-label={`${title} — ${year} ${category}`}
-      className="group block focus:outline-none focus-visible:ring-1 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+      className="group block focus:outline-none focus-visible:ring-1 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       <article className="flex flex-col">
         <header className="flex items-end justify-between gap-4 pb-3">
-          <h3 className="text-2xl md:text-3xl tracking-tight leading-none text-black transition-opacity duration-200 group-hover:opacity-70">
+          <h3 className="text-2xl md:text-3xl tracking-tight leading-none text-foreground-strong transition-opacity duration-200 group-hover:opacity-70">
             {title}
           </h3>
           <div className="flex items-center gap-1.5 shrink-0">
@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           </div>
         </header>
 
-        <div className="relative w-full aspect-[16/10] overflow-hidden bg-black/[0.04] border-t border-black">
+        <div className="relative w-full aspect-[16/10] overflow-hidden bg-foreground/[0.04] border-t border-line-strong">
           {media?.type === "image" && (
             <Image
               src={media.src}
@@ -64,7 +64,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           )}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-[0.04]"
+            className="pointer-events-none absolute inset-0 bg-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-[0.06]"
           />
         </div>
       </article>

@@ -24,7 +24,7 @@ function ProjectCard({ project }: { project: Project }) {
       aria-label={`${project.title} — ${project.year} ${project.category}`}
       className="group flex flex-col focus:outline-none"
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-black/10 bg-black/[0.03] transition-shadow duration-300 group-hover:shadow-[0_28px_56px_-24px_rgba(0,0,0,0.28)] group-focus-visible:ring-2 group-focus-visible:ring-[#0000FF] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-white">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 group-hover:border-line-strong group-focus-visible:ring-2 group-focus-visible:ring-foreground-strong group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-background">
         {thumb && (
           <Image
             src={thumb}
@@ -38,9 +38,9 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Tags / category */}
-      <div className="mt-5 flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500">
+      <div className="mt-5 flex items-center gap-2 text-xs uppercase tracking-widest text-muted">
         <span className="tabular-nums">{project.year}</span>
-        <span aria-hidden="true" className="text-zinc-300">
+        <span aria-hidden="true" className="text-muted">
           /
         </span>
         <span>
@@ -48,19 +48,19 @@ function ProjectCard({ project }: { project: Project }) {
         </span>
       </div>
 
-      <h2 className="mt-3 text-2xl tracking-tight leading-none text-black transition-opacity duration-200 group-hover:opacity-70">
+      <h2 className="mt-3 text-2xl tracking-tight leading-none text-foreground-strong transition-opacity duration-200 group-hover:opacity-70">
         {project.title}
       </h2>
 
-      <p className="mt-1.5 text-sm uppercase tracking-widest text-zinc-400">
+      <p className="mt-1.5 text-sm uppercase tracking-widest text-muted">
         <T es={project.subtitle} en={subtitleEn} />
       </p>
 
-      <p className="mt-3 max-w-prose text-sm leading-relaxed text-zinc-500 line-clamp-2">
+      <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted line-clamp-2">
         <T es={project.description} en={descriptionEn} />
       </p>
 
-      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-black">
+      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
         <T es="Ver proyecto" en="View project" />
         <ArrowUpRight
           size={16}
@@ -84,10 +84,10 @@ export default function ProyectosPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <h1 className="font-bold tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="font-semibold tracking-tighter leading-[0.9] text-foreground text-6xl md:text-7xl lg:text-8xl">
           <T es="Proyectos" en="Projects" />
         </h1>
-        <p className="mt-8 max-w-xl text-base lg:text-lg leading-relaxed text-zinc-500">
+        <p className="mt-8 max-w-xl text-base lg:text-lg leading-relaxed text-muted">
           <T
             es="Una selección de trabajos de diseño y desarrollo web — del concepto a la entrega."
             en="A selection of web design and development work — from concept to delivery."

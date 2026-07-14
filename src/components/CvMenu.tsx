@@ -21,7 +21,7 @@ const items = [
 ] as const;
 
 const linkBaseCls =
-  "text-black hover:text-[#0000FF] transition-colors duration-150";
+  "text-foreground hover:text-foreground-strong transition-colors duration-150";
 
 /** Hover/focus-triggered dropdown for the desktop navbar. */
 export default function CvMenu() {
@@ -100,7 +100,7 @@ export default function CvMenu() {
       <div
         role="menu"
         aria-label="Curriculum"
-        className={`absolute left-0 top-full mt-3 min-w-[180px] border border-black/10 bg-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.12)] transition duration-150 ${
+        className={`absolute left-0 top-full mt-3 min-w-[180px] border border-line bg-surface transition duration-150 ${
           open
             ? "pointer-events-auto opacity-100 translate-y-0"
             : "pointer-events-none opacity-0 -translate-y-1"
@@ -114,7 +114,7 @@ export default function CvMenu() {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block px-4 py-2 text-sm text-black hover:bg-black/[0.04] hover:text-[#0000FF] transition-colors duration-150"
+                className="block px-4 py-2 text-sm text-foreground hover:bg-foreground/[0.06] hover:text-foreground-strong transition-colors duration-150"
                 onClick={() => setOpen(false)}
               >
                 <T es={item.es} en={item.en} />
@@ -138,7 +138,7 @@ export function CvMobileList({
   return (
     <div className="flex flex-col gap-2 text-base">
       <h3
-        className={`text-xs uppercase tracking-widest ${dark ? "text-white/40" : "text-zinc-500"}`}
+        className={`text-xs uppercase tracking-widest ${dark ? "text-muted" : "text-muted"}`}
       >
         <T es="Currículum" en="CV" />
       </h3>
@@ -152,8 +152,8 @@ export function CvMobileList({
               onClick={onNavigate}
               className={`block py-1 text-sm transition-colors duration-150 ${
                 dark
-                  ? "text-white/70 hover:text-white"
-                  : "text-black hover:text-[#0000FF]"
+                  ? "text-muted-strong hover:text-foreground-strong"
+                  : "text-foreground hover:text-foreground-strong"
               }`}
             >
               <T es={item.es} en={item.en} />

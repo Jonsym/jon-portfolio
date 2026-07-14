@@ -46,7 +46,7 @@ export default function AboutPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+        <h1 className="mt-6 font-semibold tracking-tighter leading-[0.9] text-foreground text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
           <T es="Más de mí" en="More About Me" />
         </h1>
       </header>
@@ -56,10 +56,10 @@ export default function AboutPage() {
           aria-label="Profile"
           className="col-span-12 lg:col-span-7 lg:pr-12 order-2 lg:order-1"
         >
-          <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-muted">
             <T es="Perfil" en="Profile" />
           </h2>
-          <div className="mt-6 space-y-6 max-w-2xl text-base lg:text-lg leading-relaxed text-zinc-700">
+          <div className="mt-6 space-y-6 max-w-2xl text-base lg:text-lg leading-relaxed text-muted-strong">
             <p>
               <T
                 es="Soy desarrollador frontend enfocado en construir experiencias digitales modernas, rápidas y bien estructuradas. Me especializo en trabajar con tecnologías actuales como React y Next.js, creando interfaces escalables que no solo se ven bien, sino que también están pensadas para mantenerse y crecer a largo plazo."
@@ -83,9 +83,9 @@ export default function AboutPage() {
 
         <aside
           aria-hidden="true"
-          className="col-span-12 lg:col-span-5 lg:border-l lg:border-black/10 lg:pl-12 order-1 lg:order-2"
+          className="col-span-12 lg:col-span-5 lg:border-l lg:border-line lg:pl-12 order-1 lg:order-2"
         >
-          <div className="relative aspect-square w-full max-w-sm overflow-hidden border border-black/10 bg-black/[0.04]">
+          <div className="relative aspect-square w-full max-w-sm overflow-hidden border border-line bg-surface">
             <Image
               src="/about/jon.jpeg"
               alt="Jon Zamudio"
@@ -106,24 +106,24 @@ export default function AboutPage() {
           aria-label="Services"
           className="col-span-12 lg:col-span-6"
         >
-          <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-muted">
             <T es="Servicios" en="Services" />
           </h2>
-          <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+          <ul className="mt-6 divide-y divide-line border-y border-line">
             {services.map((service) => (
               <li
                 key={service.id}
                 className="flex items-baseline justify-between gap-6 py-4"
               >
                 <span className="flex items-baseline gap-4">
-                  <span className="text-xs tabular-nums text-zinc-400">
+                  <span className="text-xs tabular-nums text-muted">
                     {service.id}
                   </span>
-                  <span className="text-base lg:text-lg text-black">
+                  <span className="text-base lg:text-lg text-foreground">
                     <T es={service.es.label} en={service.en.label} />
                   </span>
                 </span>
-                <span className="text-xs text-zinc-500 text-right">
+                <span className="text-xs text-muted text-right">
                   <T es={service.es.note} en={service.en.note} />
                 </span>
               </li>
@@ -133,18 +133,18 @@ export default function AboutPage() {
 
         <section
           aria-label="Tech stack"
-          className="col-span-12 lg:col-span-6 lg:border-l lg:border-black/10 lg:pl-12"
+          className="col-span-12 lg:col-span-6 lg:border-l lg:border-line lg:pl-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-muted">
             <T es="Stack Tecnológico" en="Tech Stack" />
           </h2>
-          <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+          <ul className="mt-6 divide-y divide-line border-y border-line">
             {stack.map((tech) => (
               <li key={tech.id} className="flex items-baseline gap-4 py-4">
-                <span className="text-xs tabular-nums text-zinc-400">
+                <span className="text-xs tabular-nums text-muted">
                   {tech.id}
                 </span>
-                <span className="text-base lg:text-lg text-black">
+                <span className="text-base lg:text-lg text-foreground">
                   {tech.label}
                 </span>
               </li>
@@ -153,10 +153,10 @@ export default function AboutPage() {
         </section>
       </div>
 
-      <footer className="mt-24 lg:mt-32 pt-8 border-t border-black/10 flex flex-wrap items-center justify-end gap-4">
+      <footer className="mt-24 lg:mt-32 pt-8 border-t border-line flex flex-wrap items-center justify-end gap-4">
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
+          className="inline-flex items-center gap-2 text-sm text-foreground hover:opacity-60 transition-opacity duration-150"
         >
           <span>
             <T es="Iniciar un proyecto" en="Start a project" />

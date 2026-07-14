@@ -108,7 +108,7 @@ function MilestoneCarousel({
         {media.map((item, i) => (
           <li
             key={`${item.src}-${i}`}
-            className="relative w-[72%] shrink-0 snap-start overflow-hidden rounded-2xl border border-black/10 bg-black/[0.03] shadow-[0_8px_24px_-14px_rgba(0,0,0,0.3)] md:h-96 md:w-auto"
+            className="relative w-[72%] shrink-0 snap-start overflow-hidden rounded-2xl border border-line bg-surface md:h-96 md:w-auto"
             style={{ aspectRatio: item.aspect ?? "9/19.5" }}
           >
             <MediaEl item={item} sizes="(min-width: 768px) 220px, 72vw" />
@@ -123,7 +123,7 @@ function MilestoneCarousel({
           onClick={() => goTo(active - 1)}
           disabled={active === 0}
           aria-label={prevLabel}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/15 text-black transition-colors duration-150 hover:border-black/40 disabled:cursor-default disabled:opacity-30 disabled:hover:border-black/15"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:border-foreground/40 disabled:cursor-default disabled:opacity-30 disabled:hover:border-line-strong"
         >
           <ChevronLeft size={18} strokeWidth={1.75} aria-hidden="true" />
         </button>
@@ -141,7 +141,7 @@ function MilestoneCarousel({
               style={{
                 width: i === active ? "20px" : "6px",
                 backgroundColor:
-                  i === active ? color : "rgba(0,0,0,0.22)",
+                  i === active ? signal(color) : "var(--line-strong)",
               }}
             />
           ))}
@@ -152,7 +152,7 @@ function MilestoneCarousel({
           onClick={() => goTo(active + 1)}
           disabled={active === media.length - 1}
           aria-label={nextLabel}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/15 text-black transition-colors duration-150 hover:border-black/40 disabled:cursor-default disabled:opacity-30 disabled:hover:border-black/15"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:border-foreground/40 disabled:cursor-default disabled:opacity-30 disabled:hover:border-line-strong"
         >
           <ChevronRight size={18} strokeWidth={1.75} aria-hidden="true" />
         </button>
@@ -175,7 +175,7 @@ function MilestoneMedia({
     return (
       <div className="mt-4 flex justify-center">
         <div
-          className={`relative overflow-hidden rounded-2xl border border-black/10 bg-black/[0.03] ${
+          className={`relative overflow-hidden rounded-2xl border border-line bg-surface ${
             portrait ? "h-[22rem] md:h-96" : "w-full"
           }`}
           style={{ aspectRatio: item.aspect ?? "16/10" }}
@@ -198,6 +198,15 @@ function tint(color: string, alpha: number): string {
   return `color-mix(in srgb, ${color} ${alpha}%, transparent)`;
 }
 
+/**
+ * Tame the per-product hue into a small, low-chroma signal for the dark canvas:
+ * mix it toward the muted gray. Only ever applied to dots / bars / rings —
+ * never to a surface fill or to text.
+ */
+function signal(color: string): string {
+  return `color-mix(in srgb, ${color} 55%, var(--muted))`;
+}
+
 function StatusBadge({
   milestone,
   color,
@@ -210,7 +219,7 @@ function StatusBadge({
 
   if (status === "planned") {
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-black/20 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-400">
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-line-strong px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-muted">
         <Circle className="h-2.5 w-2.5" strokeWidth={2} aria-hidden="true" />
         <T es={label.es} en={label.en} />
       </span>
@@ -219,8 +228,8 @@ function StatusBadge({
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
-      style={{ backgroundColor: tint(color, 12), color }}
+      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-foreground"
+      style={{ backgroundColor: tint(color, 16) }}
     >
       {status === "completed" ? (
         <Check className="h-2.5 w-2.5" strokeWidth={3} aria-hidden="true" />
@@ -244,29 +253,29 @@ function TimelineNode({
     return (
       <span
         className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: signal(color) }}
       >
-        <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} aria-hidden="true" />
+        <Check className="h-3.5 w-3.5 text-background" strokeWidth={3} aria-hidden="true" />
       </span>
     );
   }
   if (status === "in-progress") {
     return (
       <span
-        className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white"
-        style={{ boxShadow: `0 0 0 2px ${color}` }}
+        className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-surface"
+        style={{ boxShadow: `0 0 0 2px ${signal(color)}` }}
       >
         <span
           className="h-2.5 w-2.5 rounded-full"
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: signal(color) }}
           aria-hidden="true"
         />
       </span>
     );
   }
   return (
-    <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full border border-dashed border-black/25 bg-white">
-      <span className="h-1.5 w-1.5 rounded-full bg-black/20" aria-hidden="true" />
+    <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full border border-dashed border-line-strong bg-surface">
+      <span className="h-1.5 w-1.5 rounded-full bg-muted" aria-hidden="true" />
     </span>
   );
 }
@@ -302,7 +311,7 @@ export default function LabTimeline({
               <TimelineNode milestone={m} color={color} />
               {!isLast && (
                 <span
-                  className="mt-1 w-px flex-1 bg-black/10"
+                  className="mt-1 w-px flex-1 bg-line-strong"
                   aria-hidden="true"
                 />
               )}
@@ -310,18 +319,15 @@ export default function LabTimeline({
 
             {/* Content card */}
             <div className={`pb-8 sm:pb-10 ${planned ? "opacity-70" : ""}`}>
-              <div className="rounded-2xl border border-black/10 bg-white p-4 sm:p-5 transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.25)]">
+              <div className="rounded-2xl border border-line bg-surface p-4 sm:p-5 transition-colors duration-300 hover:border-line-strong">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span
-                    className="text-[10px] uppercase tracking-[0.18em]"
-                    style={{ color }}
-                  >
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-foreground">
                     <T es={sLabel.es} en={sLabel.en} />
                   </span>
-                  <span aria-hidden="true" className="text-black/15">
+                  <span aria-hidden="true" className="text-muted">
                     /
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 tabular-nums">
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-muted tabular-nums">
                     {formatMonth(m.date, locale)}
                   </span>
                   <span className="ml-auto">
@@ -329,11 +335,11 @@ export default function LabTimeline({
                   </span>
                 </div>
 
-                <h3 className="mt-3 text-lg sm:text-xl tracking-tight leading-snug text-black">
+                <h3 className="mt-3 text-lg sm:text-xl tracking-tight leading-snug text-foreground">
                   <T es={m.title.es} en={m.title.en} />
                 </h3>
 
-                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                <p className="mt-2 text-sm leading-relaxed text-muted-strong">
                   <T es={m.description.es} en={m.description.en} />
                 </p>
 

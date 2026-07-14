@@ -26,9 +26,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} antialiased bg-white`}
+      className={`${geistSans.variable} antialiased bg-background`}
     >
-      <body className="min-h-screen flex flex-col bg-white text-black antialiased">
+      <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <I18nProvider>
           <GlobalNavbar />
           <main className="flex-1 w-full pt-8 lg:pt-12">

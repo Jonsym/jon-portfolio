@@ -23,11 +23,11 @@ const WHATSAPP = `https://wa.me/529211735484?text=${encodeURIComponent(
 )}`;
 
 const linkCls =
-  "text-black/80 hover:text-[#0000FF] transition-colors duration-150";
+  "text-muted-strong hover:text-foreground-strong transition-colors duration-150";
 
-const headerCls = "text-base font-bold uppercase tracking-widest text-black";
+const headerCls = "text-base font-semibold uppercase tracking-widest text-foreground";
 
-const dividerCls = "lg:border-l lg:border-black/10";
+const dividerCls = "lg:border-l lg:border-line";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -35,7 +35,7 @@ export default function Footer() {
   const ariaSitemap = useTPair("Sitemap", "Sitemap");
 
   return (
-    <footer className="w-full border-t border-black bg-white">
+    <footer className="w-full border-t border-line-strong bg-background">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 py-12 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-0">
           <div className="lg:col-span-4 lg:pr-8">
@@ -45,7 +45,7 @@ export default function Footer() {
               className="inline-flex items-center leading-none select-none hover:opacity-70 transition-opacity duration-150"
             >
               <Image
-                src="/icons/newicon.png"
+                src="/icons/logo.png"
                 alt=""
                 width={1329}
                 height={1183}
@@ -53,7 +53,7 @@ export default function Footer() {
                 className="h-16 lg:h-20 w-auto"
               />
             </Link>
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-black/60">
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
               Full-stack Developer &amp; Designer.
             </p>
           </div>
@@ -123,7 +123,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 lg:mt-20 pt-6 border-t border-black/10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 text-[11px] uppercase tracking-widest text-black/60">
+        <div className="mt-16 lg:mt-20 pt-6 border-t border-line flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 text-[11px] uppercase tracking-widest text-muted">
           <span>
             <T
               es={`© ${year} JonZS® — Todos los derechos reservados.`}

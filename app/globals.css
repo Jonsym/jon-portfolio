@@ -1,21 +1,31 @@
 @import "tailwindcss";
 
+/*
+ * Dark-native, monochrome. There is no light mode — no toggle, no `dark:`
+ * variant, no prefers-color-scheme. The only color on the canvas comes from
+ * project imagery. Pure #FFF is a reserved accent (see --foreground-strong).
+ * These tokens are load-bearing: nothing below hardcodes a hex.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --muted: #71717a;
-  --line: rgba(0, 0, 0, 0.10);
-  --line-strong: rgba(0, 0, 0, 0.20);
-  --accent: #0000ff;
+  --background: #0a0a0a;          /* base canvas — near-black, not pure #000 */
+  --surface: #1a1a1a;            /* raised step for panels/cards; reads above base */
+  --foreground: #ededed;         /* soft off-white — body text, most UI */
+  --foreground-strong: #ffffff;  /* RESERVED: project titles, active nav, primary CTA, focus rings */
+  --muted-strong: #b4b4b4;       /* secondary body copy — subordinate but readable */
+  --muted: #8a8a8a;              /* labels, captions, meta — clearly subordinate */
+  --line: rgba(255, 255, 255, 0.08);        /* barely-there divider — softer than the inverse math */
+  --line-strong: rgba(255, 255, 255, 0.14); /* emphasized divider, still not a scar */
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-foreground-strong: var(--foreground-strong);
   --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
 }
 
@@ -32,9 +42,9 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Vertical auto-scroll carousel (hero, desktop only). Two identical copies
-     of the project list translate up by exactly half the track height for a
-     seamless loop. GPU-friendly transform animation; paused on hover. */
+  /* Vertical auto-scroll carousel (hero projects, desktop only). Two identical
+     copies of the project list translate up by exactly half the track height
+     for a seamless top-to-bottom loop. GPU-friendly transform; paused on hover. */
   @keyframes vscroll {
     from {
       transform: translateY(0);
@@ -51,29 +61,9 @@ body {
   .carousel:hover .carousel-track {
     animation-play-state: paused;
   }
-
-  /* Horizontal logo/client marquee (hero proof row). Two identical copies of
-     the row translate left by exactly half the track width for a seamless,
-     continuous loop. Subtle and GPU-friendly; paused on hover. */
-  @keyframes hscroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  .marquee-track {
-    animation: hscroll 34s linear infinite;
-  }
-
-  .marquee:hover .marquee-track {
-    animation-play-state: paused;
-  }
 }
 
-/* Hidden scrollbar for the left hero column overflow fallback. */
+/* Hidden scrollbar for horizontal scroll containers (e.g. lab timeline). */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -83,12 +73,7 @@ body {
   display: none;
 }
 
-html {
-  background: #ffffff;
-}
-
 body {
-  background: #ffffff;
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -96,26 +81,27 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+/* Inverted for dark: white marquee over near-black text. */
 ::selection {
-  background: #000000;
-  color: #ffffff;
+  background: var(--foreground-strong);
+  color: var(--background);
 }
 
 input,
 textarea {
-  color: #000000;
-  caret-color: #000000;
+  color: var(--foreground);
+  caret-color: var(--foreground);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--muted);
 }
 
 input:-webkit-autofill,
 textarea:-webkit-autofill {
-  -webkit-text-fill-color: #000000;
-  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
-  caret-color: #000000;
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0 1000px var(--background) inset;
+  caret-color: var(--foreground);
   transition: background-color 9999s ease-in-out 0s;
 }

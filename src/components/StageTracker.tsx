@@ -6,6 +6,15 @@ import { T } from "./I18nProvider";
 import { STAGES, stageIndex, type Stage } from "@/src/lib/labs";
 
 /**
+ * Tame the per-product hue into a small, low-chroma signal for the dark canvas:
+ * mix it toward the muted gray so it reads as identity, not decoration. Only
+ * ever applied to dots / bars / rings — never to a surface fill or to text.
+ */
+function signal(color: string): string {
+  return `color-mix(in srgb, ${color} 55%, var(--muted))`;
+}
+
+/**
  * Horizontal five-stage progress tracker (Idea → Release).
  * Fluid, equal-width columns so labels never overflow on small screens.
  * The connecting line spans the first→last node centers; the fill grows up
@@ -42,10 +51,10 @@ export default function StageTracker({
           style={{ left: span, right: span }}
           aria-hidden="true"
         >
-          <div className="absolute inset-0 rounded-full bg-black/10" />
+          <div className="absolute inset-0 rounded-full bg-line-strong" />
           <motion.div
             className="absolute left-0 top-0 h-full rounded-full"
-            style={{ backgroundColor: color }}
+            style={{ backgroundColor: signal(color) }}
             initial={{ width: reduce ? `${pct}%` : "0%" }}
             whileInView={{ width: `${pct}%` }}
             viewport={{ once: true, margin: "0px 0px -10% 0px" }}
@@ -76,7 +85,7 @@ export default function StageTracker({
                   {isCurrent && !reduce && (
                     <motion.span
                       className="absolute inset-0 rounded-full"
-                      style={{ backgroundColor: color }}
+                      style={{ backgroundColor: signal(color) }}
                       initial={{ opacity: 0.35, scale: 1 }}
                       animate={{ opacity: 0, scale: 2.4 }}
                       transition={{
@@ -93,20 +102,20 @@ export default function StageTracker({
                       done
                         ? ""
                         : isCurrent
-                          ? "bg-white"
-                          : "border border-dashed border-black/25 bg-white"
+                          ? "bg-surface"
+                          : "border border-dashed border-line-strong bg-surface"
                     }`}
                     style={
                       done
-                        ? { backgroundColor: color }
+                        ? { backgroundColor: signal(color) }
                         : isCurrent
-                          ? { boxShadow: `0 0 0 2px ${color}` }
+                          ? { boxShadow: `0 0 0 2px ${signal(color)}` }
                           : undefined
                     }
                   >
                     {done && (
                       <Check
-                        className="h-2.5 w-2.5 text-white"
+                        className="h-2.5 w-2.5 text-background"
                         strokeWidth={3}
                         aria-hidden="true"
                       />
@@ -114,7 +123,7 @@ export default function StageTracker({
                     {isCurrent && (
                       <span
                         className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: color }}
+                        style={{ backgroundColor: signal(color) }}
                         aria-hidden="true"
                       />
                     )}
@@ -122,9 +131,8 @@ export default function StageTracker({
                 </span>
                 <span
                   className={`px-0.5 text-[9px] font-medium uppercase leading-tight tracking-[0.06em] sm:text-[10px] sm:tracking-[0.1em] ${
-                    done || isCurrent ? "text-black" : "text-zinc-400"
+                    done || isCurrent ? "text-foreground" : "text-muted"
                   }`}
-                  style={isCurrent ? { color } : undefined}
                 >
                   <T es={s.label.es} en={s.label.en} />
                 </span>

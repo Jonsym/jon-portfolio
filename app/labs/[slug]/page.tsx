@@ -55,44 +55,44 @@ export default async function LabPage({
       <header className="mt-12 lg:mt-20 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-x-12">
           <div className="lg:col-span-8 min-w-0">
-            <h1 className="font-bold tracking-tighter leading-[0.9] text-black text-5xl sm:text-6xl md:text-7xl xl:text-8xl break-words">
+            <h1 className="font-semibold tracking-tighter leading-[0.9] text-foreground text-5xl sm:text-6xl md:text-7xl xl:text-8xl break-words">
               {product.name}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-zinc-600">
+            <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-muted-strong">
               <T es={product.tagline.es} en={product.tagline.en} />
             </p>
           </div>
 
           <dl className="lg:col-span-4 lg:col-start-9 grid grid-cols-2 gap-x-6 gap-y-8 text-sm self-start lg:pt-2">
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.2em] text-muted">
                 <T es="Etapa" en="Stage" />
               </dt>
-              <dd className="mt-2.5" style={{ color: product.color }}>
+              <dd className="mt-2.5 text-foreground">
                 <T es={current.es} en={current.en} />
               </dd>
             </div>
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.2em] text-muted">
                 <T es="Hitos" en="Milestones" />
               </dt>
-              <dd className="mt-2.5 text-black tabular-nums">
+              <dd className="mt-2.5 text-foreground tabular-nums">
                 {completed}/{product.milestones.length}
               </dd>
             </div>
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              <dt className="text-[10px] uppercase tracking-[0.2em] text-muted">
                 <T es="Plataformas" en="Platforms" />
               </dt>
-              <dd className="mt-2.5 text-black">{product.platforms.join(" · ")}</dd>
+              <dd className="mt-2.5 text-foreground">{product.platforms.join(" · ")}</dd>
             </div>
             {product.stack && product.stack.length > 0 && (
               <div>
-                <dt className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <dt className="text-[10px] uppercase tracking-[0.2em] text-muted">
                   <T es="Stack" en="Stack" />
                 </dt>
-                <dd className="mt-2.5 text-black leading-relaxed">
+                <dd className="mt-2.5 text-foreground leading-relaxed">
                   {product.stack.join(" · ")}
                 </dd>
               </div>
@@ -100,14 +100,14 @@ export default async function LabPage({
           </dl>
         </div>
 
-        <div className="mt-12 lg:mt-16 border-t border-black pt-10 lg:pt-12">
-          <p className="max-w-3xl text-base lg:text-lg leading-[1.75] text-zinc-700">
+        <div className="mt-12 lg:mt-16 border-t border-line-strong pt-10 lg:pt-12">
+          <p className="max-w-3xl text-base lg:text-lg leading-[1.75] text-muted-strong">
             <T es={product.description.es} en={product.description.en} />
           </p>
         </div>
 
         {/* Stage tracker */}
-        <div className="mt-12 lg:mt-16 rounded-3xl border border-black/10 bg-white p-6 sm:p-8">
+        <div className="mt-12 lg:mt-16 rounded-3xl border border-line bg-surface p-6 sm:p-8">
           <StageTracker
             currentStage={product.currentStage}
             color={product.color}
@@ -117,11 +117,11 @@ export default async function LabPage({
 
       {/* Timeline */}
       <section aria-label="Timeline" className="mt-16 lg:mt-24 max-w-3xl">
-        <div className="flex items-baseline justify-between border-b border-black/10 pb-4">
-          <h2 className="text-xs uppercase tracking-widest text-zinc-500">
+        <div className="flex items-baseline justify-between border-b border-line pb-4">
+          <h2 className="text-xs uppercase tracking-widest text-muted">
             <T es="Línea de tiempo" en="Timeline" />
           </h2>
-          <p className="text-xs uppercase tracking-widest text-zinc-500 tabular-nums">
+          <p className="text-xs uppercase tracking-widest text-muted tabular-nums">
             {String(product.milestones.length).padStart(2, "0")}{" "}
             <T
               es={product.milestones.length === 1 ? "Hito" : "Hitos"}
@@ -135,10 +135,10 @@ export default async function LabPage({
         </div>
       </section>
 
-      <footer className="mt-20 lg:mt-28 pt-8 border-t border-black/10 flex flex-wrap items-center justify-between gap-4">
+      <footer className="mt-20 lg:mt-28 pt-8 border-t border-line flex flex-wrap items-center justify-between gap-4">
         <Link
           href="/labs"
-          className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
+          className="inline-flex items-center gap-2 text-sm text-foreground hover:opacity-60 transition-opacity duration-150"
         >
           <span aria-hidden="true">←</span>
           <span>
@@ -147,7 +147,7 @@ export default async function LabPage({
         </Link>
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
+          className="inline-flex items-center gap-2 text-sm text-foreground hover:opacity-60 transition-opacity duration-150"
         >
           <span>
             <T es="Iniciar un proyecto" en="Start a project" />

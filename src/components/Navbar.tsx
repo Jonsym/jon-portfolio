@@ -60,7 +60,7 @@ function Logo({
       className={`inline-flex items-center select-none hover:opacity-70 transition-opacity duration-150 ${className}`}
     >
       <Image
-        src="/icons/newicon.png"
+        src="/icons/logo.png"
         alt=""
         width={1329}
         height={1183}
@@ -72,7 +72,8 @@ function Logo({
   );
 }
 
-const linkCls = "text-black hover:text-[#0000FF] transition-colors duration-150";
+const linkCls =
+  "text-foreground tracking-[0.01em] hover:text-foreground-strong transition-colors duration-150";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -116,7 +117,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="w-full bg-white border-b border-black/10">
+    <header className="w-full bg-background border-b border-line">
       <div className="w-full px-6 lg:px-12">
         {/* Mobile bar */}
         <div className="flex h-16 lg:hidden items-center justify-between gap-6">
@@ -127,7 +128,7 @@ export default function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={ariaOpen}
-            className="inline-flex items-center rounded-full bg-black/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-black transition-colors duration-150 hover:bg-black/[0.1]"
+            className="inline-flex items-center rounded-full bg-foreground/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground transition-colors duration-150 hover:bg-foreground/[0.14]"
           >
             <T es="Menú" en="Menu" />
           </button>
@@ -149,7 +150,7 @@ export default function Navbar() {
                         <Link
                           href={link.href}
                           aria-current={isActive(link.match) ? "page" : undefined}
-                          className={`${linkCls} ${isActive(link.match) ? "text-[#0000FF]" : ""}`}
+                          className={`${linkCls} ${isActive(link.match) ? "text-foreground-strong" : ""}`}
                         >
                           <T es={link.es} en={link.en} />
                         </Link>
@@ -177,7 +178,7 @@ export default function Navbar() {
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
-        className={`lg:hidden fixed inset-0 z-50 flex flex-col bg-[#141414] text-white transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`lg:hidden fixed inset-0 z-50 flex flex-col bg-background text-foreground transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
       >
@@ -185,7 +186,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-150 hover:bg-white/20"
+            className="inline-flex items-center rounded-full bg-foreground/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground transition-colors duration-150 hover:bg-foreground/20"
           >
             <T es="Cerrar" en="Close" />
           </button>
@@ -195,7 +196,7 @@ export default function Navbar() {
           <nav aria-label={ariaPrincipal}>
             <ul className="flex flex-col">
               {mobileLinks.map((link, i) => {
-                const itemCls = `block py-1 text-5xl sm:text-6xl font-extrabold uppercase tracking-tight leading-[1.05] text-white transition-all duration-500 hover:text-[#7c7cff] ${
+                const itemCls = `block py-1 text-5xl sm:text-6xl font-bold uppercase tracking-tight leading-[1.05] text-foreground transition-all duration-500 hover:text-foreground-strong ${
                   open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
                 }`;
                 const delay = {
@@ -225,7 +226,7 @@ export default function Navbar() {
                           strokeWidth={2.5}
                           aria-hidden="true"
                           className={`shrink-0 transition-transform duration-300 ${
-                            subOpen ? "rotate-180 text-[#7c7cff]" : "text-white/50"
+                            subOpen ? "rotate-180 text-foreground-strong" : "text-muted"
                           }`}
                         />
                       </button>
@@ -244,7 +245,7 @@ export default function Navbar() {
                               <Link
                                 href={child.href}
                                 onClick={() => setOpen(false)}
-                                className="block py-1.5 text-2xl sm:text-3xl font-semibold uppercase tracking-tight leading-tight text-white/70 transition-colors duration-200 hover:text-[#7c7cff]"
+                                className="block py-1.5 text-2xl sm:text-3xl font-medium uppercase tracking-tight leading-tight text-muted-strong transition-colors duration-200 hover:text-foreground-strong"
                               >
                                 <T es={child.es} en={child.en} />
                               </Link>
@@ -272,15 +273,15 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          <div className="mt-10 flex flex-col gap-6 border-t border-white/10 pt-8">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
+          <div className="mt-10 flex flex-col gap-6 border-t border-line pt-8">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
               {externalLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="transition-colors duration-150 hover:text-white"
+                    className="transition-colors duration-150 hover:text-foreground-strong"
                   >
                     {link.label}
                   </a>
@@ -290,7 +291,7 @@ export default function Navbar() {
 
             <div className="flex items-center justify-between gap-6">
               <CvMobileList onNavigate={() => setOpen(false)} dark />
-              <LangToggle className="text-white/70 self-end shrink-0" dark />
+              <LangToggle className="text-muted self-end shrink-0" dark />
             </div>
           </div>
         </div>

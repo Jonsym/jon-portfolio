@@ -29,15 +29,15 @@ export default function LabCard({
       <Link
         href={`/labs/${product.slug}`}
         aria-label={product.name}
-        className="group relative flex h-full flex-col rounded-[28px] border border-black/10 bg-white p-6 sm:p-8 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-black/15 hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+        className="group relative flex h-full flex-col rounded-[28px] border border-line bg-surface p-6 sm:p-8 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-line-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         {/* Header */}
-        <h2 className="text-2xl tracking-tight leading-none text-black">
+        <h2 className="text-2xl tracking-tight leading-none text-foreground-strong">
           {product.name}
         </h2>
 
         {/* Tagline */}
-        <p className="mt-6 text-[15px] leading-relaxed text-zinc-600">
+        <p className="mt-6 text-[15px] leading-relaxed text-muted-strong">
           <T es={product.tagline.es} en={product.tagline.en} />
         </p>
 
@@ -52,21 +52,21 @@ export default function LabCard({
 
         {/* Current stage + latest milestone */}
         <div className="mt-auto pt-7">
-          <div className="border-t border-black/10 pt-5">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-400">
+          <div className="border-t border-line pt-5">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-muted">
               <T es="Etapa actual" en="Current stage" /> —{" "}
-              <span style={{ color: product.color }}>
+              <span className="text-foreground">
                 <T es={current.es} en={current.en} />
               </span>
             </p>
             {latest && (
-              <p className="mt-2 text-[15px] text-zinc-800">
+              <p className="mt-2 text-[15px] text-muted-strong">
                 <T es={latest.title.es} en={latest.title.en} />
               </p>
             )}
           </div>
 
-          <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-black">
+          <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
             <T es="Seguir el proceso" en="Follow the build" />
             <ArrowUpRight
               size={16}

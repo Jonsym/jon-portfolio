@@ -21,18 +21,18 @@ export default function LabsPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+        <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-muted">
           <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0000FF] opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0000FF]" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground-strong opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground-strong" />
           </span>
           <T es="Construyendo en público" en="Building in public" />
         </p>
 
-        <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="mt-6 font-semibold tracking-tighter leading-[0.9] text-foreground text-6xl md:text-7xl lg:text-8xl">
           Labs
         </h1>
-        <p className="mt-8 max-w-xl text-base lg:text-lg leading-relaxed text-zinc-500">
+        <p className="mt-8 max-w-xl text-base lg:text-lg leading-relaxed text-muted">
           <T
             es="Productos en desarrollo, no proyectos terminados. Sigue su recorrido —de la idea al lanzamiento— a través de una línea de tiempo de hitos."
             en="Products in the making, not finished projects. Follow their journey — from idea to launch — through a timeline of milestones."

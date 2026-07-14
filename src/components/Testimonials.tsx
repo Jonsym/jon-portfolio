@@ -79,7 +79,7 @@ function Rating({ value, dark }: { value: number; dark?: boolean }) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 text-xs font-medium tabular-nums ${
-        dark ? "text-white/70" : "text-zinc-500"
+        dark ? "text-muted-strong" : "text-muted"
       }`}
     >
       {value.toFixed(1)}
@@ -92,7 +92,7 @@ function Avatar({ initials, dark }: { initials: string; dark?: boolean }) {
     <span
       aria-hidden="true"
       className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold tracking-tight ${
-        dark ? "bg-white/10 text-white" : "bg-black/[0.06] text-black"
+        dark ? "bg-foreground/10 text-foreground" : "bg-foreground/[0.08] text-foreground"
       }`}
     >
       {initials}
@@ -106,8 +106,8 @@ function Card({ t }: { t: Testimonial }) {
     <figure
       className={`flex h-full flex-col gap-5 rounded-[1.5rem] p-6 lg:p-7 ${
         dark
-          ? "bg-[#0c0c0c] text-white"
-          : "border border-black/[0.07] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_16px_36px_-20px_rgba(0,0,0,0.16)]"
+          ? "bg-surface text-foreground"
+          : "border border-line bg-background text-foreground"
       }`}
     >
       <div className="flex items-center justify-between gap-3">
@@ -117,7 +117,7 @@ function Card({ t }: { t: Testimonial }) {
 
       <blockquote
         className={`flex-1 text-sm lg:text-base leading-relaxed ${
-          dark ? "text-white/85" : "text-zinc-700"
+          dark ? "text-foreground" : "text-muted-strong"
         }`}
       >
         “<T es={t.quote.es} en={t.quote.en} />”
@@ -126,12 +126,12 @@ function Card({ t }: { t: Testimonial }) {
       <figcaption>
         <p
           className={`text-sm font-semibold tracking-tight ${
-            dark ? "text-white" : "text-black"
+            dark ? "text-foreground" : "text-foreground"
           }`}
         >
           {t.name}
         </p>
-        <p className={`text-xs ${dark ? "text-white/50" : "text-zinc-500"}`}>
+        <p className={`text-xs ${dark ? "text-muted" : "text-muted"}`}>
           <T es={t.role.es} en={t.role.en} /> · {t.company}
         </p>
       </figcaption>
@@ -153,7 +153,7 @@ function Ctrl({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors duration-150 hover:bg-black hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-2"
+      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line-strong text-foreground transition-colors duration-150 hover:bg-foreground hover:text-background focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-2"
     >
       {children}
     </button>
@@ -178,15 +178,15 @@ export default function Testimonials() {
       {/* Heading + CTA + (mobile) controls */}
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
         <div className="max-w-xl">
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight lowercase">
-            <span className="text-zinc-300">
-              <T es="/clientes " en="/recent " />
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight lowercase">
+            <span className="text-muted">
+              <T es="clientes " en="recent " />
             </span>
-            <span className="text-black">
+            <span className="text-foreground">
               <T es="recientes" en="clients" />
             </span>
           </h2>
-          <p className="mt-5 max-w-md text-base lg:text-lg leading-relaxed text-zinc-500">
+          <p className="mt-5 max-w-md text-base lg:text-lg leading-relaxed text-muted">
             <T
               es="Proyectos reales, entregados más rápido y más limpios de lo esperado — sitios que se ven impecables y de verdad rinden. Esto dicen mis clientes recientes."
               en="Real projects, delivered faster and cleaner than expected — sites that look sharp and actually perform. Here's what recent clients had to say."
@@ -197,7 +197,7 @@ export default function Testimonials() {
         <div className="flex w-full lg:w-auto items-center justify-between lg:justify-end gap-5">
           <Link
             href="/proyectos"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-black transition-colors duration-150 hover:text-[#0000FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0000FF] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors duration-150 hover:text-foreground-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
             <T es="Ver proyectos recientes" en="View recent projects" />
             <ArrowUpRight

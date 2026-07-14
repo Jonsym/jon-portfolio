@@ -13,7 +13,7 @@ export const proyectosItems = [
 ] as const;
 
 const linkBaseCls =
-  "text-black hover:text-[#0000FF] transition-colors duration-150";
+  "text-foreground hover:text-foreground-strong transition-colors duration-150";
 
 /** Hover/focus-triggered dropdown for the desktop navbar — Proyectos + Labs. */
 export default function ProyectosMenu() {
@@ -84,7 +84,7 @@ export default function ProyectosMenu() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={`${linkBaseCls} inline-flex items-center gap-1 ${
-          groupActive ? "text-[#0000FF]" : ""
+          groupActive ? "text-foreground-strong" : ""
         }`}
       >
         <T es="Proyectos" en="Projects" />
@@ -99,7 +99,7 @@ export default function ProyectosMenu() {
       <div
         role="menu"
         aria-label="Proyectos"
-        className={`absolute left-0 top-full mt-3 min-w-[180px] border border-black/10 bg-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.12)] transition duration-150 ${
+        className={`absolute left-0 top-full mt-3 min-w-[180px] border border-line bg-surface transition duration-150 ${
           open
             ? "pointer-events-auto opacity-100 translate-y-0"
             : "pointer-events-none opacity-0 -translate-y-1"
@@ -112,8 +112,8 @@ export default function ProyectosMenu() {
                 role="menuitem"
                 href={item.href}
                 aria-current={isActive(item.match) ? "page" : undefined}
-                className={`block px-4 py-2 text-sm transition-colors duration-150 hover:bg-black/[0.04] hover:text-[#0000FF] ${
-                  isActive(item.match) ? "text-[#0000FF]" : "text-black"
+                className={`block px-4 py-2 text-sm transition-colors duration-150 hover:bg-foreground/[0.06] hover:text-foreground-strong ${
+                  isActive(item.match) ? "text-foreground-strong" : "text-foreground"
                 }`}
                 onClick={() => setOpen(false)}
               >

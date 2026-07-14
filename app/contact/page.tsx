@@ -51,9 +51,9 @@ export default function ContactPage() {
   const ariaForm = useTPair("Formulario de contacto", "Contact form");
 
   const fieldCls =
-    "w-full bg-transparent border-0 border-b border-black focus:border-black focus:outline-none py-3 text-base lg:text-lg text-black placeholder-zinc-400 transition-colors";
+    "w-full bg-transparent border-0 border-b border-line-strong focus:border-foreground-strong focus:outline-none py-3 text-base lg:text-lg text-foreground placeholder-muted transition-colors";
 
-  const labelCls = "text-xs uppercase tracking-[0.18em] text-zinc-500";
+  const labelCls = "text-xs uppercase tracking-[0.2em] text-muted";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,13 +78,13 @@ export default function ContactPage() {
       />
 
       <header className="mt-12 lg:mt-20 max-w-6xl">
-        <h1 className="mt-6 font-bold tracking-tighter leading-[0.9] text-black text-5xl md:text-7xl lg:text-8xl">
+        <h1 className="mt-6 font-semibold tracking-tighter leading-[0.9] text-foreground text-5xl md:text-7xl lg:text-8xl">
           <T
             es="Construyamos algo juntos."
             en="Let's build something together."
           />
         </h1>
-        <p className="mt-8 max-w-2xl text-base lg:text-lg leading-relaxed text-zinc-700">
+        <p className="mt-8 max-w-2xl text-base lg:text-lg leading-relaxed text-muted-strong">
           <T
             es="Cuéntame un poco sobre el proyecto. El formulario envía directo a WhatsApp — sin bandejas de entrada de por medio. Suelo responder en menos de un día hábil."
             en="Tell me a bit about the project. The form sends straight to WhatsApp — no inboxes in between. I usually reply within one business day."
@@ -158,7 +158,7 @@ export default function ContactPage() {
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-4">
               <button
                 type="submit"
-                className="inline-flex items-center gap-3 bg-black px-6 py-3 text-sm text-white hover:opacity-80 transition-opacity duration-150"
+                className="inline-flex items-center gap-3 bg-foreground-strong px-6 py-3 text-sm text-background hover:opacity-80 transition-opacity duration-150"
               >
                 <span>
                   <T es="Enviar por WhatsApp" en="Send via WhatsApp" />
@@ -170,7 +170,7 @@ export default function ContactPage() {
                 href={buildWhatsAppUrl(directGreeting)}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150 underline-offset-4 hover:underline"
+                className="inline-flex items-center gap-2 text-sm text-foreground hover:opacity-60 transition-opacity duration-150 underline-offset-4 hover:underline"
               >
                 <MessageCircle
                   size={16}
@@ -188,30 +188,30 @@ export default function ContactPage() {
           </form>
         </section>
 
-        <aside className="col-span-12 lg:col-span-5 flex flex-col gap-12 lg:border-l lg:border-black/10 lg:pl-12">
+        <aside className="col-span-12 lg:col-span-5 flex flex-col gap-12 lg:border-l lg:border-line lg:pl-12">
           <section>
             <h2 className={labelCls}>
               <T es="Directo" en="Direct" />
             </h2>
-            <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+            <ul className="mt-6 divide-y divide-line border-y border-line">
               <li className="flex items-baseline justify-between gap-6 py-4">
-                <span className="text-xs tabular-nums text-zinc-400">01</span>
+                <span className="text-xs tabular-nums text-muted">01</span>
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="text-base lg:text-lg text-black hover:opacity-60 transition-opacity duration-150"
+                  className="text-base lg:text-lg text-foreground hover:opacity-60 transition-opacity duration-150"
                 >
                   {EMAIL}
                 </a>
               </li>
               <li className="flex items-baseline justify-between gap-6 py-4">
-                <span className="text-xs tabular-nums text-zinc-400">02</span>
+                <span className="text-xs tabular-nums text-muted">02</span>
                 <a
                   href={buildWhatsAppUrl(
                     locale === "en" ? "Hi JonZS" : "Hola JonZS",
                   )}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="text-base lg:text-lg text-black hover:opacity-60 transition-opacity duration-150 tabular-nums"
+                  className="text-base lg:text-lg text-foreground hover:opacity-60 transition-opacity duration-150 tabular-nums"
                 >
                   {WHATSAPP_DISPLAY}
                 </a>
@@ -223,12 +223,12 @@ export default function ContactPage() {
             <h2 className={labelCls}>
               <T es="Horario" en="Hours" />
             </h2>
-            <ul className="mt-6 divide-y divide-black/10 border-y border-black/10 text-base lg:text-lg text-black">
+            <ul className="mt-6 divide-y divide-line border-y border-line text-base lg:text-lg text-foreground">
               <li className="flex items-baseline justify-between gap-6 py-4">
                 <span>
                   <T es="Lun — Vie" en="Mon — Fri" />
                 </span>
-                <span className="tabular-nums text-zinc-500">
+                <span className="tabular-nums text-muted">
                   09:00 — 18:00
                 </span>
               </li>
@@ -236,7 +236,7 @@ export default function ContactPage() {
                 <span>
                   <T es="Zona horaria" en="Time zone" />
                 </span>
-                <span className="text-zinc-500">
+                <span className="text-muted">
                   <T
                     es="CST (Ciudad de México)"
                     en="CST (Mexico City)"
@@ -248,10 +248,10 @@ export default function ContactPage() {
         </aside>
       </div>
 
-      <footer className="mt-24 lg:mt-32 pt-8 border-t border-black/10 flex flex-wrap items-center justify-end gap-4">
+      <footer className="mt-24 lg:mt-32 pt-8 border-t border-line flex flex-wrap items-center justify-end gap-4">
         <Link
           href="/about"
-          className="inline-flex items-center gap-2 text-sm text-black hover:opacity-60 transition-opacity duration-150"
+          className="inline-flex items-center gap-2 text-sm text-foreground hover:opacity-60 transition-opacity duration-150"
         >
           <span>
             <T es="Acerca" en="About" />

@@ -13,10 +13,10 @@ export default function LangToggle({ className = "", dark = false }: LangToggleP
   const setLocale = useSetLocale();
   const active = ready ? locale : "es";
 
-  const activeCls = dark ? "text-white" : "text-black";
+  const activeCls = dark ? "text-foreground-strong" : "text-foreground-strong";
   const inactiveCls = dark
-    ? "text-white/40 hover:text-white"
-    : "text-zinc-400 hover:text-black";
+    ? "text-muted hover:text-foreground-strong"
+    : "text-muted hover:text-foreground-strong";
 
   const btn = (target: "es" | "en", label: string, aria: string) => (
     <button
@@ -37,7 +37,7 @@ export default function LangToggle({ className = "", dark = false }: LangToggleP
       className={`inline-flex items-center gap-1.5 text-xs uppercase tracking-widest ${className}`}
     >
       {btn("es", "ES", "Español")}
-      <span aria-hidden="true" className={dark ? "text-white/20" : "text-black/20"}>
+      <span aria-hidden="true" className={dark ? "text-foreground/20" : "text-foreground/20"}>
         /
       </span>
       {btn("en", "EN", "English")}
