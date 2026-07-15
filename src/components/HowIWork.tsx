@@ -1,9 +1,13 @@
 import Link from "next/link";
-import { Square, SquareEqual, Zap, } from "lucide-react";
+import { Zap } from "lucide-react";
 import { T } from "@/src/components/I18nProvider";
+import ProcessTimeline from "@/src/components/ProcessTimeline";
 
-/** Editorial "How I Work" block: a label/statement split above a large black
- *  statement card. Minimal, premium, fully responsive (stacks on mobile). */
+/**
+ * Editorial "How I Work" block — boxless. The intro statement, the "Cómo
+ * Trabajo" statement, and the process timeline all sit on the bare canvas;
+ * whitespace and a hairline rule do the separation (no cards, no --surface).
+ */
 export default function HowIWork() {
   return (
     <section aria-label="How I Work" className="mt-24 lg:mt-40">
@@ -31,39 +35,40 @@ export default function HowIWork() {
             <span className="text-xs font-bold uppercase tracking-[0.14em] text-foreground">
               <T es="Construyamos algo" en="Let's build something" />
             </span>
-            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-200 group-hover:scale-110">
+            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-200 group-hover:scale-110 motion-reduce:transition-none">
               <Zap size={13} strokeWidth={2} aria-hidden="true" />
             </span>
           </Link>
         </div>
       </div>
 
-      {/* Statement card */}
-      <div className="mt-16 lg:mt-24 rounded-[1.75rem] bg-surface p-8 sm:p-12 lg:p-16 text-foreground">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-12 lg:gap-16 lg:min-h-[20rem]">
-          <div className="flex items-center min-w-0 overflow-hidden">
-            <h2 className="font-extrabold uppercase tracking-tighter leading-[0.82] text-foreground text-6xl sm:text-7xl lg:text-7xl xl:text-8xl lg:inline-block lg:origin-left lg:scale-x-[0.66] lg:whitespace-nowrap">
-              <T es="Cómo Trabajo" en="How I Work" />
-            </h2>
-          </div>
-
-          <div className="flex flex-col justify-between gap-12">
-            <div className="max-w-md space-y-6 text-base lg:text-lg leading-relaxed text-muted-strong">
-              <p>
-                <T
-                  es="Cada proyecto empieza por entender tu negocio — antes de tocar el diseño."
-                  en="Every project starts with understanding your business — before touching design."
-                />
-              </p>
-              <p>
-                <T
-                  es="Después: UI limpia, un backend escalable e interacciones fluidas. Los sistemas sólidos construyen marcas sólidas."
-                  en="Then: clean UI, a scalable backend, and smooth interactions. Strong systems build strong brands."
-                />
-              </p>
-            </div>
+      {/* Two-column on desktop: sticky "Cómo Trabajo" statement (left) while the
+          vertical timeline (right) scrolls past and scrubs. Stacks on mobile. */}
+      <div className="mt-20 lg:mt-32 grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-16">
+        {/* LEFT — sticky statement. `.tl-sticky` pins on lg and goes static under
+            reduced-motion (deterministic override in globals.css). */}
+        <div className="tl-sticky">
+          <h2 className="font-extrabold uppercase tracking-tighter leading-[0.9] text-foreground text-5xl sm:text-6xl lg:text-7xl">
+            <T es="Cómo Trabajo" en="How I Work" />
+          </h2>
+          <div className="mt-8 max-w-md space-y-6 text-base lg:text-lg leading-relaxed text-muted-strong">
+            <p>
+              <T
+                es="Cada proyecto empieza por entender tu negocio — antes de tocar el diseño."
+                en="Every project starts with understanding your business — before touching design."
+              />
+            </p>
+            <p>
+              <T
+                es="Después: UI limpia, un backend escalable e interacciones fluidas. Los sistemas sólidos construyen marcas sólidas."
+                en="Then: clean UI, a scalable backend, and smooth interactions. Strong systems build strong brands."
+              />
+            </p>
           </div>
         </div>
+
+        {/* RIGHT — the unified vertical timeline, scrubbed by scroll. */}
+        <ProcessTimeline />
       </div>
     </section>
   );

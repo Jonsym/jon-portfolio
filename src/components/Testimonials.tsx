@@ -1,9 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import MobileCarousel from "@/src/components/MobileCarousel";
 import { T } from "@/src/components/I18nProvider";
+
+/**
+ * Client logos, one per testimonial card (order is arbitrary). The assets are
+ * inconsistent — two are black artwork on a baked-in white background, so every
+ * logo sits on a white "brand chip" to read uniformly on the dark canvas.
+ */
+type ClientLogo = { src: string; alt: string; w: number; h: number };
+const CLIENT_LOGOS: ClientLogo[] = [
+  { src: "/logos/hellomatchlogo.png", alt: "Hello Matcha", w: 654, h: 305 },
+  { src: "/logos/premmologo.png", alt: "Preemmo", w: 1524, h: 798 },
+  { src: "/logos/howtologo.png", alt: "HowToSpanish", w: 290, h: 207 },
+  { src: "/logos/zaplinlogo.png", alt: "Zaplin", w: 600, h: 142 },
+];
 
 /* ----------------------------------------------------------------------------
  * Placeholder testimonials — edit these freely. The home page shows 4;
@@ -72,63 +86,46 @@ const testimonials: Testimonial[] = [
 // Home shows up to 4 testimonials.
 const visible = testimonials.slice(0, 4);
 
-function Rating({ value, dark }: { value: number; dark?: boolean }) {
+function Rating({ value }: { value: number }) {
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-xs font-medium tabular-nums ${
-        dark ? "text-muted-strong" : "text-muted"
-      }`}
-    >
+    <span className="inline-flex items-center gap-1.5 text-xs font-medium tabular-nums text-background/60">
       {value.toFixed(1)}
     </span>
   );
 }
 
-function Avatar({ initials, dark }: { initials: string; dark?: boolean }) {
+/** White "brand chip" holding a client logo, sized to a fixed height. */
+function LogoChip({ logo }: { logo: ClientLogo }) {
   return (
-    <span
-      aria-hidden="true"
-      className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold tracking-tight ${
-        dark ? "bg-foreground/10 text-foreground" : "bg-foreground/[0.08] text-foreground"
-      }`}
-    >
-      {initials}
+    <span className="inline-flex h-10 shrink-0 items-center">
+      <Image
+        src={logo.src}
+        alt={logo.alt}
+        width={logo.w}
+        height={logo.h}
+        className="h-7 w-auto max-w-[150px] object-contain"
+      />
     </span>
   );
 }
 
-function Card({ t }: { t: Testimonial }) {
-  const dark = t.featured;
+function Card({ t, logo }: { t: Testimonial; logo: ClientLogo }) {
   return (
-    <figure
-      className={`flex h-full flex-col gap-5 rounded-[1.5rem] p-6 lg:p-7 ${
-        dark
-          ? "bg-surface text-foreground"
-          : "border border-line bg-background text-foreground"
-      }`}
-    >
+    <figure className="flex h-full flex-col gap-5 rounded-[1.5rem] bg-foreground-strong p-6 text-background lg:p-7">
       <div className="flex items-center justify-between gap-3">
-        <Avatar initials={t.initials} dark={dark} />
-        <Rating value={t.rating} dark={dark} />
+        <LogoChip logo={logo} />
+        <Rating value={t.rating} />
       </div>
 
-      <blockquote
-        className={`flex-1 text-sm lg:text-base leading-relaxed ${
-          dark ? "text-foreground" : "text-muted-strong"
-        }`}
-      >
+      <blockquote className="flex-1 text-sm lg:text-base leading-relaxed text-background">
         “<T es={t.quote.es} en={t.quote.en} />”
       </blockquote>
 
       <figcaption>
-        <p
-          className={`text-sm font-semibold tracking-tight ${
-            dark ? "text-foreground" : "text-foreground"
-          }`}
-        >
+        <p className="text-sm font-semibold tracking-tight text-background">
           {t.name}
         </p>
-        <p className={`text-xs ${dark ? "text-muted" : "text-muted"}`}>
+        <p className="text-xs text-background/60">
           <T es={t.role.es} en={t.role.en} /> · {t.company}
         </p>
       </figcaption>
@@ -187,8 +184,8 @@ export default function Testimonials() {
         <MobileCarousel
           ariaLabel="Recent clients"
           className="-mx-2"
-          slides={visible.map((t) => (
-            <Card key={t.name} t={t} />
+          slides={visible.map((t, i) => (
+            <Card key={t.name} t={t} logo={CLIENT_LOGOS[i % CLIENT_LOGOS.length]} />
           ))}
         />
       </div>
@@ -197,7 +194,7 @@ export default function Testimonials() {
       <div className="mt-14 hidden lg:grid grid-cols-3 auto-rows-fr gap-6">
         {visible.map((t, i) => (
           <div key={t.name} className={placement(i)}>
-            <Card t={t} />
+            <Card t={t} logo={CLIENT_LOGOS[i % CLIENT_LOGOS.length]} />
           </div>
         ))}
       </div>

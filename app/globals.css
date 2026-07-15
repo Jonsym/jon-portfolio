@@ -105,3 +105,107 @@ textarea:-webkit-autofill {
   caret-color: var(--foreground);
   transition: background-color 9999s ease-in-out 0s;
 }
+
+/* Process timeline (HowIWork / ProcessTimeline). One vertical timeline for all
+   viewports, scrubbed by scroll where the Scroll-linked Animations API exists,
+   with an IntersectionObserver play-once fallback elsewhere.
+
+   --tl-step-h drives the desktop step height (the sticky column's scroll travel);
+   retune it here (24vh start; 30vh if 24 feels cramped). */
+:root {
+  --tl-step-h: 24vh;
+}
+
+/* The timeline is ONE continuous SVG stroke (rail → through each circle → rail),
+   drawn by a single head. `d` is computed from measured node centers so the
+   viewBox is 1:1 (round circles) at any step height / locale. Only ONE thing
+   animates — the progress path's stroke-dashoffset — so nothing can desync. */
+
+/* The <ol> is the scroll subject the head scrubs against. */
+.tl {
+  position: relative;
+  view-timeline-name: --tl-spine;
+  view-timeline-axis: block;
+}
+
+.tl-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+/* Track = the faint full path (base "timeline, not yet animated"). */
+.tl-track {
+  fill: none;
+}
+
+/* Progress = the lit portion; pathLength is normalized to 1 in markup. */
+.tl-progress {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1; /* undrawn */
+  transition-property: stroke-dashoffset;
+  transition-timing-function: ease;
+}
+
+/* Fallback faint state until the measured spine exists (or with JS off): the
+   node keeps a CSS ring and the rail a CSS line. Hidden once the spine renders. */
+.tl-node {
+  border: 2px solid var(--line-strong);
+}
+.tl.spine-ready .tl-node {
+  border-color: transparent;
+}
+.tl.spine-ready .tl-rail-fallback {
+  display: none;
+}
+
+/* Fallback reveal (no native scroll-timeline): IO toggles `.is-visible` once —
+   one dashoffset sweep of the single head. */
+.tl.is-visible .tl-progress {
+  stroke-dashoffset: 0;
+  transition-duration: 2.4s;
+}
+
+/* Native scrub: the single head follows scroll across the spine's transit and
+   reverses on scroll-up. One animation, one range. Off the main thread. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tl-progress {
+      animation: tl-draw linear both;
+      animation-timeline: --tl-spine;
+      animation-range: cover 2% cover 90%;
+    }
+  }
+}
+@keyframes tl-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Sticky statement column (desktop only); static under reduced-motion. The
+   later reduced-motion rule wins deterministically. */
+@media (min-width: 1024px) {
+  .tl-sticky {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+}
+
+/* No animation, no pinning: render the completed path immediately. */
+@media (prefers-reduced-motion: reduce) {
+  .tl-progress {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+  .tl-sticky {
+    position: static;
+  }
+}
