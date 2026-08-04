@@ -1,15 +1,22 @@
 import Link from "next/link";
 import { T } from "@/src/components/I18nProvider";
+import CrowdCanvas from "@/src/components/CrowdCanvas";
 
 /** Final call-to-action: full-width black statement that invites the visitor
- *  to start a project. The primary button links to /contacto. */
+ *  to start a project. The primary button links to /contacto. A decorative
+ *  walking crowd (Open Peeps) drifts across the bottom behind the copy. */
 export default function FinalCta() {
   return (
     <section
       aria-label="Start a project"
-      className="w-full bg-surface text-foreground"
+      className="relative w-full overflow-hidden bg-surface text-foreground min-h-[90vh] flex items-center"
     >
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 py-24 sm:py-32 lg:py-44 text-center">
+      {/* Decorative crowd — sits behind the copy, walks along the bottom. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0">
+        <CrowdCanvas src="/images/peeps/all-peeps.png" rows={15} cols={7} />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-12 py-24 sm:py-32 lg:py-44 text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-muted">
           <T
             es="(Disponible para nuevos proyectos — 2026)"

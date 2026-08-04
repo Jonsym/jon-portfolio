@@ -120,8 +120,8 @@ export default function Navbar() {
     <header className="w-full bg-background border-b border-line">
       <div className="w-full px-6 lg:px-12">
         {/* Mobile bar */}
-        <div className="flex h-16 lg:hidden items-center justify-between gap-6">
-          <Logo className="h-11" />
+        <div className="flex h-14 lg:hidden items-center justify-between gap-6">
+          <Logo className="h-9" />
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -134,13 +134,14 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Desktop bar — logo left, links + lang right */}
-        <div className="hidden lg:flex h-20 items-center justify-between gap-8">
-          <Logo className="h-12 shrink-0" />
+        {/* Desktop bar — logo left, links + lang right. Slimmed to an editorial
+            rule so the rolling wordmark below owns the eye. */}
+        <div className="hidden lg:flex h-14 items-center justify-between gap-8">
+          <Logo className="h-8 shrink-0" />
 
-          <div className="flex items-center gap-8 xl:gap-10">
+          <div className="flex items-center gap-6 xl:gap-8">
             <nav aria-label={ariaPrincipal}>
-              <ul className="flex items-center gap-8 xl:gap-10 text-base">
+              <ul className="flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.14em]">
                 {navLinks.map((link) => (
                   <Fragment key={link.href}>
                     <li>

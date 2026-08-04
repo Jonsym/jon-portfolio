@@ -13,7 +13,7 @@ export const proyectosItems = [
 ] as const;
 
 const linkBaseCls =
-  "text-foreground hover:text-foreground-strong transition-colors duration-150";
+  "text-foreground hover:text-foreground-strong transition-colors duration-150 uppercase tracking-[0.14em]";
 
 /** Hover/focus-triggered dropdown for the desktop navbar — Proyectos + Labs. */
 export default function ProyectosMenu() {

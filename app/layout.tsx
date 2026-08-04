@@ -1,15 +1,32 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Archivo_Black, Inter } from "next/font/google";
 import "./globals.css";
 import GlobalNavbar from "@/src/components/GlobalNavbar";
 import Footer from "@/src/components/Footer";
 import { I18nProvider } from "@/src/components/I18nProvider";
 
-// Single typeface for the entire site — Geist Sans. Keeps the design system to
-// one voice; weight, case, and color carry the hierarchy instead of extra fonts.
+// Geist Sans is the workhorse — body, UI, nav. Weight, case, and color carry the
+// hierarchy across the interface.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+// Archivo Black is a single-weight display face, used only for the giant
+// rolling "JON @ JON" hero wordmark. Non-variable, so weight 400 is required.
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Tight neo-grotesque used only inside the projects collage (see globals.css),
+// a deliberate switch from the hero's wide-tracked treatment.
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} antialiased bg-background`}
+      className={`${geistSans.variable} ${archivoBlack.variable} ${inter.variable} antialiased bg-background`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <I18nProvider>

@@ -27,6 +27,7 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-archivo-black);
 }
 
 html,
@@ -61,6 +62,230 @@ body {
   .carousel:hover .carousel-track {
     animation-play-state: paused;
   }
+
+  /* Giant hero wordmark — a seamless horizontal roll. The track holds two
+     identical groups of "JON @ JON …"; translating left by exactly 50% lands
+     the second group where the first began, so the loop is invisible.
+     GPU-friendly transform; pauses on hover so the name stays readable. */
+  @keyframes marquee-x {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-x 30s linear infinite;
+  }
+
+  /* 3D hero ring — the rotor carries the faces around the cylinder. One
+     continuous rotateY; keeps spinning even on hover. */
+  @keyframes spin-y {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  .wordmark-rotor {
+    animation: spin-y 34s linear infinite;
+  }
+}
+
+/* A face turned to the back of the ring points away from the camera, so hiding
+   its backface makes it disappear cleanly (no mirrored text) and reappear at
+   the front — that's what makes the 360° loop seamless. */
+.wordmark-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Reduced motion / no-JS: nothing spins. The flat fallback holds still, shifted
+   left so it still reads as a cropped, oversized headline. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    transform: translateX(-8%);
+  }
+  .wordmark-rotor {
+    animation: none;
+  }
+}
+
+
+/* ------------------------------------------------------------------ *
+ * Scroll-driven projects collage (see ProjectsCollage.tsx).
+ *
+ * ONE SIZE PER ROW. Every card in a row is identical; JS sets the row's
+ * `--row-h` (interpolated from scroll progress) and each card's height is
+ * `--row-h`, width follows from `--aspect`. The row is centered and always
+ * wider than the viewport, so as it grows the outer cards clip off both edges
+ * — that "only the middle three show" state is emergent geometry, not code.
+ *
+ * Rows sit in FIXED slots (translated by `--y`) and expand symmetrically in
+ * place, so the container's height is exactly rows×baseH + (rows−1)×gap and the
+ * loop writes only custom properties + z-index — no per-frame layout.
+ * ------------------------------------------------------------------ */
+.collage-root {
+  --gap: 20px; /* desktop */
+  --page-margin: 24px; /* the card row is inset by this; the wordmark is not */
+  --aspect-w: 3; /* card box 3:2 — taller cards; image is object-fit: cover */
+  --aspect-h: 2;
+  --card-w: 20vw; /* fallbacks until JS measures */
+  --card-h: 11vw;
+  --base-height: 20vh;
+  position: relative;
+  overflow-x: clip; /* bleeding cards never create horizontal scroll */
+  opacity: 0;
+  /* Section typeface: a tight neo-grotesque, distinct from the hero. */
+  font-family: var(--font-inter), var(--font-geist-sans), sans-serif;
+}
+.collage-root.is-ready {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Wordmark sits inside the collage, above the first row (JS sets `top`). It's
+   decorative, so it ignores the pointer entirely — hover can't affect it. */
+.collage-wordmark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.collage-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  min-height: var(--base-height); /* identical on every row — no cascade */
+  overflow-x: clip; /* cards clip at the viewport edge… */
+  overflow-y: visible; /* …but captions must not be eaten */
+  transform: translate3d(0, var(--y, 0px), 0);
+  contain: layout; /* scope each frame's card reflow to the row */
+  /* will-change is toggled per row in JS (only while moving). */
+}
+
+.collage-wrapper {
+  display: flex;
+  justify-content: center; /* odd count → middle card is centered */
+  align-items: flex-start;
+  gap: var(--gap);
+  width: 100%;
+}
+
+/* Every card resolves to the SAME box for its row: --card-w × --card-h. */
+.collage-item {
+  position: relative;
+  flex: 0 0 auto;
+  display: block;
+  width: var(--card-w);
+  outline: none;
+}
+.collage-item:focus-visible {
+  outline: 2px solid var(--foreground-strong);
+  outline-offset: 3px;
+}
+
+.collage-thumb {
+  position: relative;
+  width: 100%;
+  height: var(--card-h);
+  overflow: hidden;
+  background: var(--surface);
+}
+.collage-img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+/* Only the active (centre) card responds to hover — the bleeding side cards
+   stay clickable but don't invite a click. */
+.collage-item.visual-index-2:hover .collage-img {
+  transform: scale(1.03);
+}
+
+/* Caption justified across the card's own width: title flush left, date flush
+   right. Nothing hangs outside the card. */
+.collage-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 8px;
+}
+.collage-title,
+.collage-year {
+  white-space: nowrap;
+  font-size: 0.72rem; /* ~11.5px */
+  font-weight: 400; /* regular, not bold */
+  text-transform: uppercase;
+  letter-spacing: 0.01em; /* near-zero — tight vs. the hero's wide tracking */
+}
+.collage-title {
+  color: var(--foreground-strong);
+}
+.collage-year {
+  flex: none;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visited-state overlay (structure kept; "seen" logic is a later step). */
+.elementSeen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Buffer rows: one empty card, no imagery, unfocusable. */
+.collage-empty {
+  pointer-events: none;
+}
+.collage-empty .collage-thumb {
+  background: transparent;
+}
+.collage-row.invisible {
+  visibility: hidden;
+}
+
+/* Mobile — identical engine; only the crop and gap change (square cover). */
+@media (max-width: 1023px) {
+  .collage-root {
+    --gap: 16px;
+    --page-margin: 16px;
+    --aspect-w: 1;
+    --aspect-h: 1;
+  }
+  .collage-title,
+  .collage-year {
+    font-size: 0.68rem;
+  }
+}
+
+/* Lenis smooth scroll (see ProjectsCollage.tsx). Default mode animates the real
+   scrollTop, so CSS scroll-timeline sections keep tracking. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
 }
 
 /* Hidden scrollbar for horizontal scroll containers (e.g. lab timeline). */
