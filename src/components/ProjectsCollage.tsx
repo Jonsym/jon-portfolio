@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { projects, canOptimizeSrc, type Project } from "@/src/lib/projects";
+import HeroMascot from "@/src/components/HeroMascot";
 
 /**
  * Scroll-driven projects collage — ported from the reference prototype.
@@ -121,6 +122,7 @@ type Cache = {
 
 export default function ProjectsCollage() {
   const rootRef = useRef<HTMLElement | null>(null);
+  const mascotRef = useRef<HTMLDivElement | null>(null);
   const rowEls = useRef<(HTMLDivElement | null)[]>([]);
   const cache = useRef<Cache | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -167,6 +169,11 @@ export default function ProjectsCollage() {
     const collageTop = root.getBoundingClientRect().top + window.scrollY; // header band height
     const firstRowTop = vh - rowHRest - CLEARANCE;
     const pusher = Math.max(gap + vh * 0.02, firstRowTop - collageTop);
+    // Centre the mascot in the band above the first row.
+    if (mascotRef.current) {
+      const mh = mascotRef.current.getBoundingClientRect().height;
+      mascotRef.current.style.top = `${Math.max(vh * 0.05, (pusher - mh) / 2)}px`;
+    }
 
     const n = ROWS.length;
     // A modest bottom reserve lets a peaking row expand; `overflow: clip` keeps
@@ -331,6 +338,11 @@ export default function ProjectsCollage() {
       aria-label="Selected work"
       className={`collage-root ${ready ? "is-ready" : ""}`}
     >
+      {/* Mascot in the band above the first row (eyes follow the cursor). */}
+      <div ref={mascotRef} className="collage-mascot">
+        <HeroMascot />
+      </div>
+
       {ROWS.map((row, i) => (
         <div
           key={i}

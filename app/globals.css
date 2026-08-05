@@ -161,6 +161,60 @@ body {
   pointer-events: none;
 }
 
+/* Mascot sits centred in the band above the first row (JS sets `top`). */
+.collage-mascot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mascot {
+    animation: mascot-float 6s ease-in-out infinite;
+  }
+  @keyframes mascot-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  /* Hand-drawn "life" — the cat breathes and its tail sways. */
+  .cat-breathe {
+    transform-box: fill-box;
+    transform-origin: 50% 92%;
+    animation: cat-breathe 3.6s ease-in-out infinite;
+  }
+  @keyframes cat-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.025);
+    }
+  }
+  .cat-tail {
+    transform-box: fill-box;
+    transform-origin: 80% 8%;
+    animation: cat-tail 2.9s ease-in-out infinite;
+  }
+  @keyframes cat-tail {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+  }
+}
+
 .collage-row {
   position: absolute;
   left: 0;
