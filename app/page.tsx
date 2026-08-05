@@ -18,8 +18,10 @@ export default function Home() {
       </div>
 
       {/* How I Work + Recent clients — back inside the centered container.
-          The collage pulls this up via a negative margin; keep the extra gap small. */}
-      <div className="mt-8 lg:mt-12">
+          The collage pulls this up via a negative margin; this section is an
+          opaque layer (relative z-10 + solid bg) so it cleanly covers the
+          collage's tail instead of the cards bleeding over its text. */}
+      <div className="relative z-10 bg-background mt-8 lg:mt-12">
         <HowIWork />
         <Testimonials />
       </div>

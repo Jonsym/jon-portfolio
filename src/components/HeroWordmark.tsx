@@ -1,115 +1,159 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useTPair } from "@/src/components/I18nProvider";
+import { useEffect, useRef } from "react";
 
 /**
- * The hero wordmark — "JON @ JON @ JON …" wrapped around a horizontal 3D ring
- * that spins continuously (the rotative "360" text), in Archivo Black. Each
- * repetition is a face placed around a cylinder whose radius is computed from
- * the measured word width so the faces tile edge to edge at any viewport.
- * `backface-visibility: hidden` makes a face vanish as it turns to the back
- * (no mirrored text) and reappear at the front — a seamless 360° loop.
+ * Hero wordmark — full-width "JON WORKS" in Archivo Black with a liquid wave.
+ * Each LETTER is its own element with its own SVG displacement filter, so on
+ * hover every letter ripples independently (staggered phase → the wave travels
+ * across the word). The row is fit-to-width in JS: measured at a base size, then
+ * the font is scaled so the word spans the container exactly (no overflow).
  *
- * Until the client has measured (SSR / first paint / no-JS), a flat marquee
- * stands in so the wordmark is never blank.
+ * Performance: the rAF runs ONLY while hovering (plus a short settle) and only
+ * animates each filter's displacement `scale` — the per-letter turbulence noise
+ * is fixed, so it stays cached. Reduced-motion skips the wave.
  */
 
-const SEG_COUNT = 10; // faces around the ring
+const WORD = "JON WORKS";
+const LETTERS = [...WORD];
 
-// Shared type ramp for the ring faces AND the hidden measuring node — Archivo
-// Black via --font-display. They must match exactly or the radius won't tile.
-const FACE =
-  "font-[family-name:var(--font-display)] uppercase leading-[0.8] text-[16vw] lg:text-[13vw] text-foreground-strong whitespace-nowrap";
-
-function Unit() {
-  // Plain "@" glyph — no ringed badge around it.
-  return (
-    <span className="flex items-center gap-[0.12em] pr-[0.18em]">
-      <span>JON</span>
-      <span aria-hidden="true">@</span>
-    </span>
-  );
-}
+const IDLE = 6;
+const HOVER_BASE = 30;
+const HOVER_AMP = 16;
+const PHASE = 0.7; // per-letter phase offset → ripple across the word
+const SPEED = 4;
+const EASE = 0.14;
 
 export default function HeroWordmark() {
-  const name = useTPair(
-    "Jon Zamudio — Diseño y Desarrollo Web",
-    "Jon Zamudio — Web Design & Development"
-  );
+  const rowRef = useRef<HTMLDivElement | null>(null);
+  const dispRefs = useRef<(SVGFEDisplacementMapElement | null)[]>([]);
+  const scales = useRef<number[]>(LETTERS.map(() => IDLE));
+  const hovering = useRef(false);
+  const raf = useRef<number | null>(null);
+  const t = useRef(0);
+  const last = useRef<number | null>(null);
+  const reduce = useRef(false);
 
-  const measureRef = useRef<HTMLSpanElement>(null);
-  const [geo, setGeo] = useState<{ radius: number; perspective: number } | null>(
-    null
-  );
-
+  // Fit the word to the container width (measure natural width, scale the font).
   useEffect(() => {
-    const measure = () => {
-      const el = measureRef.current;
-      const w = el?.offsetWidth ?? 0;
-      if (!w) return;
-      const radius = (SEG_COUNT * w) / (2 * Math.PI);
-      setGeo({ radius, perspective: radius * 1.15 });
+    const row = rowRef.current;
+    if (!row) return;
+    const fit = () => {
+      row.style.fontSize = "100px";
+      const natural = row.scrollWidth;
+      const avail = row.clientWidth;
+      if (natural > 0) row.style.fontSize = `${(100 * avail) / natural}px`;
     };
-    measure();
-    window.addEventListener("resize", measure);
-    document.fonts?.ready.then(measure).catch(() => {});
-    return () => window.removeEventListener("resize", measure);
+    fit();
+    window.addEventListener("resize", fit);
+    document.fonts?.ready.then(fit).catch(() => {});
+    return () => window.removeEventListener("resize", fit);
   }, []);
 
+  useEffect(() => {
+    reduce.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
+  const loop = (now: number) => {
+    const dt = last.current == null ? 1 / 60 : Math.min(0.05, (now - last.current) / 1000);
+    last.current = now;
+    t.current += dt;
+    const k = 1 - Math.pow(1 - EASE, dt * 60);
+    let moving = false;
+    for (let i = 0; i < LETTERS.length; i++) {
+      const target = hovering.current
+        ? HOVER_BASE + HOVER_AMP * Math.sin(t.current * SPEED + i * PHASE)
+        : IDLE;
+      scales.current[i] += (target - scales.current[i]) * k;
+      dispRefs.current[i]?.setAttribute("scale", scales.current[i].toFixed(2));
+      if (hovering.current || Math.abs(scales.current[i] - IDLE) > 0.3) moving = true;
+    }
+    if (moving) {
+      raf.current = requestAnimationFrame(loop);
+    } else {
+      for (let i = 0; i < LETTERS.length; i++) {
+        scales.current[i] = IDLE;
+        dispRefs.current[i]?.setAttribute("scale", String(IDLE));
+      }
+      raf.current = null;
+      last.current = null;
+    }
+  };
+
+  const onEnter = () => {
+    if (reduce.current) return;
+    hovering.current = true;
+    if (raf.current == null) {
+      last.current = null;
+      raf.current = requestAnimationFrame(loop);
+    }
+  };
+  const onLeave = () => {
+    hovering.current = false;
+  };
+
   return (
-    <section
-      aria-label={name}
-      className="marquee3d relative w-full overflow-hidden select-none h-[26vw] lg:h-[20vw]"
-      style={geo ? { perspective: `${geo.perspective}px` } : undefined}
-    >
-      <h1 className="sr-only">{name}</h1>
-
-      <span
-        ref={measureRef}
-        aria-hidden="true"
-        className={`invisible pointer-events-none absolute left-0 top-0 ${FACE}`}
-      >
-        <Unit />
-      </span>
-
-      {geo ? (
-        <div
-          className="absolute inset-0 [transform-style:preserve-3d]"
-          style={{ transform: `translateZ(-${geo.radius}px)` }}
-        >
-          <div className="wordmark-rotor absolute inset-0 [transform-style:preserve-3d]">
-            {Array.from({ length: SEG_COUNT }, (_, i) => (
-              <div
-                key={i}
-                className={`wordmark-face absolute inset-0 flex items-center justify-center ${FACE}`}
-                style={{
-                  transform: `rotateY(${
-                    i * (360 / SEG_COUNT)
-                  }deg) translateZ(${geo.radius}px)`,
+    <div className="w-full select-none px-4 sm:px-6 lg:px-8">
+      {/* Per-letter filter defs (hidden). */}
+      <svg width="0" height="0" aria-hidden="true" className="absolute">
+        <defs>
+          {LETTERS.map((_, i) => (
+            <filter
+              key={i}
+              id={`hw-${i}`}
+              x="-40%"
+              y="-45%"
+              width="180%"
+              height="190%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.013 0.02"
+                numOctaves={2}
+                seed={7 + i}
+                result="noise"
+              />
+              <feDisplacementMap
+                ref={(el) => {
+                  dispRefs.current[i] = el;
                 }}
-              >
-                <Unit />
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div
-          className={`marquee-track absolute inset-0 flex w-max items-center ${FACE}`}
-        >
-          <span className="flex shrink-0 items-center" aria-hidden="true">
-            {Array.from({ length: 6 }, (_, i) => (
-              <Unit key={i} />
-            ))}
-          </span>
-          <span className="flex shrink-0 items-center" aria-hidden="true">
-            {Array.from({ length: 6 }, (_, i) => (
-              <Unit key={i} />
-            ))}
-          </span>
-        </div>
-      )}
-    </section>
+                in="SourceGraphic"
+                in2="noise"
+                scale={IDLE}
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          ))}
+        </defs>
+      </svg>
+
+      <div
+        ref={rowRef}
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        aria-label={WORD}
+        className="pointer-events-auto flex w-full items-center justify-center whitespace-nowrap font-[family-name:var(--font-display)] uppercase leading-[0.8] text-foreground-strong text-[13vw]"
+      >
+        {LETTERS.map((ch, i) =>
+          ch === " " ? (
+            <span key={i} aria-hidden="true" className="inline-block w-[0.2em]" />
+          ) : (
+            <span
+              key={i}
+              aria-hidden="true"
+              style={{ filter: `url(#hw-${i})` }}
+              className="inline-block will-change-[filter]"
+            >
+              {ch}
+            </span>
+          )
+        )}
+      </div>
+    </div>
   );
 }

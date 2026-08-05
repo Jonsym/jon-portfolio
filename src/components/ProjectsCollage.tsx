@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { projects, canOptimizeSrc, type Project } from "@/src/lib/projects";
-import HeroWordmark from "@/src/components/HeroWordmark";
 
 /**
  * Scroll-driven projects collage — ported from the reference prototype.
@@ -122,7 +121,6 @@ type Cache = {
 
 export default function ProjectsCollage() {
   const rootRef = useRef<HTMLElement | null>(null);
-  const wmRef = useRef<HTMLDivElement | null>(null);
   const rowEls = useRef<(HTMLDivElement | null)[]>([]);
   const cache = useRef<Cache | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -166,23 +164,20 @@ export default function ProjectsCollage() {
     // caption bottom = firstRowTop + rowHRest = vh - CLEARANCE  (inside)
     // row 2 top      = caption bottom + gap  = vh + (gap - CLEARANCE) ≥ vh
     const CLEARANCE = 8;
-    const wmH = wmRef.current?.getBoundingClientRect().height ?? vh * 0.2;
     const collageTop = root.getBoundingClientRect().top + window.scrollY; // header band height
     const firstRowTop = vh - rowHRest - CLEARANCE;
-    const pusher = Math.max(wmH + gap + vh * 0.02, firstRowTop - collageTop);
-    // The wordmark sits directly above the first row (gap between).
-    if (wmRef.current) wmRef.current.style.top = `${pusher - gap - wmH}px`;
+    const pusher = Math.max(gap + vh * 0.02, firstRowTop - collageTop);
 
     const n = ROWS.length;
-    // Resting stack + the extra one peaked row adds → scrollHeight never drifts.
-    const height =
-      pusher + n * (rowHRest + gap) - gap + (rowHPeak - rowHRest);
+    // A modest bottom reserve lets a peaking row expand; `overflow: clip` keeps
+    // any surplus off-screen (never bleeding into the next section) and pins the
+    // trailing gap small. NO negative margin — that's what made the tail overlap
+    // the next section's copy.
+    const reserve = (rowHPeak - rowHRest) * 0.5;
+    const height = pusher + n * (rowHRest + gap) - gap + reserve;
     root.style.height = `${height}px`;
     root.style.setProperty("--base-height", `${rowHRest}px`);
-    // Pull the next section up into the empty bottom peak-reserve. Leaving half
-    // the reserve keeps room for the last row's own expansion; the rest is dead
-    // space at the end of the scroll, so the following section can overlap it.
-    root.style.marginBottom = `-${Math.round((rowHPeak - rowHRest) * 0.55)}px`;
+    root.style.marginBottom = "0px";
 
     cache.current = {
       vh,
@@ -336,11 +331,6 @@ export default function ProjectsCollage() {
       aria-label="Selected work"
       className={`collage-root ${ready ? "is-ready" : ""}`}
     >
-      {/* Wordmark lives inside the collage, above the first row. */}
-      <div ref={wmRef} className="collage-wordmark">
-        <HeroWordmark />
-      </div>
-
       {ROWS.map((row, i) => (
         <div
           key={i}

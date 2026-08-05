@@ -139,7 +139,8 @@ body {
   --card-h: 11vw;
   --base-height: 20vh;
   position: relative;
-  overflow-x: clip; /* bleeding cards never create horizontal scroll */
+  isolation: isolate; /* keep the rows' z-index from leaking past the section */
+  overflow: clip; /* clip on BOTH axes — a card can never bleed below the section */
   opacity: 0;
   /* Section typeface: a tight neo-grotesque, distinct from the hero. */
   font-family: var(--font-inter), var(--font-geist-sans), sans-serif;
