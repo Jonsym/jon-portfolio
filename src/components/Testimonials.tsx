@@ -7,9 +7,12 @@ import MobileCarousel from "@/src/components/MobileCarousel";
 import { T } from "@/src/components/I18nProvider";
 
 /**
- * Client logos, one per testimonial card (order is arbitrary). The assets are
- * inconsistent — two are black artwork on a baked-in white background, so every
- * logo sits on a white "brand chip" to read uniformly on the dark canvas.
+ * Client logos, one per testimonial (order is arbitrary). The assets are
+ * inconsistent — two are artwork on a baked-in white background, two are
+ * transparent and full-colour — so they all get the same treatment:
+ * grayscale + invert, composited with `mix-blend-screen`. Screen drops the
+ * inverted white background to nothing against a dark surface, so every logo
+ * lands as a monochrome mark with no chip around it. See `LogoMark`.
  */
 type ClientLogo = { src: string; alt: string; w: number; h: number };
 const CLIENT_LOGOS: ClientLogo[] = [
@@ -21,7 +24,7 @@ const CLIENT_LOGOS: ClientLogo[] = [
 
 /* ----------------------------------------------------------------------------
  * Placeholder testimonials — edit these freely. The home page shows 4;
- * `featured: true` renders the dark card.
+ * `featured: true` is the one pulled out as the large lead quote.
  * ------------------------------------------------------------------------- */
 
 type Testimonial = {
@@ -83,62 +86,94 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// Home shows up to 4 testimonials.
-const visible = testimonials.slice(0, 4);
+// Home shows up to 4 testimonials: one pulled out as the lead quote, the rest
+// in a row underneath. Pairing is by index, so a logo travels with its card.
+const visible = testimonials.slice(0, 4).map((t, i) => ({
+  t,
+  logo: CLIENT_LOGOS[i % CLIENT_LOGOS.length],
+}));
+const leadIndex = Math.max(
+  0,
+  visible.findIndex(({ t }) => t.featured),
+);
+const lead = visible[leadIndex];
+const rest = visible.filter((_, i) => i !== leadIndex);
 
 function Rating({ value }: { value: number }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-medium tabular-nums text-background/60">
+    <span className="text-xs font-medium tabular-nums text-muted">
       {value.toFixed(1)}
     </span>
   );
 }
 
-/** White "brand chip" holding a client logo, sized to a fixed height. */
-function LogoChip({ logo }: { logo: ClientLogo }) {
+/**
+ * A client logo reduced to a monochrome mark. `mix-blend-screen` is what makes
+ * the chip unnecessary — see the note on CLIENT_LOGOS.
+ */
+function LogoMark({ logo, className = "h-7" }: { logo: ClientLogo; className?: string }) {
   return (
-    <span className="inline-flex h-10 shrink-0 items-center">
-      <Image
-        src={logo.src}
-        alt={logo.alt}
-        width={logo.w}
-        height={logo.h}
-        className="h-7 w-auto max-w-[150px] object-contain"
-      />
-    </span>
+    <Image
+      src={logo.src}
+      alt={logo.alt}
+      width={logo.w}
+      height={logo.h}
+      className={`${className} w-auto max-w-[150px] shrink-0 object-contain grayscale invert mix-blend-screen`}
+    />
   );
 }
 
+/** The pulled-out lead quote: no panel, set large straight on the canvas. */
+function LeadQuote({ t, logo }: { t: Testimonial; logo: ClientLogo }) {
+  return (
+    <figure className="border-t border-line pt-10 lg:pt-12">
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <blockquote className="lg:col-span-8 text-2xl sm:text-3xl lg:text-[2.5rem] font-medium leading-[1.2] tracking-tight text-foreground-strong text-balance">
+          “<T es={t.quote.es} en={t.quote.en} />”
+        </blockquote>
+
+        <figcaption className="lg:col-span-4 flex flex-col justify-end gap-5">
+          <div className="flex items-center justify-between gap-4">
+            <LogoMark logo={logo} className="h-9" />
+            <Rating value={t.rating} />
+          </div>
+          <div className="border-t border-line pt-4">
+            <p className="text-sm font-semibold tracking-tight text-foreground">
+              {t.name}
+            </p>
+            <p className="mt-0.5 text-xs text-muted">
+              <T es={t.role.es} en={t.role.en} /> · {t.company}
+            </p>
+          </div>
+        </figcaption>
+      </div>
+    </figure>
+  );
+}
+
+/** Supporting testimonial: a raised surface panel, uniform height. */
 function Card({ t, logo }: { t: Testimonial; logo: ClientLogo }) {
   return (
-    <figure className="flex h-full flex-col gap-5 rounded-[1.5rem] bg-foreground-strong p-6 text-background lg:p-7">
+    <figure className="flex h-full flex-col gap-5 rounded-[1.5rem] border border-line bg-surface p-6 transition-colors duration-200 hover:border-line-strong lg:p-7">
       <div className="flex items-center justify-between gap-3">
-        <LogoChip logo={logo} />
+        <LogoMark logo={logo} />
         <Rating value={t.rating} />
       </div>
 
-      <blockquote className="flex-1 text-sm lg:text-base leading-relaxed text-background">
+      <blockquote className="flex-1 text-sm lg:text-base leading-relaxed text-muted-strong">
         “<T es={t.quote.es} en={t.quote.en} />”
       </blockquote>
 
-      <figcaption>
-        <p className="text-sm font-semibold tracking-tight text-background">
+      <figcaption className="border-t border-line pt-4">
+        <p className="text-sm font-semibold tracking-tight text-foreground">
           {t.name}
         </p>
-        <p className="text-xs text-background/60">
+        <p className="mt-0.5 text-xs text-muted">
           <T es={t.role.es} en={t.role.en} /> · {t.company}
         </p>
       </figcaption>
     </figure>
   );
-}
-
-// Desktop masonry placement: featured tall-left, two white top-right, one wide
-// white bottom-right — fills a 3×2 grid with no gaps for exactly 4 cards.
-function placement(i: number): string {
-  if (i === 0) return "lg:row-span-2";
-  if (i === 3) return "lg:col-span-2";
-  return "";
 }
 
 export default function Testimonials() {
@@ -179,23 +214,26 @@ export default function Testimonials() {
         </div>
       </div>
 
+      {/* Lead quote, at every breakpoint */}
+      <div className="mt-14 lg:mt-20">
+        <LeadQuote t={lead.t} logo={lead.logo} />
+      </div>
+
       {/* Mobile / tablet: infinite touch carousel */}
       <div className="mt-10 lg:hidden">
         <MobileCarousel
           ariaLabel="Recent clients"
           className="-mx-2"
-          slides={visible.map((t, i) => (
-            <Card key={t.name} t={t} logo={CLIENT_LOGOS[i % CLIENT_LOGOS.length]} />
+          slides={rest.map(({ t, logo }) => (
+            <Card key={t.name} t={t} logo={logo} />
           ))}
         />
       </div>
 
-      {/* Desktop: static masonry grid */}
-      <div className="mt-14 hidden lg:grid grid-cols-3 auto-rows-fr gap-6">
-        {visible.map((t, i) => (
-          <div key={t.name} className={placement(i)}>
-            <Card t={t} logo={CLIENT_LOGOS[i % CLIENT_LOGOS.length]} />
-          </div>
+      {/* Desktop: the remaining quotes in one even row */}
+      <div className="mt-10 hidden auto-rows-fr grid-cols-3 gap-6 lg:grid lg:mt-12">
+        {rest.map(({ t, logo }) => (
+          <Card key={t.name} t={t} logo={logo} />
         ))}
       </div>
     </section>

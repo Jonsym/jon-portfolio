@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import CatMark from "./CatMark";
 import { T, useTPair } from "./I18nProvider";
 
 const sitemap = [
@@ -42,16 +42,9 @@ export default function Footer() {
             <Link
               href="/"
               aria-label={ariaHome}
-              className="inline-flex items-center leading-none select-none hover:opacity-70 transition-opacity duration-150"
+              className="inline-flex items-center leading-none select-none text-white hover:opacity-70 transition-opacity duration-150"
             >
-              <Image
-                src="/icons/logo.png"
-                alt=""
-                width={1329}
-                height={1183}
-                sizes="(min-width: 1024px) 80px, 64px"
-                className="h-16 lg:h-20 w-auto"
-              />
+              <CatMark className="h-16 lg:h-20 w-auto" />
             </Link>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
               Full-stack Developer &amp; Designer.

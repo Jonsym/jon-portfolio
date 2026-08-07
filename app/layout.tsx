@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Archivo_Black, Inter } from "next/font/google";
 import "./globals.css";
 import GlobalNavbar from "@/src/components/GlobalNavbar";
-import Footer from "@/src/components/Footer";
+import GlobalFooter from "@/src/components/GlobalFooter";
 import { I18nProvider } from "@/src/components/I18nProvider";
 
 // Geist Sans is the workhorse — body, UI, nav. Weight, case, and color carry the
@@ -53,7 +53,7 @@ export default function RootLayout({
               {children}
             </div>
           </main>
-          <Footer />
+          <GlobalFooter />
         </I18nProvider>
       </body>
     </html>

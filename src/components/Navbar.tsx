@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import CatMark from "./CatMark";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
 import CvMenu, { CvMobileList } from "./CvMenu";
@@ -45,29 +45,15 @@ const externalLinks = [
   { label: "Instagram", href: "https://www.instagram.com/jony.zasa/" },
 ] as const;
 
-function Logo({
-  className = "",
-  invert = false,
-}: {
-  className?: string;
-  invert?: boolean;
-}) {
+function Logo({ className = "" }: { className?: string }) {
   const ariaHome = useTPair("JonZS — Inicio", "JonZS — Home");
   return (
     <Link
       href="/"
       aria-label={ariaHome}
-      className={`inline-flex items-center select-none hover:opacity-70 transition-opacity duration-150 ${className}`}
+      className={`inline-flex items-center select-none text-white hover:opacity-70 transition-opacity duration-150 ${className}`}
     >
-      <Image
-        src="/icons/logo.png"
-        alt=""
-        width={1329}
-        height={1183}
-        priority
-        sizes="(min-width: 1024px) 48px, 44px"
-        className={`h-full w-auto ${invert ? "invert" : ""}`}
-      />
+      <CatMark className="h-full w-auto" />
     </Link>
   );
 }
@@ -117,7 +103,9 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="w-full bg-background border-b border-line">
+    // `relative z-40` keeps the bar above fixed-position page layers (see the
+    // projects carousel), while staying under the mobile drawer at z-50.
+    <header className="relative z-40 w-full bg-background border-b border-line">
       <div className="w-full px-6 lg:px-12">
         {/* Mobile bar */}
         <div className="flex h-14 lg:hidden items-center justify-between gap-6">
