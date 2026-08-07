@@ -7,7 +7,6 @@ import { ChevronDown } from "lucide-react";
 import CatMark from "./CatMark";
 import { T, useTPair } from "./I18nProvider";
 import LangToggle from "./LangToggle";
-import CvMenu, { CvMobileList } from "./CvMenu";
 import ProyectosMenu from "./ProyectosMenu";
 
 type NavChild = {
@@ -145,12 +144,6 @@ export default function Navbar() {
                         </Link>
                       )}
                     </li>
-                    {/* Curriculum dropdown sits right after Proyectos */}
-                    {link.match === "/proyectos" && (
-                      <li>
-                        <CvMenu />
-                      </li>
-                    )}
                   </Fragment>
                 ))}
               </ul>
@@ -278,8 +271,7 @@ export default function Navbar() {
               ))}
             </ul>
 
-            <div className="flex items-center justify-between gap-6">
-              <CvMobileList onNavigate={() => setOpen(false)} dark />
+            <div className="flex items-center justify-end gap-6">
               <LangToggle className="text-muted self-end shrink-0" dark />
             </div>
           </div>

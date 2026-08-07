@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Download, Eye } from "lucide-react";
 import Breadcrumb from "@/src/components/Breadcrumb";
 import { T } from "@/src/components/I18nProvider";
+import { cvDocs } from "@/src/lib/cv";
 
 export const metadata: Metadata = {
   title: "Sobre mí — Jon Zamudio, Desarrollador & Diseñador",
@@ -152,6 +154,50 @@ export default function AboutPage() {
           </ul>
         </section>
       </div>
+
+      <section aria-label="Curriculum" className="mt-20 lg:mt-32">
+        <h2 className="text-xs uppercase tracking-[0.2em] text-muted">
+          <T es="Currículum" en="CV" />
+        </h2>
+        <ul className="mt-6 divide-y divide-line border-y border-line">
+          {cvDocs.map((doc) => (
+            <li
+              key={doc.href}
+              className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4"
+            >
+              <span className="flex items-baseline gap-4">
+                <span className="text-xs tabular-nums text-muted">{doc.code}</span>
+                <span className="text-base lg:text-lg text-foreground">
+                  <T es={doc.es} en={doc.en} />
+                </span>
+                <span className="text-xs uppercase tracking-widest text-muted">PDF</span>
+              </span>
+
+              <span className="flex items-center gap-2">
+                {/* View opens the PDF in a tab; download saves it. Same file,
+                    two intents — `download` is what separates them. */}
+                <a
+                  href={doc.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs uppercase tracking-[0.14em] text-foreground transition-colors duration-150 hover:border-line-strong hover:text-foreground-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  <Eye size={14} strokeWidth={1.75} aria-hidden="true" />
+                  <T es="Ver" en="View" />
+                </a>
+                <a
+                  href={doc.href}
+                  download
+                  className="inline-flex items-center gap-2 rounded-full bg-foreground-strong px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-background transition-opacity duration-150 hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  <Download size={14} strokeWidth={1.75} aria-hidden="true" />
+                  <T es="Descargar" en="Download" />
+                </a>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <footer className="mt-24 lg:mt-32 pt-8 border-t border-line flex flex-wrap items-center justify-end gap-4">
         <Link

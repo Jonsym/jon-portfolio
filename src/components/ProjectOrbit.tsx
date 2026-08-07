@@ -2,9 +2,40 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Building2,
+  GraduationCap,
+  HeartPulse,
+  KeyRound,
+  Languages,
+  Leaf,
+  PawPrint,
+  Smile,
+  Trees,
+  type LucideIcon,
+} from "lucide-react";
 import { T, useTPair } from "@/src/components/I18nProvider";
 import type { Project } from "@/src/lib/projects";
+
+/**
+ * One icon per project, keyed by slug — hovering a card should say something
+ * about *that* project, not just "this is a link". Anything unmapped (a new
+ * project) falls back to the generic arrow.
+ */
+const PROJECT_ICONS: Record<string, LucideIcon> = {
+  "novax-constructora": Building2,
+  "lumina-dental": Smile,
+  luxora: KeyRound,
+  "The-Woods": Trees,
+  academia: GraduationCap,
+  HowtoSpanish: Languages,
+  MaterCare: HeartPulse,
+  HelloMatcha: Leaf,
+  Petzu: PawPrint,
+};
 
 /**
  * Projects as an endless carousel of title circles filling one locked viewport.
@@ -251,8 +282,12 @@ export default function ProjectOrbit({ projects }: { projects: Project[] }) {
         />
       </div>
 
-      {/* ---------------- lg and up: two vertical columns ---------------- */}
-      <div className="absolute inset-0 hidden justify-center gap-8 lg:flex">
+      {/* ---------------- lg and up: two vertical columns ----------------
+          The frames are wider than the circles they hold (230px inside 254px)
+          so the hover scale has room; at equal widths `overflow-hidden` sliced
+          the sides flat. The gap shrinks by the same amount, so the spacing
+          between circles is unchanged. */}
+      <div className="absolute inset-0 hidden justify-center gap-2 lg:flex">
         <Rail
           register={register}
           items={left}
@@ -260,7 +295,7 @@ export default function ProjectOrbit({ projects }: { projects: Project[] }) {
           axis="y"
           dir={-1}
           label={labelA}
-          className="relative h-full w-[230px]"
+          className="relative h-full w-[254px]"
         />
         <Rail
           register={register}
@@ -270,7 +305,7 @@ export default function ProjectOrbit({ projects }: { projects: Project[] }) {
           dir={1}
           offset={127}
           label={labelB}
-          className="relative h-full w-[230px]"
+          className="relative h-full w-[254px]"
         />
       </div>
 
@@ -423,29 +458,52 @@ function Orb({
   inert: boolean;
   axis: "x" | "y";
 }) {
+  const Icon = PROJECT_ICONS[project.slug] ?? ArrowUpRight;
+
   return (
     <Link
       href={`/proyectos/${project.slug}`}
       aria-label={`${project.title} — ${project.year} ${project.category}`}
       tabIndex={inert ? -1 : undefined}
-      className={`group relative flex aspect-square shrink-0 items-center justify-center rounded-full border border-line bg-gradient-to-b from-white/[0.07] to-white/[0.015] transition-colors duration-300 hover:border-line-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background ${
-        axis === "y" ? "my-3 w-full" : "mx-3 h-full"
+      className={`group relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-gradient-to-b from-white/[0.07] to-white/[0.015] transition-[transform,border-color] duration-500 ease-out hover:border-line-strong motion-safe:lg:hover:scale-[1.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground-strong focus-visible:ring-offset-4 focus-visible:ring-offset-background ${
+        axis === "y" ? "my-3 w-[230px]" : "mx-3 h-full"
       }`}
     >
-      <span className="absolute top-[13%] text-[0.5rem] uppercase tracking-[0.2em] tabular-nums text-muted lg:text-[0.625rem]">
+      {/* Ambient: the ring ticks orbit the circle, and speed up on hover.
+          `motion-safe` drops the whole thing for reduced-motion users. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 motion-safe:animate-spin motion-safe:[animation-duration:28s] motion-safe:[animation-timing-function:linear] motion-safe:group-hover:[animation-duration:7s]"
+      >
+        <span className="absolute left-[15%] top-[15%] size-1 rounded-full bg-muted/50 transition-colors duration-500 group-hover:bg-foreground-strong/70" />
+        <span className="absolute bottom-[15%] right-[15%] size-1 rounded-full bg-muted/50 transition-colors duration-500 group-hover:bg-foreground-strong/70" />
+      </span>
+
+      <span className="absolute top-[13%] text-[0.5rem] uppercase tracking-[0.2em] tabular-nums text-muted transition-colors duration-300 group-hover:text-foreground lg:text-[0.625rem]">
         N. {String(n).padStart(2, "0")}
       </span>
 
-      <span className="px-6 text-center text-sm italic leading-tight tracking-tight text-balance text-foreground-strong transition-opacity duration-300 group-hover:opacity-60 lg:px-8 lg:text-lg">
+      {/* On desktop the title and the icon swap on a shared X axis, like two
+          faces of one card turning over. Touch has no hover, so the title
+          simply stays put there. */}
+      <span className="px-6 text-center text-sm italic leading-tight tracking-tight text-balance text-foreground-strong transition-all duration-500 ease-out lg:group-hover:opacity-0 lg:group-hover:[transform:perspective(600px)_rotateX(-90deg)] lg:px-8 lg:text-lg">
         {project.title}
       </span>
 
-      <span className="absolute bottom-[13%] text-[0.5rem] uppercase tracking-[0.2em] tabular-nums text-muted lg:text-[0.625rem]">
-        Y. {project.year}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden items-center justify-center opacity-0 [transform:perspective(600px)_rotateX(90deg)] transition-all duration-500 ease-out lg:flex lg:group-hover:opacity-100 lg:group-hover:[transform:perspective(600px)_rotateX(0deg)]"
+      >
+        <Icon
+          size={30}
+          strokeWidth={1.5}
+          className="text-foreground-strong motion-safe:lg:group-hover:animate-[orb-icon_2.6s_ease-in-out_infinite]"
+        />
       </span>
 
-      <span aria-hidden="true" className="absolute left-[15%] top-[15%] size-1 rounded-full bg-muted/50" />
-      <span aria-hidden="true" className="absolute bottom-[15%] right-[15%] size-1 rounded-full bg-muted/50" />
+      <span className="absolute bottom-[13%] text-[0.5rem] uppercase tracking-[0.2em] tabular-nums text-muted transition-colors duration-300 group-hover:text-foreground lg:text-[0.625rem]">
+        Y. {project.year}
+      </span>
     </Link>
   );
 }

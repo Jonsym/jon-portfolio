@@ -161,6 +161,21 @@ body {
   pointer-events: none;
 }
 
+/* Projects carousel: once a card's title has flipped away, its icon keeps
+   turning in place — swinging on both axes and pushing toward the viewer at
+   the extremes, so it reads as an object with depth rather than a flat glyph. */
+@keyframes orb-icon {
+  0%,
+  100% {
+    transform: perspective(500px) rotateY(-26deg) rotateX(10deg) translateZ(0)
+      scale(1);
+  }
+  50% {
+    transform: perspective(500px) rotateY(26deg) rotateX(-10deg)
+      translateZ(30px) scale(1.06);
+  }
+}
+
 /* Mascot sits centred in the band above the first row (JS sets `top`). */
 .collage-mascot {
   position: absolute;

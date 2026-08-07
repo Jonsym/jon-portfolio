@@ -96,31 +96,43 @@ export default function ProyectosMenu() {
         />
       </button>
 
+      {/* The gap between trigger and panel is padding on the positioned
+          wrapper, not a margin, so crossing it stays inside the hover target
+          and doesn't dismiss the menu. */}
       <div
-        role="menu"
-        aria-label="Proyectos"
-        className={`absolute left-0 top-full mt-3 min-w-[180px] border border-line bg-surface transition duration-150 ${
+        className={`absolute left-0 top-full z-50 pt-3 transition duration-200 ease-out ${
           open
-            ? "pointer-events-auto opacity-100 translate-y-0"
-            : "pointer-events-none opacity-0 -translate-y-1"
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0"
         }`}
       >
-        <ul className="flex flex-col py-2">
-          {proyectosItems.map((item) => (
-            <li key={item.href} role="none">
-              <Link
-                role="menuitem"
-                href={item.href}
-                aria-current={isActive(item.match) ? "page" : undefined}
-                className={`block px-4 py-2 text-sm transition-colors duration-150 hover:bg-foreground/[0.06] hover:text-foreground-strong ${
-                  isActive(item.match) ? "text-foreground-strong" : "text-foreground"
-                }`}
-                onClick={() => setOpen(false)}
-              >
-                <T es={item.es} en={item.en} />
-              </Link>
-            </li>
-          ))}
+        {/* Minimal: no caret, no icons, no hover fills. Structure comes from
+            the hairline between rows — the same divider the rest of the site
+            uses — and the only hover cue is the label brightening and easing
+            right. */}
+        <ul
+          role="menu"
+          aria-label="Proyectos"
+          className="min-w-[170px] divide-y divide-line border border-line bg-background/95 backdrop-blur-md"
+        >
+          {proyectosItems.map((item) => {
+            const current = isActive(item.match);
+            return (
+              <li key={item.href} role="none">
+                <Link
+                  role="menuitem"
+                  href={item.href}
+                  aria-current={current ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                  className={`block px-5 py-3.5 text-xs tracking-[0.14em] transition-all duration-200 hover:translate-x-0.5 hover:text-foreground-strong focus:outline-none focus-visible:translate-x-0.5 focus-visible:text-foreground-strong ${
+                    current ? "text-foreground-strong" : "text-muted"
+                  }`}
+                >
+                  <T es={item.es} en={item.en} />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
